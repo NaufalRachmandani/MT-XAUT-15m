@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "title": "InvictusForward-1 v1.10 \u2014 M15 Only Documentation",
+    "hero_title": "InvictusForward-1",
+    "subtitle_html": "Dual-Strategy EA untuk XAUUSD &mdash; dokumentasi khusus yang berlaku di <strong>M15</strong>",
+    "badge_html": "v1.10 &bull; M15 Scalping &bull; XAUUSD Only",
+    "footer_html": "InvictusForward-1 v1.10 &bull; M15 Only &bull; Generated 2026-04-14",
+    "language": "id",
+    "original_html": "/Users/naufalrachmandani/Downloads/InvictusForward-1-Docs.html"
+  },
+  "logic": {
+    "symbol_aliases": [
+      "XAUUSD",
+      "XAUUSDm"
+    ],
+    "timeframe": "M15",
+    "required_timeframe_minutes": 15,
+    "trending": {
+      "magic": 202604100,
+      "always_active": true,
+      "allows_buy": true,
+      "allows_sell": true,
+      "allows_market_order": true,
+      "allows_limit_order": true,
+      "killswitch_daily_wins": 20,
+      "daily_loss_cap_pct": 5.0,
+      "weekend_block": true,
+      "friday_cutoff_hour": 15,
+      "toxic_hours": [
+        3,
+        17
+      ],
+      "cooldown_bars_after_loss": 2,
+      "bias_lookback_bars": 9,
+      "bullish_hh_min": 5,
+      "bearish_ll_min": 6,
+      "default_bias": "bullish",
+      "sell_hours": [
+        7,
+        10,
+        22
+      ],
+      "swing_lookback": 2,
+      "max_bos_bars_back": 60,
+      "min_break_atr": 0.3,
+      "min_body_ratio": 0.45,
+      "zone_search_window": 8,
+      "max_zone_range_usd": 20.0,
+      "max_zone_prior_tests": 1,
+      "zone_cooldown_bars": 2,
+      "zone_cooldown_tolerance_usd": 1.0,
+      "entry_body_ratio": 0.5,
+      "score": {
+        "zone": 40,
+        "volatility": 15,
+        "fvg": 10,
+        "retest": 10,
+        "sweep": 5,
+        "trend": 20,
+        "gold_buy_bonus": 10,
+        "buy_min": 80,
+        "sell_min": 90,
+        "rr_boost_min": 95
+      },
+      "sell_requires_impulsive_bos": true,
+      "sell_lot_modifier": 0.5,
+      "sl_atr_buffer": 0.5,
+      "min_sl_usd": 25.0,
+      "max_sl_usd": 25.0,
+      "tp_rr_default": 1.5,
+      "tp_rr_boost": 2.0,
+      "pending_expiry_bars": 8,
+      "pending_expiry_seconds": 7200,
+      "max_positions_tiers": [
+        {
+          "max_balance": 20000,
+          "max_positions": 5
+        },
+        {
+          "max_balance": 50000,
+          "max_positions": 4
+        },
+        {
+          "max_balance": 999999999,
+          "max_positions": 3
+        }
+      ],
+      "timed_profit_close_hours": 5,
+      "timed_profit_usd_per_0_01": 15.0
+    },
+    "sideways": {
+      "magic": 202604200,
+      "adx_threshold_h4": 20.0,
+      "buy_only": true,
+      "market_only": true,
+      "daily_wins_cap": 10,
+      "daily_loss_cap_pct": 3.0,
+      "toxic_hours": [
+        3,
+        19
+      ],
+      "cooldown_bars_after_loss": 2,
+      "range_bars": 48,
+      "min_range_usd": 15.0,
+      "max_range_atr_multiplier": 10.0,
+      "entry_zone_fraction": 0.25,
+      "max_positions": 4,
+      "cluster_max_per_day": 2,
+      "cluster_tolerance_usd": 5.0,
+      "sl_atr_buffer": 0.5,
+      "sl_min_usd": 5.0,
+      "sl_max_usd": 20.0,
+      "tp_fraction": 0.5,
+      "lot_modifier": 0.25
+    },
+    "risk": {
+      "slippage_points": 50,
+      "compounding_tiers": [
+        {
+          "name": "<=20k",
+          "min_balance": 0,
+          "max_balance": 20000,
+          "formula_code": "floor(balance/500) * 0.01"
+        },
+        {
+          "name": "20k-50k",
+          "min_balance": 20000,
+          "max_balance": 50000,
+          "formula_code": "0.40 + floor((balance-20000)/750) * 0.01"
+        },
+        {
+          "name": "50k+",
+          "min_balance": 50000,
+          "max_balance": 999999999,
+          "formula_code": "0.80 + floor((balance-50000)/1500) * 0.01"
+        }
+      ],
+      "loss_modifiers": [
+        {
+          "min_losses": 3,
+          "max_losses": 4,
+          "multiplier": 0.5
+        },
+        {
+          "min_losses": 5,
+          "max_losses": 6,
+          "multiplier": 0.25
+        },
+        {
+          "min_losses": 7,
+          "max_losses": 999,
+          "multiplier": 0.1
+        }
+      ],
+      "min_lot": 0.01
+    },
+    "dead_inputs": {
+      "BT_RiskPercent": 3.0,
+      "BT_UseFixedLot": false,
+      "BT_FixedLot": 0.01,
+      "BT_CompoundingPer": 500,
+      "BT_MaxDailyWins": 20
+    }
+  },
+  "docs": {
+    "toc": [
+      {
+        "id": "s1",
+        "number": "01",
+        "label": "Arsitektur Dual-Strategy di M15"
+      },
+      {
+        "id": "s2",
+        "number": "02",
+        "label": "Cara Entry (Pipeline M15)"
+      },
+      {
+        "id": "s3",
+        "number": "03",
+        "label": "Semua Parameter M15"
+      },
+      {
+        "id": "s4",
+        "number": "04",
+        "label": "Penentu Bullish"
+      },
+      {
+        "id": "s5",
+        "number": "05",
+        "label": "Penentu Bearish"
+      },
+      {
+        "id": "s6",
+        "number": "06",
+        "label": "Saat Sideways"
+      },
+      {
+        "id": "s7",
+        "number": "07",
+        "label": "Posisi ke-1 s/d ke-N &amp; Close"
+      },
+      {
+        "id": "s8",
+        "number": "08",
+        "label": "Limit Order, Expired, Tidak Kena"
+      },
+      {
+        "id": "s9",
+        "number": "09",
+        "label": "Risk Management &amp; Lot Sizing"
+      },
+      {
+        "id": "s10",
+        "number": "10",
+        "label": "Rekomendasi"
+      }
+    ],
+    "trending_flow": [
+      {
+        "class_name": "ck",
+        "title": "1. KillSwitch",
+        "detail_html": "Daily wins &ge; 20? STOP. Daily loss &gt; 5% balance awal hari? STOP."
+      },
+      {
+        "class_name": "ck",
+        "title": "2. Weekend Filter",
+        "detail_html": "Sabtu/Minggu = skip. Jumat &ge; 15:00 = skip."
+      },
+      {
+        "class_name": "ck",
+        "title": "3. Toxic Hours",
+        "detail_html": "Jam 03 dan jam 17 server time = skip (data historis: WR &lt; 27%)."
+      },
+      {
+        "class_name": "ck",
+        "title": "4. After-Loss Cooldown",
+        "detail_html": "Setelah SL hit, tunggu 2 bar = <strong>30 menit</strong> sebelum entry lagi."
+      },
+      {
+        "class_name": "ok",
+        "title": "5. Bias Detection",
+        "detail_html": "Hitung HH/LL dari 9 bar terakhir. HH &ge; 5 = Bullish. LL &ge; 6 = Bearish. Default = <strong>Bullish</strong>. Bullish &amp; Neutral = BUY."
+      },
+      {
+        "class_name": "ck",
+        "title": "6. SELL Ultra-Strict Filter",
+        "detail_html": "Jika Bearish: SELL <strong>hanya boleh</strong> di jam 07, 10, 22. Selain itu = skip."
+      },
+      {
+        "class_name": "ok",
+        "title": "7. BOS Detection",
+        "detail_html": "Cari swing point (fractal lookback=2, window 60 bar = 15 jam). Cari candle yang close menembus swing. Break &ge; ATR &times; 0.30. Classify: <span class=\"badge b-buy\">Impulsive</span> atau <span class=\"badge b-warn\">Corrective</span>."
+      },
+      {
+        "class_name": "ok",
+        "title": "8. Zone Detection (Candle A/B)",
+        "detail_html": "Cari Candle B (1-8 bar dari refBar) yang body engulf Candle A. Zone range &le; $20. Fresh zone saja (max 1 test sebelumnya)."
+      },
+      {
+        "class_name": "ck",
+        "title": "9. Zone Cooldown",
+        "detail_html": "Zone yang sama (toleransi $1) sudah dipakai dalam 2 bar terakhir? Skip."
+      },
+      {
+        "class_name": "ok",
+        "title": "10. Confluence Scoring",
+        "detail_html": "Zone(40) + Volatility(15) + FVG(10) + Retest(10) + Sweep(5) + Trend(20) + GoldBuy(10) = max 110. Minimum <strong>80</strong> untuk BUY, <strong>90</strong> untuk SELL."
+      },
+      {
+        "class_name": "ck",
+        "title": "11. SELL Extra Gate",
+        "detail_html": "SELL harus BOS Impulsive + score &ge; 90. Lot dipotong 50%."
+      },
+      {
+        "class_name": "ck",
+        "title": "12. Max Positions",
+        "detail_html": "Balance &le; $20k: max 5. $20-50k: max 4. $50k+: max 3."
+      },
+      {
+        "class_name": "ok",
+        "title": "13. SL / TP / Lot",
+        "detail_html": "SL = zone boundary + ATR&times;0.5 (di-clamp ke fixed $25). TP = entry &plusmn; $25 &times; RR. RR = 2.0 jika score &ge; 95, else 1.5. Lot dari compounding + loss reduction."
+      },
+      {
+        "class_name": "ok",
+        "title": "14. Order Placement",
+        "detail_html": "BUY: ask &le; entry &rarr; market buy. ask &gt; entry &rarr; buy limit (expiry 2 jam). SELL: kebalikannya."
+      }
+    ],
+    "sideways_flow": [
+      {
+        "class_name": "ck",
+        "title": "1. Guards",
+        "detail_html": "Max 10 wins/day. Daily loss &le; 3%. Skip jam 03 &amp; 19. Cooldown 30 menit setelah loss. Max 4 posisi."
+      },
+      {
+        "class_name": "ok",
+        "title": "2. Range",
+        "detail_html": "Highest/lowest dari 48 bar M15 (12 jam). Range min $15, max ATR&times;10."
+      },
+      {
+        "class_name": "ck",
+        "title": "3. Entry Zone",
+        "detail_html": "Close bar terakhir harus di <strong>lower 25%</strong> range. BUY only."
+      },
+      {
+        "class_name": "ck",
+        "title": "4. Cluster",
+        "detail_html": "Max 2 entry per range per hari. Same range = high/low &lt; $5 perbedaan."
+      },
+      {
+        "class_name": "ok",
+        "title": "5. Market BUY",
+        "detail_html": "SL = rangeLow - (ATR&times;0.5). Clamp $5-$20. TP = mid-range (50%). Lot = 25% trending."
+      }
+    ],
+    "buy_example_pre": "Jam 10:15 M15 bar close. 9 bar terakhir: 6 HH \u2192 Bullish.\nSwing High ditemukan di bar 8 ($2655). Bar 3 close $2658 \u2192 BOS (break $3).\nATR(14) = $5. Break $3 >= $5 \u00d7 0.30 ($1.50) \u2713\nBOS candle: body 65% range, 1/3 preceding bullish \u2192 Impulsive.\nZone: Candle B bar 4 (bullish, close > Candle A top). Range $12 \u2264 $20 \u2713\nScore: Zone(40) + Vol(15) + FVG(10) + Trend(20) + Gold(10) = 95 \u2192 Grade A \u2713\nEntry: 50% body B = $2648. Ask $2652 > $2648 \u2192 Buy Limit.\nSL: $2648 - $25 = $2623. TP: $2648 + $25\u00d72.0 = $2698 (score \u2265 95 \u2192 RR 2.0)\nExpiry: 2 jam.",
+    "timeline_pre": "10:00  BOS zone A \u2192 Posisi #1 BUY 0.20 lot, SL $2625, TP $2687\n10:30  BOS zone B \u2192 Posisi #2 BUY 0.20 lot, SL $2635, TP $2697\n10:45  ADX H4=18 \u2192 Sideways aktif\n11:00  Range bounce \u2192 Posisi #3 BUY(SW) 0.05 lot, SL $2637, TP $2660\n12:15  #1 TP hit \u2192 win, dailyWins=1\n13:30  #3 SL hit \u2192 sw_consLosses=1, cooldown 30m\n14:00  Cooldown selesai, pipeline jalan lagi\n15:00  #2 profit $18 + open 4.5jam \u2192 belum 5 jam, tetap hold\n15:30  #2 profit $20 + open 5 jam \u2192 timed close",
+    "worst_case_pre": "Balance $10k, trending lot = 0.20\n5 trending positions: 5 \u00d7 0.20 = 1.00 lot\n4 sideways positions: 4 \u00d7 0.05 = 0.20 lot\nTotal: 1.20 lot all XAUUSD BUY\n\nJika semua SL hit:\n  Trending: 5 \u00d7 $25 = $125\n  Sideways: 4 \u00d7 $20 = $80\n  Total max loss = $205 (2.05% dari $10k)",
+    "recommendations": [
+      {
+        "title_html": "1. Fixed SL $25 Tidak Adaptif <span class=\"rp rp-h\">HIGH</span>",
+        "body_html": "<code>MinSL = MaxSL = $25</code>. ATR gold M15 bisa $3 sampai $15+. Saat vol tinggi (news), $25 ketat &rarr; sering kena. Saat vol rendah, $25 terlalu lebar &rarr; RR buruk.</p><p><strong>Fix:</strong> Buat range misal $15-$35, biarkan ATR buffer yang menentukan."
+      },
+      {
+        "title_html": "2. Pending Order Tidak Bisa Di-cancel <span class=\"rp rp-h\">HIGH</span>",
+        "body_html": "Jika bias berubah atau daily loss mendekati cap, limit order tetap aktif. Bisa terisi di kondisi yang sudah tidak valid.</p><p><strong>Fix:</strong> Tambah <code>ManagePendingOrders()</code> di OnTick: cancel jika bias flip atau loss &gt; 4%."
+      },
+      {
+        "title_html": "3. Dead Input Parameters <span class=\"rp rp-h\">HIGH</span>",
+        "body_html": "4 dari 5 input parameters tidak berfungsi. User bisa mengira mereka mengubah risk padahal tidak. Optimizer juga waste resource.</p><p><strong>Fix:</strong> Hapus, atau implementasikan <code>BT_UseFixedLot</code> / <code>BT_CompoundingPer</code> sebagai override."
+      },
+      {
+        "title_html": "4. Tidak Ada Trailing Stop / Breakeven <span class=\"rp rp-m\">MEDIUM</span>",
+        "body_html": "Posisi +$20 bisa kembali ke -$25 tanpa proteksi. Winner jadi loser tanpa perlawanan.</p><p><strong>Fix:</strong> Breakeven setelah profit &ge; 1R ($25): pindahkan SL ke entry + $2."
+      },
+      {
+        "title_html": "5. Timed Close 5 Jam Terlalu Lama untuk M15 <span class=\"rp rp-m\">MEDIUM</span>",
+        "body_html": "Setup M15 dengan SL $25 / TP $37.50 seharusnya resolve dalam 1-3 jam. 5 jam = profit bisa hilang.</p><p><strong>Fix:</strong> Turunkan ke 2-3 jam, atau trailing setelah 50% TP tercapai."
+      },
+      {
+        "title_html": "6. Bias Detection dari 9 Bar M15 Saja <span class=\"rp rp-m\">MEDIUM</span>",
+        "body_html": "9 bar = 2 jam 15 menit. Terlalu pendek untuk trend determination. Default Bullish juga bisa blind spot saat genuine downtrend.</p><p><strong>Fix:</strong> Tambah konfirmasi H1 atau H4 bias. Jika M15 Bullish tapi H4 Bearish &rarr; kurangi lot atau skip."
+      },
+      {
+        "title_html": "7. Total Exposure 9 Posisi Semua BUY XAUUSD <span class=\"rp rp-m\">MEDIUM</span>",
+        "body_html": "High correlation risk. Satu spike turun kena semua posisi.</p><p><strong>Fix:</strong> Total lot cap gabungan kedua strategy, misal max 1.0 lot combined."
+      },
+      {
+        "title_html": "8. Sideways TP Mid-Range Bisa Terlalu Pendek <span class=\"rp rp-l\">LOW</span>",
+        "body_html": "Range $15, entry di lower 25% ($3.75 dari low), TP di 50% ($7.50 dari low). Jarak cuma $3.75 tapi SL bisa $5-$20.</p><p><strong>Fix:</strong> TP ke 60-70% range, atau minimum TP $8."
+      },
+      {
+        "title_html": "9. Zone Cooldown Tidak Reset Harian <span class=\"rp rp-l\">LOW</span>",
+        "body_html": "<code>g_lastZonePrice</code> tidak di-reset saat hari baru. Zone hari kemarin bisa block entry hari ini.</p><p><strong>Fix:</strong> Tambahkan <code>g_lastZonePrice=0; g_lastZoneTime=0;</code> di blok newDay."
+      },
+      {
+        "title_html": "10. Print() Tidak Reliable di Wine <span class=\"rp rp-l\">LOW</span>",
+        "body_html": "Forward test di Mac/Wine = <code>Print()</code> bisa hilang. Sulit debug rejection reasons.</p><p><strong>Fix:</strong> File-based logging: <code>FileOpen/FileWriteString</code> catat setiap signal evaluation."
+      }
+    ]
+  }
+}

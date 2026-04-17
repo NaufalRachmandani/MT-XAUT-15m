@@ -1,0 +1,4 @@
+.DS_Store
+*.lnk
+__pycache__/
+tools/__pycache__/

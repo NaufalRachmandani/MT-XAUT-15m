@@ -250,7 +250,10 @@ static const int    IF1_SIDEWAYS_MAX_POSITIONS_OVERRIDE = 8;
 static const int    IF1_SIDEWAYS_CLUSTER_MAX_PER_DAY_OVERRIDE = 5;
 static const bool   IF1_ALLOW_ALL_SELL_HOURS = true;
 static const ulong  IF1_SELL_BLOCK_HOURS_MASK = 0;
-static const ulong  IF1_LOW_SCORE_SELL_BLOCK_HOURS_MASK = 333408;
+static const ulong  IF1_LOW_SCORE_SELL_BLOCK_HOURS_MASK = 341600;
+static const bool   IF1_GOLD_HIGH_SCORE_SELL_REQUIRE_IMPULSIVE_BOS = true;
+static const int    IF1_GOLD_HIGH_SCORE_SELL_MIN_LL_HH_EDGE = 0;
+static const double IF1_GOLD_HIGH_SCORE_SELL_MIN_BREAK_ATR_OVERRIDE = 0.0;
 static const int    IF1_TREND_TIMED_PROFIT_CLOSE_HOURS_OVERRIDE = 4;
 static const int    IF1_SIDEWAYS_TIMED_PROFIT_CLOSE_HOURS_OVERRIDE = 2;
 static const double IF1_TREND_TIMED_PROFIT_USD_PER_001_OVERRIDE = 24.0;
@@ -1374,6 +1377,25 @@ bool IF1EvaluateTrending()
      {
       g_diag.trendScoreBlocked++;
       return(false);
+     }
+   if(bias.direction < 0 && IF1IsGoldSymbol() && score >= IF1_TREND_HIGH_SCORE_LOT_BOOST_MIN)
+     {
+      if(IF1_GOLD_HIGH_SCORE_SELL_REQUIRE_IMPULSIVE_BOS && bos.quality != IF1_BOS_IMPULSIVE)
+        {
+         g_diag.trendBosBlocked++;
+         return(false);
+        }
+      if((bias.llCount - bias.hhCount) < IF1_GOLD_HIGH_SCORE_SELL_MIN_LL_HH_EDGE)
+        {
+         g_diag.trendScoreBlocked++;
+         return(false);
+        }
+      if(IF1_GOLD_HIGH_SCORE_SELL_MIN_BREAK_ATR_OVERRIDE > 0.0 &&
+         bos.breakDistance < (atr * IF1_GOLD_HIGH_SCORE_SELL_MIN_BREAK_ATR_OVERRIDE))
+        {
+         g_diag.trendBosBlocked++;
+         return(false);
+        }
      }
    if(bias.direction < 0 && score <= IF1_TREND_LOW_SCORE_SELL_MAX &&
       IF1HourBlockedByMask(currentHour, IF1_LOW_SCORE_SELL_BLOCK_HOURS_MASK))

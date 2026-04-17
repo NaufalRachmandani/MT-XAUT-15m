@@ -177,11 +177,12 @@
 <div class="card info" style="margin-bottom:28px;">
   <div class="card-title">Notes: Final v3</div>
   <p>Versi <strong>v3</strong> final ini adalah hasil penggabungan dua pelajaran besar: <strong>sell XAU tidak bisa diperlakukan sama dengan buy</strong>, dan <strong>low-score sell perlu dipilih lebih ketat per jam</strong> supaya tetap berfungsi sebagai hedge tanpa menjadi sumber drawdown yang tidak perlu.</p>
-  <p>Iterasi terakhir memisahkan perlakuan <strong>high-score sell</strong> dari boost buy, lalu memblok hanya <strong>low-score sell</strong> pada jam yang secara statistik buruk. Pendekatan ini menang karena menaikkan profit dan sekaligus menurunkan drawdown, tanpa mematikan layer sell secara brutal.</p>
+  <p>Iterasi terakhir menambahkan satu validasi struktural penting: <strong>high-score sell pada gold wajib datang dari BOS bearish yang impulsif</strong>. Di saat yang sama, filter jam <strong>low-score sell</strong> diperluas lagi sampai mencakup jam <code>13</code>. Kombinasi ini menang karena menaikkan profit, memperbaiki quality sell, dan menurunkan drawdown tanpa mematikan layer sell secara brutal.</p>
   <ul>
     <li><strong>High-score buy tetap agresif</strong>: boost lot <code>1.18x</code> hanya dipertahankan untuk buy score tinggi.</li>
-    <li><strong>High-score sell dipisahkan dari boost buy</strong>: sell score tinggi tidak lagi otomatis mendapat lot boost buy, sehingga bucket high-score sell menjadi lebih jinak.</li>
-    <li><strong>Low-score sell difilter per jam</strong>: jam <code>05, 06, 09, 10, 12, 16, 18</code> diblok hanya untuk low-score sell.</li>
+    <li><strong>High-score sell dipisahkan dari boost buy</strong>: sell score tinggi tidak lagi otomatis mendapat lot boost buy.</li>
+    <li><strong>High-score sell wajib impulsive BOS</strong>: untuk gold, setup sell score tinggi hanya valid jika BOS bearish-nya impulsif.</li>
+    <li><strong>Low-score sell difilter per jam</strong>: jam <code>05, 06, 09, 10, 12, 13, 16, 18</code> diblok hanya untuk low-score sell.</li>
     <li><strong>Full sell block tetap dihindari</strong>: beberapa eksperimen memang membuat sell jauh lebih positif, tetapi drawdown melonjak ke area <code>53%+</code> karena fungsi hedge hilang.</li>
     <li><strong>Dynamic SL/TP tetap jadi fondasi</strong>: performa final masih ditopang adaptive stop, RR dinamis, dan bukan oleh hard time-close.</li>
     <li><strong>Timed close tetap hanya safety valve</strong>: pada run final, exit by expert tetap <code>0</code>, jadi edge utama tetap berasal dari kualitas entry dan struktur TP/SL.</li>
@@ -192,8 +193,8 @@
     <tr><td>Filosofi</td><td>Frekuensi tinggi + compounding agresif</td><td>Growth trend berat, sell diperlakukan direction-aware</td></tr>
     <tr><td>Trend Capacity</td><td><code>6 / 9 / 12</code></td><td><code>7 / 11 / 15</code></td></tr>
     <tr><td>High-Score Buy</td><td>Tidak ada boost khusus</td><td><code>1.18x</code> boost tetap aktif</td></tr>
-    <tr><td>High-Score Sell</td><td>Tidak dibedakan dari sell lain</td><td>Tidak ikut boost buy; sizing lebih netral</td></tr>
-    <tr><td>Low-Score Sell</td><td>Tetap aktif di semua jam</td><td>Diblok hanya di jam <code>05, 06, 09, 10, 12, 16, 18</code></td></tr>
+    <tr><td>High-Score Sell</td><td>Tidak dibedakan dari sell lain</td><td>Tidak ikut boost buy dan wajib BOS bearish impulsif</td></tr>
+    <tr><td>Low-Score Sell</td><td>Tetap aktif di semua jam</td><td>Diblok hanya di jam <code>05, 06, 09, 10, 12, 13, 16, 18</code></td></tr>
     <tr><td>Trend RR</td><td><code>1.55 / 2.05</code></td><td><code>1.62 / 2.25</code> dengan buy premium <code>2.45</code></td></tr>
     <tr><td>Sideways Lot Modifier</td><td><code>0.15x</code></td><td><code>0.10x</code></td></tr>
     <tr><td>Timed Close</td><td>Safety valve biasa</td><td>Tetap safety valve; bukan sumber edge utama</td></tr>
@@ -202,13 +203,13 @@
   <p>Setup pembanding ini sama untuk semua varian: <code>XAUUSDc</code>, <code>M15</code>, <code>2025.01.01 - 2026.04.15</code>, <code>Deposit 10,000 USD</code>, <code>Leverage 1:100</code>, mode <code>Every tick</code>.</p>
   <table>
     <tr><th>Metrik</th><th>Base</th><th>v1</th><th>v2</th><th>v3</th></tr>
-    <tr><td>Total Net Profit</td><td><code>4,272.44</code> (<code>+42.72%</code>)</td><td><code>40,820.81</code> (<code>+408.21%</code>)</td><td><code>330,732.11</code> (<code>+3307.32%</code>)</td><td><code>556,772.11</code> (<code>+5567.72%</code>)</td></tr>
-    <tr><td>Total Trades</td><td><code>556</code></td><td><code>553</code></td><td><code>3464</code></td><td><code>3444</code></td></tr>
-    <tr><td>Win Rate</td><td><code>41.55%</code></td><td><code>49.19%</code></td><td><code>48.56%</code></td><td><code>49.83%</code></td></tr>
+    <tr><td>Total Net Profit</td><td><code>4,272.44</code> (<code>+42.72%</code>)</td><td><code>40,820.81</code> (<code>+408.21%</code>)</td><td><code>330,732.11</code> (<code>+3307.32%</code>)</td><td><code>573,363.10</code> (<code>+5733.63%</code>)</td></tr>
+    <tr><td>Total Trades</td><td><code>556</code></td><td><code>553</code></td><td><code>3464</code></td><td><code>3428</code></td></tr>
+    <tr><td>Win Rate</td><td><code>41.55%</code></td><td><code>49.19%</code></td><td><code>48.56%</code></td><td><code>49.82%</code></td></tr>
     <tr><td>Profit Factor</td><td><code>1.02</code></td><td><code>1.39</code></td><td><code>1.11</code></td><td><code>1.19</code></td></tr>
-    <tr><td>Recovery Factor</td><td><code>0.11</code></td><td><code>2.41</code></td><td><code>2.63</code></td><td><code>3.74</code></td></tr>
-    <tr><td>Max Balance Drawdown</td><td><code>35,051.64</code> (<code>71.56%</code>)</td><td><code>15,810.71</code> (<code>28.22%</code>)</td><td><code>125,219.55</code> (<code>32.00%</code>)</td><td><code>143,555.87</code> (<code>22.89%</code>)</td></tr>
-    <tr><td>Max Equity Drawdown</td><td><code>38,805.04</code> (<code>73.70%</code>)</td><td><code>16,950.10</code> (<code>30.07%</code>)</td><td><code>125,638.43</code> (<code>32.06%</code>)</td><td><code>148,990.34</code> (<code>23.57%</code>)</td></tr>
+    <tr><td>Recovery Factor</td><td><code>0.11</code></td><td><code>2.41</code></td><td><code>2.63</code></td><td><code>3.85</code></td></tr>
+    <tr><td>Max Balance Drawdown</td><td><code>35,051.64</code> (<code>71.56%</code>)</td><td><code>15,810.71</code> (<code>28.22%</code>)</td><td><code>125,219.55</code> (<code>32.00%</code>)</td><td><code>143,451.34</code> (<code>22.41%</code>)</td></tr>
+    <tr><td>Max Equity Drawdown</td><td><code>38,805.04</code> (<code>73.70%</code>)</td><td><code>16,950.10</code> (<code>30.07%</code>)</td><td><code>125,638.43</code> (<code>32.06%</code>)</td><td><code>148,897.42</code> (<code>23.08%</code>)</td></tr>
   </table>
 </div>
 

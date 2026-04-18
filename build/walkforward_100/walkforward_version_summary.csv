@@ -1,0 +1,4 @@
+version,positive_windows,total_windows,avg_net_profit,median_net_profit,avg_profit_factor,avg_win_rate,avg_equity_dd_pct,worst_equity_dd_pct,best_window,best_window_net,worst_window,worst_window_net,best_net_wins,best_pf_wins,best_recovery_wins
+v1,11,16,52.52,25.66,1.49,48.37,50.11,75.75,2025-11,252.15,2025-12,-68.38,5,7,7
+v4,12,16,121.42,67.71,1.27,51.85,60.0,82.24,2025-11,459.8,2025-10,-57.34,6,3,2
+v5,11,16,56.36,66.88,1.44,51.53,50.97,83.63,2025-02,210.59,2025-10,-74.83,5,6,7

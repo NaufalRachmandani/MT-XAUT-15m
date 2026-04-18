@@ -1,19 +1,5 @@
 [
   {
-    "version": "base",
-    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_base_compare_2025_100_XAUUSDc_M15_20250101_20260415.htm",
-    "tester_log": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Tester/logs/20260418.log",
-    "net_profit": 341.92,
-    "profit_factor": 1.08,
-    "expected_payoff": 0.61,
-    "total_trades": 563,
-    "win_rate": 41.39,
-    "balance_dd_abs": 727.09,
-    "balance_dd_pct": 63.03,
-    "equity_dd_abs": 820.8,
-    "equity_dd_pct": 65.97
-  },
-  {
     "version": "v1",
     "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v1_compare_2025_100_XAUUSDc_M15_20250101_20260415.htm",
     "tester_log": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Tester/logs/20260418.log",
@@ -26,34 +12,6 @@
     "balance_dd_pct": 28.13,
     "equity_dd_abs": 386.05,
     "equity_dd_pct": 29.53
-  },
-  {
-    "version": "v2",
-    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v2_compare_2025_100_XAUUSDc_M15_20250101_20260415.htm",
-    "tester_log": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Tester/logs/20260418.log",
-    "net_profit": 2511.59,
-    "profit_factor": 1.03,
-    "expected_payoff": 0.87,
-    "total_trades": 2890,
-    "win_rate": 49.31,
-    "balance_dd_abs": 11302.72,
-    "balance_dd_pct": 85.28,
-    "equity_dd_abs": 11474.39,
-    "equity_dd_pct": 85.67
-  },
-  {
-    "version": "v3",
-    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v3_compare_2025_100_XAUUSDc_M15_20250101_20260415.htm",
-    "tester_log": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Tester/logs/20260418.log",
-    "net_profit": 5735.02,
-    "profit_factor": 1.03,
-    "expected_payoff": 2.0,
-    "total_trades": 2866,
-    "win_rate": 50.03,
-    "balance_dd_abs": 37392.46,
-    "balance_dd_pct": 90.34,
-    "equity_dd_abs": 39846.21,
-    "equity_dd_pct": 90.88
   },
   {
     "version": "v4",

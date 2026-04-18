@@ -36,12 +36,12 @@ Panduan ini menjelaskan cara menjalankan backtest MetaTrader 5 secara programati
 Contoh file yang dibutuhkan:
 
 - Source EA:
-  `mt5/InvictusForward1M15_v3_1.mq5`
+  `mt5/InvictusForward1M15_v5.mq5`
 - Config backtest:
-  `mt5/InvictusForward1M15_v3_1.backtest.ini`
+  `mt5/InvictusForward1M15_v5.backtest.ini`
 - Script runner:
-  `tools/iterate_v3.py`
-  `tools/iterate_v3_1.py`
+  `tools/iterate_v5.py`
+  `tools/compare_versions_6m_100.py`
 
 ## Langkah 1: Compile EA
 
@@ -52,8 +52,8 @@ WINEPREFIX="/Users/naufalrachmandani/Library/Application Support/net.metaquotes.
 WINEDEBUG=-all \
 "/Applications/MetaTrader 5.app/Contents/SharedSupport/wine/bin/wine64" \
 "C:\\Program Files\\MetaTrader 5\\metaeditor64.exe" \
-"/compile:C:\\MT5Build\\InvictusForward1M15_v3_1.mq5" \
-"/log:C:\\MT5Build\\InvictusForward1M15_v3_1.compile.log"
+"/compile:C:\\MT5Build\\InvictusForward1M15_v5.mq5" \
+"/log:C:\\MT5Build\\InvictusForward1M15_v5.compile.log"
 ```
 
 Catatan penting:
@@ -67,7 +67,7 @@ Contoh cek log:
 ```bash
 python3 - <<'PY'
 from pathlib import Path
-log = Path("/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/MT5Build/InvictusForward1M15_v3_1.compile.log")
+log = Path("/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/MT5Build/InvictusForward1M15_v5.compile.log")
 text = log.read_bytes().decode("utf-16le", errors="ignore")
 print(text.splitlines()[-1])
 print("ok" if "0 errors" in text else "compile failed")
@@ -80,8 +80,8 @@ Contoh:
 
 ```bash
 cp \
-"/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/MT5Build/InvictusForward1M15_v3_1.ex5" \
-"/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Experts/Invictus/InvictusForward1M15_v3_1.ex5"
+"/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/MT5Build/InvictusForward1M15_v5.ex5" \
+"/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Experts/Invictus/InvictusForward1M15_v5.ex5"
 ```
 
 ## Langkah 3: Buat File Config Tester
@@ -105,7 +105,7 @@ Account=0
 Profile=0
 
 [Tester]
-Expert=Invictus\InvictusForward1M15_v3_1.ex5
+Expert=Invictus\InvictusForward1M15_v5.ex5
 Symbol=XAUUSDc
 Period=M15
 Login=257385275
@@ -115,10 +115,10 @@ Optimization=0
 FromDate=2025.01.01
 ToDate=2026.04.15
 ForwardMode=0
-Report=\Reports\InvictusForward1M15_v3_1_XAUUSDc_M15_2025_2026
+Report=\Reports\InvictusForward1M15_v5_XAUUSDc_M15_2025_2026
 ReplaceReport=1
 ShutdownTerminal=1
-Deposit=10000
+Deposit=100
 Currency=USD
 Leverage=1:100
 UseLocal=1
@@ -142,7 +142,7 @@ WINEPREFIX="/Users/naufalrachmandani/Library/Application Support/net.metaquotes.
 WINEDEBUG=-all \
 "/Applications/MetaTrader 5.app/Contents/SharedSupport/wine/bin/wine64" \
 "C:\\Program Files\\MetaTrader 5\\terminal64.exe" \
-"/config:C:\\MT5Build\\InvictusForward1M15_v3_1.backtest.ini"
+"/config:C:\\MT5Build\\InvictusForward1M15_v5.backtest.ini"
 ```
 
 Setelah command ini jalan, MT5 akan:
@@ -161,7 +161,7 @@ Pola paling sederhana:
 import time
 from pathlib import Path
 
-report = Path("/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v3_1_XAUUSDc_M15_2025_2026.htm")
+report = Path("/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v5_XAUUSDc_M15_2025_2026.htm")
 
 for _ in range(180):
     if report.exists() and report.stat().st_size > 0:
@@ -327,20 +327,22 @@ else:
 - Buat `report` name unik untuk setiap iterasi.
 - Simpan hasil JSON/Markdown summary per batch tuning.
 - Tambahkan diagnostic counters di EA sejak awal.
-- Bedakan varian EA per file:
-  `base`, `v1`, `v2`, `v3`, `v3_1`, dst.
+- Batasi varian aktif supaya workflow tetap sederhana. Di project ini varian aktif yang dipertahankan sekarang hanya:
+  `v1`, `v4`, dan `v5`.
 - Jangan melakukan tuning buta hanya dari net profit; selalu lihat:
   `PF`, `recovery factor`, `equity drawdown`, `trade count`.
 
 ## File Referensi di Project Ini
 
-- Runner 20 iterasi:
-  [iterate_v3.py](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/tools/iterate_v3.py)
-- Runner 5 eksperimen defensif:
-  [iterate_v3_1.py](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/tools/iterate_v3_1.py)
-- Config backtest v3.1:
-  [InvictusForward1M15_v3_1.backtest.ini](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v3_1.backtest.ini)
-- EA v3.1:
-  [InvictusForward1M15_v3_1.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v3_1.mq5)
+- Runner 20 iterasi `v5`:
+  [iterate_v5.py](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/tools/iterate_v5.py)
+- Runner compare versi aktif:
+  [compare_versions_6m_100.py](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/tools/compare_versions_6m_100.py)
+- Runner walk-forward versi aktif:
+  [walkforward_regime_matrix.py](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/tools/walkforward_regime_matrix.py)
+- Config backtest `v5`:
+  [InvictusForward1M15_v5.backtest.ini](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v5.backtest.ini)
+- EA `v5`:
+  [InvictusForward1M15_v5.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v5.mq5)
 
 Dengan setup ini, batch backtest bisa ditinggal jalan sendiri, lalu kamu tinggal baca report dan summary saat selesai.

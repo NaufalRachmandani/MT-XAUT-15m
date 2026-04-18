@@ -25,7 +25,7 @@ WINE = "/Applications/MetaTrader 5.app/Contents/SharedSupport/wine/bin/wine64"
 METAEDITOR_EXE = r"C:\Program Files\MetaTrader 5\metaeditor64.exe"
 TERMINAL_EXE = r"C:\Program Files\MetaTrader 5\terminal64.exe"
 
-VERSIONS = ["base", "v1", "v2", "v3", "v4", "v5"]
+VERSIONS = ["v1", "v4", "v5"]
 
 
 @dataclass

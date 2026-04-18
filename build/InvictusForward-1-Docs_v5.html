@@ -187,47 +187,58 @@
     <li><strong>Cap posisi mentah ditolak</strong>: membatasi posisi tanpa quality filter justru merusak recovery/hedge dan tidak menyelesaikan akar problem drawdown.</li>
     <li><strong>Timed close tetap bukan sumber edge</strong>: run final tetap <code>expert close = 0</code>; perbaikan datang dari entry quality dan sizing.</li>
   </ul>
-  <h3>Ringkas Evolusi Versi pada Setup 6 Bulan / $100</h3>
+  <h3>Versi Aktif untuk Akun Kecil</h3>
+  <p>Setelah review regime dan walk-forward, versi lama <code>base</code>, <code>v2</code>, dan <code>v3</code> dipensiunkan dari workflow aktif. Yang dipertahankan sekarang hanya tiga varian dengan peran yang lebih jelas: <strong>v1</strong> sebagai mode defensif, <strong>v4</strong> sebagai mode agresif/research, dan <strong>v5</strong> sebagai mode recent-market untuk akun kecil.</p>
   <table>
-    <tr><th>Versi</th><th>Karakter di Setup Kecil</th><th>Catatan Praktis</th></tr>
-    <tr><td>Base</td><td>Hampir tidak jalan dengan benar</td><td>Tidak layak untuk akun kecil</td></tr>
-    <tr><td>v1</td><td>Masih collapse seperti base</td><td>Tuning awal belum cocok untuk modal kecil</td></tr>
-    <tr><td>v2</td><td>Trade count tinggi, profit mulai positif</td><td>Engine sudah hidup, tapi DD masih sangat buruk</td></tr>
-    <tr><td>v3</td><td>Masih agresif dan equity swing besar</td><td>Upgrade modal besar tidak translate baik ke akun kecil</td></tr>
-    <tr><td>v4</td><td>Buy breakout lebih rapi, tetapi DD masih ekstrem</td><td>Filter breakout saja belum cukup</td></tr>
-    <tr><td>v5</td><td>Paling seimbang untuk akun kecil</td><td>Daily cap + low-balance throttle benar-benar membantu</td></tr>
+    <tr><th>Versi</th><th>Peran</th><th>Catatan Praktis</th></tr>
+    <tr><td>v1</td><td>Defensif / robust</td><td>Kandidat utama saat prioritasnya kestabilan dan risk-adjusted return</td></tr>
+    <tr><td>v4</td><td>Agresif / research</td><td>Profit bisa besar, tetapi drawdown tetap lebih kasar</td></tr>
+    <tr><td>v5</td><td>Recent-market / small-account</td><td>Paling cocok untuk market terbaru dan modal kecil</td></tr>
   </table>
-  <h3>Snapshot Backtest: Base vs v1 vs v2 vs v3 vs v4 vs v5</h3>
+  <h3>Snapshot Backtest: v1 vs v4 vs v5</h3>
   <p>Semua varian di bawah ini dites ulang dengan setup yang sama: <code>XAUUSDc</code>, <code>M15</code>, <code>2025.10.18 - 2026.04.15</code>, <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>, mode <code>Every tick</code>.</p>
   <table>
-    <tr><th>Metrik</th><th>Base</th><th>v1</th><th>v2</th><th>v3</th><th>v4</th><th>v5</th></tr>
-    <tr><td>Total Net Profit</td><td><code>-93.61</code></td><td><code>-91.91</code></td><td><code>223.97</code></td><td><code>210.33</code></td><td><code>208.73</code></td><td><code>278.04</code></td></tr>
-    <tr><td>Total Trades</td><td><code>10</code></td><td><code>40</code></td><td><code>1043</code></td><td><code>1084</code></td><td><code>1079</code></td><td><code>672</code></td></tr>
-    <tr><td>Win Rate</td><td><code>30.00%</code></td><td><code>35.00%</code></td><td><code>49.38%</code></td><td><code>50.55%</code></td><td><code>50.42%</code></td><td><code>52.08%</code></td></tr>
-    <tr><td>Profit Factor</td><td><code>0.12</code></td><td><code>0.31</code></td><td><code>1.06</code></td><td><code>1.04</code></td><td><code>1.04</code></td><td><code>1.20</code></td></tr>
-    <tr><td>Expected Payoff</td><td><code>-9.36</code></td><td><code>-2.30</code></td><td><code>0.21</code></td><td><code>0.19</code></td><td><code>0.19</code></td><td><code>0.41</code></td></tr>
-    <tr><td>Max Balance Drawdown</td><td><code>93.61</code> (<code>93.61%</code>)</td><td><code>93.31</code> (<code>92.02%</code>)</td><td><code>675.45</code> (<code>84.88%</code>)</td><td><code>1277.47</code> (<code>89.94%</code>)</td><td><code>1258.81</code> (<code>89.74%</code>)</td><td><code>230.53</code> (<code>52.61%</code>)</td></tr>
-    <tr><td>Max Equity Drawdown</td><td><code>116.79</code> (<code>94.81%</code>)</td><td><code>115.09</code> (<code>93.43%</code>)</td><td><code>674.44</code> (<code>84.13%</code>)</td><td><code>1351.22</code> (<code>90.07%</code>)</td><td><code>1332.56</code> (<code>89.89%</code>)</td><td><code>248.65</code> (<code>54.24%</code>)</td></tr>
+    <tr><th>Metrik</th><th>v1</th><th>v4</th><th>v5</th></tr>
+    <tr><td>Total Net Profit</td><td><code>-91.91</code></td><td><code>208.73</code></td><td><code>278.04</code></td></tr>
+    <tr><td>Total Trades</td><td><code>40</code></td><td><code>1079</code></td><td><code>672</code></td></tr>
+    <tr><td>Win Rate</td><td><code>35.00%</code></td><td><code>50.42%</code></td><td><code>52.08%</code></td></tr>
+    <tr><td>Profit Factor</td><td><code>0.31</code></td><td><code>1.04</code></td><td><code>1.20</code></td></tr>
+    <tr><td>Expected Payoff</td><td><code>-2.30</code></td><td><code>0.19</code></td><td><code>0.41</code></td></tr>
+    <tr><td>Max Balance Drawdown</td><td><code>93.31</code> (<code>92.02%</code>)</td><td><code>1258.81</code> (<code>89.74%</code>)</td><td><code>230.53</code> (<code>52.61%</code>)</td></tr>
+    <tr><td>Max Equity Drawdown</td><td><code>115.09</code> (<code>93.43%</code>)</td><td><code>1332.56</code> (<code>89.89%</code>)</td><td><code>248.65</code> (<code>54.24%</code>)</td></tr>
   </table>
   <h3>Snapshot Backtest: Dari Awal 2025 / $100</h3>
   <p>Untuk membaca apakah market terbaru memang berubah, semua varian juga dites ulang dengan window lebih panjang: <code>2025.01.01 - 2026.04.15</code>, tetap di <code>XAUUSDc</code>, <code>M15</code>, <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>, mode <code>Every tick</code>.</p>
   <table>
-    <tr><th>Metrik</th><th>Base</th><th>v1</th><th>v2</th><th>v3</th><th>v4</th><th>v5</th></tr>
-    <tr><td>Total Net Profit</td><td><code>341.92</code></td><td><code>1076.45</code></td><td><code>2511.59</code></td><td><code>5735.02</code></td><td><code>14968.71</code></td><td><code>8337.70</code></td></tr>
-    <tr><td>Total Trades</td><td><code>563</code></td><td><code>552</code></td><td><code>2890</code></td><td><code>2866</code></td><td><code>2832</code></td><td><code>2222</code></td></tr>
-    <tr><td>Win Rate</td><td><code>41.39%</code></td><td><code>49.46%</code></td><td><code>49.31%</code></td><td><code>50.03%</code></td><td><code>50.32%</code></td><td><code>50.90%</code></td></tr>
-    <tr><td>Profit Factor</td><td><code>1.08</code></td><td><code>1.41</code></td><td><code>1.03</code></td><td><code>1.03</code></td><td><code>1.04</code></td><td><code>1.09</code></td></tr>
-    <tr><td>Expected Payoff</td><td><code>0.61</code></td><td><code>1.95</code></td><td><code>0.87</code></td><td><code>2.00</code></td><td><code>5.29</code></td><td><code>3.75</code></td></tr>
-    <tr><td>Max Balance Drawdown</td><td><code>727.09</code> (<code>63.03%</code>)</td><td><code>365.26</code> (<code>28.13%</code>)</td><td><code>11302.72</code> (<code>85.28%</code>)</td><td><code>37392.46</code> (<code>90.34%</code>)</td><td><code>76375.22</code> (<code>87.94%</code>)</td><td><code>17860.45</code> (<code>76.95%</code>)</td></tr>
-    <tr><td>Max Equity Drawdown</td><td><code>820.80</code> (<code>65.97%</code>)</td><td><code>386.05</code> (<code>29.53%</code>)</td><td><code>11474.39</code> (<code>85.67%</code>)</td><td><code>39846.21</code> (<code>90.88%</code>)</td><td><code>81003.03</code> (<code>88.29%</code>)</td><td><code>19440.91</code> (<code>78.05%</code>)</td></tr>
+    <tr><th>Metrik</th><th>v1</th><th>v4</th><th>v5</th></tr>
+    <tr><td>Total Net Profit</td><td><code>1076.45</code></td><td><code>14968.71</code></td><td><code>8337.70</code></td></tr>
+    <tr><td>Total Trades</td><td><code>552</code></td><td><code>2832</code></td><td><code>2222</code></td></tr>
+    <tr><td>Win Rate</td><td><code>49.46%</code></td><td><code>50.32%</code></td><td><code>50.90%</code></td></tr>
+    <tr><td>Profit Factor</td><td><code>1.41</code></td><td><code>1.04</code></td><td><code>1.09</code></td></tr>
+    <tr><td>Expected Payoff</td><td><code>1.95</code></td><td><code>5.29</code></td><td><code>3.75</code></td></tr>
+    <tr><td>Max Balance Drawdown</td><td><code>365.26</code> (<code>28.13%</code>)</td><td><code>76375.22</code> (<code>87.94%</code>)</td><td><code>17860.45</code> (<code>76.95%</code>)</td></tr>
+    <tr><td>Max Equity Drawdown</td><td><code>386.05</code> (<code>29.53%</code>)</td><td><code>81003.03</code> (<code>88.29%</code>)</td><td><code>19440.91</code> (<code>78.05%</code>)</td></tr>
   </table>
   <h3>Catatan Regime</h3>
   <ul>
-    <li><strong>Recent market berbeda jelas</strong>: <code>base</code> dan <code>v1</code> runtuh di 6 bulan terakhir, padahal pada window penuh keduanya tidak runtuh, bahkan <code>v1</code> sangat sehat.</li>
-    <li><strong><code>v1</code> paling kuat secara risk-adjusted pada full-period</strong>: PF <code>1.41</code> dan equity DD hanya <code>29.53%</code>, jadi dia terlihat paling robust untuk regime yang lebih panjang.</li>
-    <li><strong><code>v4</code> paling agresif</strong>: profit absolut terbesar pada full-period, tetapi DD tetap terlalu ekstrem untuk modal kecil.</li>
-    <li><strong><code>v5</code> paling cocok untuk market terbaru</strong>: pada 6 bulan terakhir dia paling seimbang dari sisi profit, PF, dan drawdown, walau pada full-period dia bukan yang paling konservatif.</li>
-    <li><strong>Implikasi praktis</strong>: ranking versi berubah sesuai regime, jadi langkah berikutnya sebaiknya bukan memilih satu versi “paling benar”, melainkan menyiapkan rule kapan versi defensif dipakai dan kapan versi agresif masih boleh dipakai.</li>
+    <li><strong><code>v1</code> adalah opsi defensif</strong>: pada full-period dia paling sehat secara risk-adjusted dengan PF <code>1.41</code> dan equity DD <code>29.53%</code>.</li>
+    <li><strong><code>v4</code> adalah opsi agresif</strong>: profit absolut tertinggi saat market mendukung, tetapi DD tetap terlalu besar untuk dijadikan default akun kecil.</li>
+    <li><strong><code>v5</code> adalah opsi recent-market</strong>: pada 6 bulan terakhir dia paling seimbang dari sisi profit, PF, dan drawdown.</li>
+    <li><strong>Implikasi praktis</strong>: workflow aktif sekarang disederhanakan menjadi tiga mode saja, yaitu <code>v1</code>, <code>v4</code>, dan <code>v5</code>.</li>
+  </ul>
+  <h3>Walk-Forward Monthly Regime Matrix / $100</h3>
+  <p>Untuk memastikan perubahan regime memang nyata, semua versi juga diuji per bulan dari <code>2025.01.01</code> sampai <code>2026.04.15</code> dengan setup yang sama: <code>XAUUSDc</code>, <code>M15</code>, <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>, mode <code>Every tick</code>. Ringkasan agregat monthly walk-forward:</p>
+  <table>
+    <tr><th>Versi</th><th>Positive Windows</th><th>Avg Net</th><th>Avg PF</th><th>Avg Win Rate</th><th>Avg EqDD</th><th>Best Net Wins</th><th>Best Recovery Wins</th></tr>
+    <tr><td>v1</td><td><code>11 / 16</code></td><td><code>52.52</code></td><td><code>1.49</code></td><td><code>48.37%</code></td><td><code>50.11%</code></td><td><code>5</code></td><td><code>7</code></td></tr>
+    <tr><td>v4</td><td><code>12 / 16</code></td><td><code>121.42</code></td><td><code>1.27</code></td><td><code>51.85%</code></td><td><code>60.00%</code></td><td><code>6</code></td><td><code>2</code></td></tr>
+    <tr><td>v5</td><td><code>11 / 16</code></td><td><code>56.36</code></td><td><code>1.44</code></td><td><code>51.53%</code></td><td><code>50.97%</code></td><td><code>5</code></td><td><code>7</code></td></tr>
+  </table>
+  <ul>
+    <li><strong><code>v1</code> adalah leader robustness</strong>: paling banyak menang di metrik recovery-style monthly dan punya PF rata-rata tertinggi.</li>
+    <li><strong><code>v4</code> adalah leader momentum/aggressive</strong>: rata-rata net profit bulanan paling tinggi, positive windows paling banyak, dan paling sering menang profit absolut bulanan.</li>
+    <li><strong><code>v5</code> adalah leader recent-regime</strong>: paling kuat pada window terbaru dan berbagi posisi teratas di metrik recovery-style dengan <code>v1</code>.</li>
+    <li><strong>Kesimpulan taktis</strong>: <code>v1</code> cocok sebagai mode defensif, <code>v5</code> cocok sebagai mode recent-market, dan <code>v4</code> sebaiknya tetap diposisikan sebagai mode agresif/research, bukan default live.</li>
   </ul>
 </div>
 

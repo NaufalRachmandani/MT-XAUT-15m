@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InvictusForward-1 v6 — M15 Only Documentation</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --gold: #e3b341;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7; padding: 0;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a1e2e 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border); padding: 50px 40px; text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.6rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+  }
+  .hero .subtitle { color: var(--text-dim); font-size: 1.1rem; max-width: 650px; margin: 0 auto; }
+  .hero .badge {
+    display: inline-block; margin-top: 14px; padding: 4px 16px; border-radius: 20px;
+    background: rgba(88,166,255,0.12); border: 1px solid rgba(88,166,255,0.3);
+    color: var(--accent); font-size: 0.85rem; font-weight: 600;
+  }
+
+  .container { max-width: 1050px; margin: 0 auto; padding: 36px 28px; }
+
+  /* TOC */
+  .toc {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px 28px; margin-bottom: 44px;
+  }
+  .toc h2 { font-size: 1rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 28px; }
+  .toc a { color: var(--accent); text-decoration: none; font-size: 0.93rem; padding: 3px 0; display: block; }
+  .toc a:hover { color: var(--purple); }
+  .toc .n { color: var(--text-dim); font-size: 0.78rem; margin-right: 6px; font-weight: 600; }
+
+  /* Sections */
+  section { margin-bottom: 52px; }
+  section h2 {
+    font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 12px;
+  }
+  section h2 .ic {
+    font-size: 1.3rem; width: 38px; height: 38px; display: flex; align-items: center;
+    justify-content: center; border-radius: 10px; flex-shrink: 0;
+  }
+  section h3 { font-size: 1.1rem; font-weight: 600; margin: 22px 0 10px; color: var(--accent); }
+
+  p { margin-bottom: 11px; }
+
+  /* Cards */
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 22px; margin-bottom: 14px;
+  }
+  .card.buy  { border-left: 4px solid var(--green); }
+  .card.sell { border-left: 4px solid var(--red); }
+  .card.info { border-left: 4px solid var(--accent); }
+  .card.warn { border-left: 4px solid var(--orange); }
+  .card.purple { border-left: 4px solid var(--purple); }
+  .card-title { font-weight: 700; font-size: 1.02rem; margin-bottom: 8px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.91rem; }
+  th, td { padding: 9px 13px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: var(--surface2); color: var(--accent); font-weight: 600; font-size: 0.79rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  tr:hover td { background: rgba(88,166,255,0.04); }
+
+  code {
+    background: var(--surface2); color: var(--gold); padding: 2px 6px; border-radius: 4px;
+    font-size: 0.86rem; font-family: 'SF Mono','Fira Code',monospace;
+  }
+  pre {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px; overflow-x: auto; font-size: 0.84rem; line-height: 1.6; margin: 10px 0 14px;
+    font-family: 'SF Mono','Fira Code',monospace; color: var(--text);
+  }
+
+  /* Flow */
+  .flow { display: flex; flex-direction: column; margin: 18px 0; }
+  .flow-step { display: flex; align-items: stretch; gap: 14px; }
+  .flow-line {
+    width: 3px; background: var(--border); margin-left: 16px; flex-shrink: 0; position: relative;
+  }
+  .flow-line::before {
+    content: ''; width: 13px; height: 13px; border-radius: 50%; background: var(--accent);
+    position: absolute; top: 14px; left: -5px;
+  }
+  .flow-step.ok .flow-line::before { background: var(--green); }
+  .flow-step.no .flow-line::before { background: var(--red); }
+  .flow-step.ck .flow-line::before { background: var(--orange); }
+  .flow-box {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 16px; margin: 5px 0; flex: 1;
+  }
+  .flow-box .ft { font-weight: 700; font-size: 0.93rem; margin-bottom: 3px; }
+  .flow-box .fd { font-size: 0.86rem; color: var(--text-dim); }
+
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.76rem; font-weight: 600;
+  }
+  .b-buy  { background: rgba(63,185,80,0.15); color: var(--green); }
+  .b-sell { background: rgba(248,81,73,0.15); color: var(--red); }
+  .b-info { background: rgba(88,166,255,0.15); color: var(--accent); }
+  .b-warn { background: rgba(210,153,34,0.15); color: var(--orange); }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+
+  .formula {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 18px; margin: 10px 0; font-family: 'SF Mono','Fira Code',monospace;
+    font-size: 0.88rem; text-align: center; color: var(--gold);
+  }
+
+  ul, ol { margin: 6px 0 10px 22px; }
+  li { margin-bottom: 5px; font-size: 0.93rem; }
+
+  .rec {
+    background: linear-gradient(135deg, rgba(88,166,255,0.06), rgba(188,140,255,0.06));
+    border: 1px solid rgba(88,166,255,0.2); border-radius: 12px; padding: 22px; margin-bottom: 14px;
+  }
+  .rec .rt { font-weight: 700; font-size: 0.98rem; color: var(--accent); margin-bottom: 6px; }
+  .rec .rp {
+    display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 0.71rem;
+    font-weight: 700; text-transform: uppercase; margin-left: 8px;
+  }
+  .rp-h { background: rgba(248,81,73,0.2); color: var(--red); }
+  .rp-m { background: rgba(210,153,34,0.2); color: var(--orange); }
+  .rp-l { background: rgba(63,185,80,0.2); color: var(--green); }
+
+  .footer {
+    text-align: center; padding: 36px; color: var(--text-dim); font-size: 0.84rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .split, .toc-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.9rem; }
+    .container { padding: 20px 14px; }
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>InvictusForward-1</h1>
+  <p class="subtitle">Dual-Strategy EA untuk XAUUSD &mdash; dokumentasi khusus yang berlaku di <strong>M15</strong></p>
+  <span class="badge">v6 Variant &bull; M15 Scalping &bull; XAUUSD Only</span>
+</div>
+
+<div class="container">
+
+<div class="card info" style="margin-bottom:28px;">
+  <div class="card-title">What Changed from Base</div>
+  <p><strong>Base</strong> tidak lagi ada di working tree aktif, tetapi masih tersimpan di git history dan tetap saya pakai sebagai titik pembanding desain asli.</p>
+  <p>Perubahan terpenting di <strong>v6</strong> bukan cuma tuning angka, tetapi perubahan arsitektur: sizing diubah menjadi <strong>fixed-fractional risk</strong>, lalu di atasnya ditambahkan filter regime <code>2026</code> yang memangkas cluster loss pagi paling buruk.</p>
+  <ul>
+    <li><strong>Risk per trade sekarang explicit</strong>: input <code>V6_TrendRiskPercent</code> dan <code>V6_SidewaysRiskPercent</code> menjadi basis sizing resmi.</li>
+    <li><strong>Risk dihitung dari stop nyata</strong>: lot dibentuk dari <code>risk_usd / loss_per_lot_at_stop</code>, bukan ladder balance.</li>
+    <li><strong>Tier balance dimatikan</strong>: perilaku bot dibuat lebih mirip antar modal kecil dan besar.</li>
+    <li><strong>Skip-below-min-lot</strong>: kalau hasil lot riil di bawah minimum broker, trade diblok, bukan dipaksa ke <code>0.01</code>.</li>
+    <li><strong>Current regime filter</strong>: high-score buy wajib <code>impulsive BOS</code> dan trend toxic-hour block aktif di <code>07, 08, 09, 10, 11</code>.</li>
+    <li><strong>Default resmi saat ini</strong>: tuning aktif dipusatkan pada window <code>2026.01.01 - 2026.04.15</code>.</li>
+  </ul>
+  <table>
+    <tr><th>Area</th><th>Base</th><th>v6</th></tr>
+    <tr><td>Lot sizing</td><td>Compounding murni, terikat balance tier</td><td>Fixed-fractional dari <code>equity %</code> dan jarak stop aktual</td></tr>
+    <tr><td>Trend SL</td><td>Fixed <code>$25</code></td><td>Dynamic clamp <code>$12-$30</code></td></tr>
+    <tr><td>Trend/Sideways wins cap</td><td><code>20 / 10</code></td><td><code>50 / 20</code></td></tr>
+    <tr><td>Cooldown setelah loss</td><td><code>2 bar / 30 menit</code></td><td><code>1 bar / 15 menit</code></td></tr>
+    <tr><td>Sideways regime</td><td>ADX H4 <code>&lt; 20</code></td><td>ADX H4 <code>&lt; 28</code></td></tr>
+    <tr><td>Sideways structure</td><td>Entry zone <code>25%</code>, TP <code>50%</code>, cluster <code>2</code>, max pos <code>4</code></td><td>Entry zone <code>40%</code>, TP <code>max(55%, $6.5)</code>, cluster <code>5</code>, max pos <code>8</code></td></tr>
+    <tr><td>Sell model</td><td>Ultra-strict, score tinggi, lot dipotong keras</td><td>Structural sell + global risk haircut <code>0.85x</code> + <code>sell score minimum 85</code></td></tr>
+    <tr><td>Buy model</td><td>Tanpa validasi impulsive khusus</td><td>High-score buy wajib <code>impulsive BOS</code></td></tr>
+    <tr><td>Trend time filter</td><td>Toxic hour dasar <code>3,17</code></td><td>Toxic hour aktif <code>3,7,8,9,10,11,17</code></td></tr>
+    <tr><td>Execution path</td><td>Hybrid market/limit</td><td>Current path market-only</td></tr>
+    <tr><td>Timed profit close</td><td><code>5 jam</code>, threshold tunggal <code>$15/0.01 lot</code></td><td>Trend <code>4 jam / $24</code>, Sideways <code>2 jam / $15</code></td></tr>
+    <tr><td>Tujuan utama</td><td>Mereplikasi logic dokumen ke EA dasar</td><td>Membuat perilaku lebih invariant lintas ukuran modal</td></tr>
+  </table>
+  <h3>Scaling Check: v6 / $100 vs $10,000</h3>
+  <p>Validasi utama <strong>v6</strong> adalah memastikan hasil tetap mirip saat modal berubah. Semua run berikut memakai setup yang sama: <code>XAUUSDc</code>, <code>M15</code>, mode <code>Every tick</code>, <code>Leverage 1:100</code>.</p>
+  <h3>Snapshot Backtest: Current Official Window</h3>
+  <p>Window: <code>2026.01.01 - 2026.04.15</code>.</p>
+  <table>
+    <tr><th>Metrik</th><th>Deposit 100</th><th>Deposit 10,000</th><th>Delta</th></tr>
+    <tr><td>Total Net Profit</td><td><code>58.96</code></td><td><code>7448.39</code></td><td>Skala nominal, bukan target utama</td></tr>
+    <tr><td>Profit %</td><td><code>58.96%</code></td><td><code>74.48%</code></td><td><code>+15.52 pts</code></td></tr>
+    <tr><td>Profit Factor</td><td><code>1.17</code></td><td><code>1.21</code></td><td><code>+0.04</code></td></tr>
+    <tr><td>Win Rate</td><td><code>53.01%</code></td><td><code>53.99%</code></td><td><code>+0.98 pts</code></td></tr>
+    <tr><td>Total Trades</td><td><code>498</code></td><td><code>489</code></td><td><code>-9</code></td></tr>
+    <tr><td>Max Balance Drawdown</td><td><code>28.36%</code></td><td><code>28.83%</code></td><td><code>+0.47 pts</code></td></tr>
+    <tr><td>Max Equity Drawdown</td><td><code>29.17%</code></td><td><code>29.90%</code></td><td><code>+0.73 pts</code></td></tr>
+  </table>
+  <p><strong>Interpretasi scaling current window</strong>: drawdown, PF, win rate, dan trade count sudah sangat dekat. Gap profit % masih ada karena akun <code>$100</code> tetap sering menyentuh keterbatasan <code>minimum lot 0.01</code>, jadi sebagian risk budget tidak selalu bisa diekspresikan penuh.</p>
+  <h3>Current 2026 Regime Findings</h3>
+  <ul>
+    <li><strong>Current regime 2026</strong>: default resmi <strong>v6</strong> sekarang jauh lebih sehat daripada baseline <code>sell85</code>, karena toxic-hour block dan impulsive buy memotong cluster fast-fail pagi.</li>
+    <li><strong>Loss terbesar yang tersisa</strong> masih didominasi <strong>buy stop-loss</strong>, terutama exit di jam <code>00</code>, <code>08</code>, <code>18</code>, <code>19</code>, dan <code>20</code>.</li>
+    <li><strong>Perbaikan utama dari ronde 10x+</strong>: jam buruk pagi tidak lagi dibiarkan terbuka penuh; yang dipotong justru cluster yang paling sering melahirkan stop-loss buy beruntun.</li>
+    <li><strong>Scaling reality</strong>: invariance sekarang sudah jauh lebih baik di level PF, DD, win rate, dan trade count, tetapi profit % di akun <code>$100</code> masih bisa lebih rendah karena keterbatasan minimum lot broker.</li>
+  </ul>
+  <h3>Snapshot Backtest: 2026 Only / $100</h3>
+  <p>Semua versi aktif dites ulang dengan setup yang sama: <code>XAUUSDc</code>, <code>M15</code>, <code>2026.01.01 - 2026.04.15</code>, <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>, mode <code>Every tick</code>.</p>
+  <table>
+    <tr><th>Metrik</th><th>v1</th><th>v4</th><th>v5</th><th>v6</th></tr>
+    <tr><td>Total Net Profit</td><td><code>-56.19</code></td><td><code>131.60</code></td><td><code>145.47</code></td><td><code>58.96</code></td></tr>
+    <tr><td>Total Trades</td><td><code>36</code></td><td><code>417</code></td><td><code>323</code></td><td><code>498</code></td></tr>
+    <tr><td>Win Rate</td><td><code>38.89%</code></td><td><code>47.00%</code></td><td><code>49.23%</code></td><td><code>53.01%</code></td></tr>
+    <tr><td>Profit Factor</td><td><code>0.55</code></td><td><code>1.10</code></td><td><code>1.22</code></td><td><code>1.17</code></td></tr>
+    <tr><td>Expected Payoff</td><td><code>-1.56</code></td><td><code>0.32</code></td><td><code>0.45</code></td><td><code>0.12</code></td></tr>
+    <tr><td>Max Balance Drawdown</td><td><code>91.91</code> (<code>88.39%</code>)</td><td><code>263.16</code> (<code>88.73%</code>)</td><td><code>159.82</code> (<code>84.56%</code>)</td><td><code>35.12</code> (<code>22.71%</code>)</td></tr>
+    <tr><td>Max Equity Drawdown</td><td><code>109.48</code> (<code>90.92%</code>)</td><td><code>284.14</code> (<code>89.76%</code>)</td><td><code>173.10</code> (<code>85.98%</code>)</td><td><code>40.38</code> (<code>29.17%</code>)</td></tr>
+  </table>
+  <ul>
+    <li><strong><code>v5</code> adalah profit leader</strong> di window <code>2026-only</code>, tetapi drawdown-nya masih terlalu kasar.</li>
+    <li><strong><code>v6</code> adalah risk-adjusted leader</strong>: profit absolut lebih kecil dari <code>v4/v5</code>, tetapi PF tetap sehat dan drawdown turun sangat besar.</li>
+    <li><strong><code>v1</code> tidak relevan untuk regime ini</strong>: hasilnya negatif dan sample trade terlalu sedikit.</li>
+    <li><strong>Implikasi praktis</strong>: untuk market <code>2026-only</code>, <code>v6</code> lebih cocok kalau prioritasnya survivability; <code>v5</code> masih lebih cocok kalau prioritasnya profit agresif dan siap menerima DD tinggi.</li>
+  </ul>
+</div>
+
+<nav class="toc">
+  <h2>Daftar Isi</h2>
+  <div class="toc-grid">
+    <div>
+      <a href="#s1"><span class="n">01</span>Arsitektur Dual-Strategy di M15</a>
+      <a href="#s2"><span class="n">02</span>Cara Entry (Pipeline M15)</a>
+      <a href="#s3"><span class="n">03</span>Semua Parameter M15</a>
+      <a href="#s4"><span class="n">04</span>Penentu Bullish</a>
+      <a href="#s5"><span class="n">05</span>Penentu Bearish</a>
+    </div>
+    <div>
+      <a href="#s6"><span class="n">06</span>Saat Sideways</a>
+      <a href="#s7"><span class="n">07</span>Posisi ke-1 s/d ke-N &amp; Close</a>
+      <a href="#s8"><span class="n">08</span>Limit Order, Expired, Tidak Kena</a>
+      <a href="#s9"><span class="n">09</span>Risk Management &amp; Lot Sizing</a>
+      <a href="#s10"><span class="n">10</span>Rekomendasi</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- 1. ARSITEKTUR -->
+<!-- ============================================================ -->
+<section id="s1">
+  <h2><span class="ic" style="background:rgba(88,166,255,0.12)">01</span> Arsitektur Dual-Strategy di M15</h2>
+
+  <p>Di M15, EA menjalankan <strong>dua strategi paralel</strong> dengan state dan magic number terpisah:</p>
+
+  <div class="split">
+    <div class="card buy">
+      <div class="card-title">Trending (SMC Breakout)</div>
+      <p>Magic: <code>202604100</code></p>
+      <ul>
+        <li><strong>Selalu aktif</strong> setiap bar M15 baru</li>
+        <li>BUY + SELL (SELL difilter secara struktural dan di-risk haircut)</li>
+        <li>Current v6 memakai <strong>market order only</strong></li>
+        <li>Max posisi: <code>7</code> tetap, tidak lagi tergantung balance tier</li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <div class="card-title">Sideways (Range Bounce)</div>
+      <p>Magic: <code>202604200</code></p>
+      <ul>
+        <li>Aktif <strong>hanya saat ADX H4 &lt; 28</strong></li>
+        <li>BUY-only, selalu market order</li>
+        <li>Risk-based sizing dengan basis <code>0.80%</code> equity</li>
+        <li>Max posisi: <code>8</code>, max 5 entry/range/hari</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Apa yang TIDAK berlaku di M15</h3>
+  <div class="card warn">
+    <p>Beberapa fitur di kode <strong>hanya aktif di TF &gt; M15</strong> dan sepenuhnya di-skip saat M15:</p>
+    <ul>
+      <li><strong>Session Filter</strong> &mdash; DISABLED. M15 boleh entry kapan saja (kecuali toxic hours).</li>
+      <li><strong>Same-Direction Block</strong> &mdash; DISABLED. Setelah loss, arah yang sama tetap boleh entry lagi.</li>
+        <li><strong>BT_MaxDailyWins</strong> &mdash; TIDAK dipakai. v6 memakai override internal: trend <code>50</code> wins/day, sideways <code>20</code> wins/day.</li>
+      </ul>
+  </div>
+
+  <h3>Regime Switch: ADX H4</h3>
+  <div class="card info">
+    <p>ADX(14) pada H4 dibaca sekali per tick sebagai regime detector:</p>
+    <table>
+      <tr><th>ADX H4</th><th>Yang Jalan</th></tr>
+      <tr><td>&ge; 28</td><td>Trending saja</td></tr>
+      <tr><td>&lt; 28</td><td>Trending + Sideways (bonus layer)</td></tr>
+    </table>
+    <p style="margin-bottom:0">Trending <strong>tidak pernah dimatikan</strong>. Sideways = tambahan saat market flat.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 2. CARA ENTRY -->
+<!-- ============================================================ -->
+<section id="s2">
+  <h2><span class="ic" style="background:rgba(63,185,80,0.12)">02</span> Cara Entry (Pipeline M15)</h2>
+
+  <h3>A. Trending Entry &mdash; 14 Step</h3>
+  <p>Setiap bar M15 baru yang close, pipeline ini jalan berurutan. Gagal di step mana pun = <strong>tidak ada entry</strong>.</p>
+
+  <div class="flow">
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">1. KillSwitch</div>
+        <div class="fd">Trending wins &ge; <code>50</code>? STOP. Daily loss &gt; <code>6%</code> balance awal hari? STOP.</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">2. Weekend Filter</div>
+        <div class="fd">Sabtu/Minggu = skip. Jumat &ge; 15:00 = skip.</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">3. Toxic Hours</div>
+        <div class="fd">Jam 03 dan jam 17 server time = skip (data historis: WR &lt; 27%).</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">4. After-Loss Cooldown</div>
+        <div class="fd">Setelah SL hit, tunggu 1 bar = <strong>15 menit</strong> sebelum entry lagi.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">5. Bias Detection</div>
+        <div class="fd">Hitung HH/LL dari 9 bar terakhir. HH &ge; 5 = Bullish. LL &ge; 6 = Bearish. Default = <strong>Bullish</strong>. Bullish &amp; Neutral = BUY.</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">6. SELL Structural Filter</div>
+        <div class="fd">v6 tidak lagi membatasi SELL ke 3 jam tertentu. SELL tetap boleh di semua jam non-toxic, tetapi harus lolos score minimum <code>85</code>, dan gold high-score sell wajib BOS impulsive.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">7. BOS Detection</div>
+        <div class="fd">Cari swing point (fractal lookback=2, window 60 bar = 15 jam). Cari candle yang close menembus swing. Break &ge; ATR &times; 0.30. Classify: <span class="badge b-buy">Impulsive</span> atau <span class="badge b-warn">Corrective</span>.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">8. Zone Detection (Candle A/B)</div>
+        <div class="fd">Cari Candle B (1-12 bar dari refBar) yang body engulf Candle A. Zone range &le; $30. Fresh zone saja (max 2 test sebelumnya).</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">9. Zone Cooldown</div>
+        <div class="fd">Zone yang sama (toleransi $1) sudah dipakai dalam 1 bar terakhir? Skip.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">10. Confluence Scoring</div>
+        <div class="fd">Zone(40) + Volatility(15) + FVG(10) + Retest(10) + Sweep(5) + Trend(20) + GoldBuy(10) = max 110. Minimum <strong>75</strong> untuk BUY, <strong>85</strong> untuk SELL.</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">11. Direction-Specific Risk Gate</div>
+        <div class="fd">SELL mendapat haircut risk global <code>0.85x</code>. Untuk gold, high-score sell (<code>95+</code>) wajib BOS impulsive. BUY high-score (<code>95+</code>) justru mendapat RR lebih panjang.</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">12. Max Positions</div>
+        <div class="fd">Trending dibatasi ke <code>7</code> posisi aktif. Batas ini tetap, tidak lagi berubah menurut balance tier.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">13. SL / TP / Lot</div>
+        <div class="fd">SL = zone boundary + ATR&times;0.5, lalu di-clamp ke <code>$12-$30</code>. TP = entry &plusmn; stopDistance &times; RR. RR default <code>1.62</code>, boost lebih tinggi untuk setup premium. Lot dibentuk dari <strong>risk USD / loss per lot</strong>.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">14. Order Placement</div>
+        <div class="fd">Current v6 selalu eksekusi lewat market buy / market sell. Entry reference dari zone tetap dipakai untuk hitung struktur dan stopDistance, tetapi bukan lagi untuk memutuskan limit order.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>B. Sideways Entry &mdash; 5 Step</h3>
+  <p>Hanya jalan saat ADX H4 &lt; 28. Lebih simpel, BUY-only, selalu market order.</p>
+
+  <div class="flow">
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">1. Guards</div>
+        <div class="fd">Max 20 wins/day. Daily loss &le; 4%. Skip jam 03 &amp; 19. Cooldown 15 menit setelah loss. Max 8 posisi.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">2. Range</div>
+        <div class="fd">Highest/lowest dari 48 bar M15 (12 jam). Range min $15, max ATR&times;10.</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">3. Entry Zone</div>
+        <div class="fd">Close bar terakhir harus di <strong>lower 40%</strong> range. BUY only.</div>
+      </div>
+    </div>
+    <div class="flow-step ck">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">4. Cluster</div>
+        <div class="fd">Max 5 entry per range per hari. Same range = high/low &lt; $5 perbedaan.</div>
+      </div>
+    </div>
+    <div class="flow-step ok">
+      <div class="flow-line"></div>
+      <div class="flow-box">
+        <div class="ft">5. Market BUY</div>
+        <div class="fd">SL = rangeLow - (ATR&times;0.5). Clamp $5-$20. TP = max(55% range, $6.5). Lot dihitung dari risk base <code>0.80%</code> equity.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3. PARAMETER M15 -->
+<!-- ============================================================ -->
+<section id="s3">
+  <h2><span class="ic" style="background:rgba(210,153,34,0.12)">03</span> Semua Parameter M15</h2>
+
+  <h3>TF-Dependent (Otomatis di-set oleh IH_InitParams)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Nilai</th><th>Fungsi</th></tr>
+    <tr><td><code>IH_SwingLookback</code></td><td>2</td><td>Fractal: butuh 2 bar kiri &amp; 2 bar kanan untuk validasi swing</td></tr>
+    <tr><td><code>IH_MinBreakATR</code></td><td>0.30</td><td>Break distance minimal = ATR &times; 0.30</td></tr>
+    <tr><td><code>IH_MinBodyRatio</code></td><td>0.45</td><td>Body/range ratio candle BOS untuk qualify Impulsive</td></tr>
+    <tr><td><code>IH_MaxBOSBarsBack</code></td><td>60</td><td>Cari swing sampai 60 bar ke belakang (15 jam)</td></tr>
+      <tr><td><code>IH_ZoneSearchWindow</code></td><td>12</td><td>Cari Candle A/B sampai 12 bar dari refBar</td></tr>
+      <tr><td><code>IH_MaxZoneRange</code></td><td>$30</td><td>Zone harus compact, tetapi lebih longgar dari spec awal</td></tr>
+      <tr><td><code>IH_MinScoreA</code></td><td>75</td><td>Score minimum efektif untuk BUY di v6</td></tr>
+      <tr><td><code>IH_MinScoreSell</code></td><td>85</td><td>Score minimum efektif untuk SELL di v6</td></tr>
+    <tr><td><code>IH_GoldBuyBonus</code></td><td>10</td><td>Bonus score otomatis untuk BUY gold</td></tr>
+    <tr><td><code>IH_MinSLDollar</code></td><td>$12</td><td>Minimum SL distance setelah clamp</td></tr>
+    <tr><td><code>IH_MaxSLDollar</code></td><td>$30</td><td>Maximum SL distance setelah clamp</td></tr>
+    <tr><td><code>IH_TP1_RR</code></td><td>1.62</td><td>Default RR. Boost aktif sejak score <code>84+</code></td></tr>
+    <tr><td><code>IH_ATRBufferSL</code></td><td>0.5</td><td>SL = zone boundary + ATR &times; 0.5</td></tr>
+    <tr><td><code>IH_PendingExpiryBars</code></td><td>8</td><td>Masih ada di spec, tetapi current v6 tidak lagi mengirim limit order</td></tr>
+    <tr><td><code>IH_EntryBodyRatio</code></td><td>0.35</td><td>Entry reference di 35% body Candle B</td></tr>
+  </table>
+
+  <h3>Hardcoded Constants (Berlaku M15)</h3>
+  <table>
+    <tr><th>Parameter</th><th>Nilai</th><th>Keterangan</th></tr>
+    <tr><td>KillSwitch wins</td><td>50</td><td>Max wins/day trending di v6</td></tr>
+    <tr><td>Daily loss cap (trending)</td><td>6%</td><td>Dari balance awal hari</td></tr>
+    <tr><td>Daily loss cap (sideways)</td><td>4%</td><td>Dari balance awal hari</td></tr>
+    <tr><td>Sideways wins cap</td><td>20</td><td>Max wins/day sideways</td></tr>
+    <tr><td>ADX threshold</td><td>28</td><td>ADX H4 &lt; 28 = sideways aktif</td></tr>
+    <tr><td>Cooldown after loss</td><td>1 bar (15 min)</td><td>Kedua strategy</td></tr>
+    <tr><td>Zone cooldown tolerance</td><td>$1</td><td>Same zone jika entry price &lt; $1 beda</td></tr>
+    <tr><td>Toxic hours (trending)</td><td>03, 17</td><td>WR &lt; 27%</td></tr>
+    <tr><td>Toxic hours (sideways)</td><td>03, 19</td><td>WR 0-14%</td></tr>
+    <tr><td>SELL hours</td><td>All non-toxic hours</td><td>Tidak ada lagi 3 jam khusus sell; current filter utamanya structural</td></tr>
+    <tr><td>Friday cutoff</td><td>15:00</td><td>No trading setelah ini</td></tr>
+    <tr><td>Timed profit close</td><td>Trend 4 jam / Sideways 2 jam</td><td>Trend butuh profit <code>$24/0.01 lot</code>, sideways <code>$15/0.01 lot</code></td></tr>
+    <tr><td>Slippage</td><td>50 points</td><td>Max deviation</td></tr>
+    <tr><td>Sideways range min/max</td><td>$15 / ATR&times;10</td><td>Range validation</td></tr>
+    <tr><td>Sideways SL clamp</td><td>$5 - $20</td><td>SL boundaries</td></tr>
+    <tr><td>Sideways risk base</td><td>0.80% equity</td><td>Dikonversi ke lot dari jarak SL aktual</td></tr>
+    <tr><td>Cluster max</td><td>5 entry/range/day</td><td>Same range = &lt;$5 delta</td></tr>
+  </table>
+
+  <h3>Input Parameters Aktif di v6</h3>
+  <div class="card info">
+    <p>Di <strong>v6</strong>, sizing sudah dipindahkan ke input yang benar-benar aktif di kode:</p>
+    <table>
+      <tr><th>Parameter</th><th>Nilai Default</th><th>Peran</th></tr>
+      <tr><td><code>V6_TrendRiskPercent</code></td><td><code>1.75</code></td><td>Risk % equity dasar untuk strategy trending</td></tr>
+      <tr><td><code>V6_SidewaysRiskPercent</code></td><td><code>0.80</code></td><td>Risk % equity dasar untuk strategy sideways</td></tr>
+      <tr><td><code>V6_SellRiskMultiplier</code></td><td><code>0.85</code></td><td>Global haircut untuk seluruh sell</td></tr>
+      <tr><td><code>V6_LowScoreSellRiskMultiplier</code></td><td><code>0.50</code></td><td>Haircut ekstra untuk low-score sell</td></tr>
+      <tr><td><code>V6_HighScoreBuyRiskMultiplier</code></td><td><code>1.15</code></td><td>Boost ringan untuk high-score buy</td></tr>
+      <tr><td><code>IF1_SCORE_SELL_MIN_OVERRIDE</code></td><td><code>85</code></td><td>Low-score sell dipotong total dari default resmi v6</td></tr>
+      <tr><td><code>V6_TrendMaxPositions</code></td><td><code>7</code></td><td>Batas posisi trending tetap lintas balance</td></tr>
+      <tr><td><code>V6_SidewaysMaxPositions</code></td><td><code>8</code></td><td>Batas posisi sideways tetap lintas balance</td></tr>
+      <tr><td><code>V6_SkipTradeBelowMinLot</code></td><td><code>true</code></td><td>Skip trade bila lot hasil risk sizing &lt; minimum broker</td></tr>
+    </table>
+    <p style="margin-bottom:0">Input warisan seperti <code>BT_RiskPercent</code> tetap ada untuk parity dokumen lama, tetapi sizing aktif <strong>sudah tidak memakai compounding ladder</strong>.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. BULLISH -->
+<!-- ============================================================ -->
+<section id="s4">
+  <h2><span class="ic" style="background:rgba(63,185,80,0.12)">04</span> Penentu Bullish</h2>
+
+  <div class="card buy">
+    <div class="card-title">DetectBias() &mdash; 9 Bar Analysis</div>
+    <p>Dari 9 bar M15 terakhir (2 jam 15 menit), hitung:</p>
+    <ul>
+      <li><strong>Higher High (HH)</strong>: berapa bar yang <code>high[k] &gt; high[k+1]</code></li>
+      <li><strong>Lower Low (LL)</strong>: berapa bar yang <code>low[k] &lt; low[k+1]</code></li>
+    </ul>
+    <table>
+      <tr><th>Kondisi</th><th>Hasil</th></tr>
+      <tr><td>HH &ge; 5</td><td><span class="badge b-buy">BULLISH</span> &rarr; BUY</td></tr>
+      <tr><td>LL &ge; 6</td><td><span class="badge b-sell">BEARISH</span> &rarr; SELL (restricted)</td></tr>
+      <tr><td>Keduanya tidak terpenuhi</td><td><span class="badge b-buy">BULLISH</span> (default gold)</td></tr>
+    </table>
+    <p style="margin-bottom:0"><strong>Bullish + Neutral = BUY</strong>. EA sangat bias ke BUY karena gold cenderung naik jangka panjang.</p>
+  </div>
+
+  <h3>BUY Scoring</h3>
+  <table>
+    <tr><th>Komponen</th><th>Poin</th><th>Cara Qualify</th></tr>
+    <tr><td>Zone Detected</td><td>+40</td><td>Selalu +40 jika Candle A/B valid</td></tr>
+    <tr><td>Volatility Normal</td><td>+15</td><td>ATR saat ini &lt; 130% rata-rata 50 bar</td></tr>
+    <tr><td>FVG</td><td>+10</td><td>Fair Value Gap di sekitar BOS candle</td></tr>
+    <tr><td>Retest</td><td>+10</td><td>Harga kembali ke swing &amp; bounce (wick &gt; 50% atau body engulf)</td></tr>
+    <tr><td>Sweep</td><td>+5</td><td>Liquidity grab: low &lt; swing tapi close &gt; swing (dalam 5 bar)</td></tr>
+    <tr><td>Trend</td><td>+20</td><td>5+ dari 9 bar membentuk higher highs</td></tr>
+    <tr><td>Gold Buy Bonus</td><td>+10</td><td>Selalu +10 untuk BUY gold</td></tr>
+  </table>
+  <div class="formula">
+    Min BUY = <strong>75</strong> &nbsp;&bull;&nbsp; Max = <strong>110</strong> &nbsp;&bull;&nbsp; RR boost aktif sejak score &ge; <strong>84</strong>, dan high-score buy <strong>95+</strong> bisa memanjang ke RR <strong>2.45</strong>
+  </div>
+
+  <h3>Contoh BUY Setup</h3>
+  <pre>
+Jam 10:15 M15 bar close. 9 bar terakhir: 6 HH → Bullish.
+Swing High ditemukan di bar 8 ($2655). Bar 3 close $2658 → BOS (break $3).
+ATR(14) = $5. Break $3 >= $5 × 0.30 ($1.50) ✓
+BOS candle: body 65% range, 1/3 preceding bullish → Impulsive.
+Zone: Candle B bar 4 (bullish, close > Candle A top). Range $12 ≤ $20 ✓
+Score: Zone(40) + Vol(15) + FVG(10) + Trend(20) + Gold(10) = 95 → Grade A ✓
+Entry reference: 35% body B dipakai untuk hitung struktur zone.
+Current v6 eksekusi dengan market order pada ask/bid saat sinyal valid.
+SL: diturunkan dari zone + ATR buffer, lalu di-clamp ke rentang $12-$30.
+TP: stopDistance × RR, dan untuk buy score ≥95 RR bisa memanjang ke 2.45.
+  </pre>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5. BEARISH -->
+<!-- ============================================================ -->
+<section id="s5">
+  <h2><span class="ic" style="background:rgba(248,81,73,0.12)">05</span> Penentu Bearish</h2>
+
+  <div class="card sell">
+    <div class="card-title">SELL di v6: Structural, Bukan Clock-Based</div>
+    <p>v6 tidak lagi membatasi SELL ke tiga jam tertentu. SELL sekarang dibuka di semua jam non-toxic, tetapi harus lolos score minimum, risk haircut, dan validasi BOS bearish yang lebih ketat.</p>
+  </div>
+
+  <h3>Gate 1: Bias Bearish (LL &ge; 6)</h3>
+  <p>Minimal 67% bar dari 9 terakhir membuat lower-low. Lebih ketat dari BUY (56%).</p>
+
+  <h3>Gate 2: Sell Hours Sudah Dibuka</h3>
+  <table>
+    <tr><th>Aturan</th><th>Perilaku v6</th></tr>
+    <tr><td>Jam sell umum</td><td><strong>Tidak dibatasi</strong> selama bukan toxic hour</td></tr>
+    <tr><td>Toxic hours</td><td><code>03</code>, <code>17</code> tetap diblok untuk trending</td></tr>
+    <tr><td>Low-score sell hour block</td><td>Ada branch khusus di kode, tetapi secara praktis inert karena floor score sell sekarang sudah <code>85</code></td></tr>
+  </table>
+  <p>Jadi pembeda utama SELL di v6 bukan jam, tetapi kualitas struktur bearish dan haircut risk.</p>
+
+  <h3>Gate 3: Score dan BOS Quality</h3>
+  <table>
+    <tr><th>Requirement</th><th>BUY</th><th>SELL</th></tr>
+    <tr><td>BOS Quality</td><td>Impulsive atau Corrective</td><td>Umumnya boleh dua-duanya, tetapi <strong>gold high-score sell (95+)</strong> wajib impulsive</td></tr>
+    <tr><td>Min Score</td><td><strong>75</strong></td><td><strong>85</strong></td></tr>
+    <tr><td>Risk sizing</td><td>Base <code>1.75%</code> equity</td><td><strong>0.85x</strong> dari base risk</td></tr>
+    <tr><td>Gold Bonus</td><td>+10</td><td>Tidak ada</td></tr>
+  </table>
+
+  <h3>BOS Impulsive Requirements</h3>
+  <ul>
+    <li>Body candle BOS &ge; 45% dari total range</li>
+    <li>Minimal 1 dari 3 bar sebelumnya juga bearish (momentum)</li>
+    <li>Lower wick (opposite wick untuk sell) &le; 40% dari range</li>
+  </ul>
+
+  <h3>Bearish Zone</h3>
+  <ul>
+    <li>Candle B: bearish, close &lt; Candle A body bottom</li>
+    <li>Supply zone: [open_B (high), close_B (low)]</li>
+    <li>Entry reference: 35% body B</li>
+    <li>SL: zone high + ATR&times;0.5, lalu clamp ke <code>$12-$30</code></li>
+    <li>TP: <code>stopDistance × RR</code>, dengan RR sell default <code>1.62</code> dan boost <code>2.25</code> saat score cukup tinggi</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. SIDEWAYS -->
+<!-- ============================================================ -->
+<section id="s6">
+  <h2><span class="ic" style="background:rgba(188,140,255,0.12)">06</span> Saat Sideways</h2>
+
+  <div class="card purple">
+    <div class="card-title">ADX H4 &lt; 28 = Sideways Regime</div>
+    <p>Saat ADX rendah, EA menambahkan strategy <strong>Range Bounce BUY-only</strong> di atas trending yang tetap jalan.</p>
+  </div>
+
+  <h3>Range Calculation</h3>
+  <ul>
+    <li>48 bar M15 terakhir (12 jam) &rarr; highest high, lowest low</li>
+    <li>Min range: $15 (di bawah = noise)</li>
+    <li>Max range: ATR(14) &times; 10 (di atas = trending, bukan sideways)</li>
+  </ul>
+
+  <h3>Entry Logic</h3>
+  <div class="formula">
+    Buy Zone = rangeLow s/d rangeLow + (rangeSize &times; 0.40)
+    <br>Close bar terakhir HARUS di bawah buy zone top
+    <br>TP = max(55% range, $6.5) &bull; SL = rangeLow - ATR buffer
+  </div>
+
+  <h3>Proteksi Sideways</h3>
+  <table>
+    <tr><th>Proteksi</th><th>Nilai</th></tr>
+    <tr><td>Max wins/day</td><td>20</td></tr>
+    <tr><td>Daily loss cap</td><td>4%</td></tr>
+    <tr><td>Toxic hours</td><td>03, 19</td></tr>
+    <tr><td>Cooldown after loss</td><td>1 bar (15 min)</td></tr>
+    <tr><td>Max positions</td><td>8</td></tr>
+    <tr><td>Cluster protection</td><td>5 entry per range per hari</td></tr>
+    <tr><td>Lot</td><td>Risk-based, basis <code>0.80%</code> equity</td></tr>
+    <tr><td>SL clamp</td><td>$5 - $20</td></tr>
+  </table>
+
+  <h3>Trending vs Sideways di M15</h3>
+  <table>
+    <tr><th></th><th>Trending</th><th>Sideways</th></tr>
+    <tr><td>Aktif</td><td>Selalu</td><td>ADX H4 &lt; 28</td></tr>
+    <tr><td>Arah</td><td>BUY + SELL</td><td>BUY only</td></tr>
+    <tr><td>Logika</td><td>BOS + Zone + Scoring</td><td>Range boundary bounce</td></tr>
+    <tr><td>Order type</td><td>Market only</td><td>Market only</td></tr>
+    <tr><td>Lot</td><td>Risk-based dari SL aktual</td><td>Risk-based dari SL aktual</td></tr>
+    <tr><td>Daily loss</td><td>6%</td><td>4%</td></tr>
+    <tr><td>Max wins</td><td>50</td><td>20</td></tr>
+    <tr><td>SL</td><td>$12-$30 dynamic clamp</td><td>$5-$20</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7. POSISI LIFECYCLE -->
+<!-- ============================================================ -->
+<section id="s7">
+  <h2><span class="ic" style="background:rgba(57,211,83,0.12)">07</span> Posisi ke-1 s/d ke-N &amp; Close</h2>
+
+  <h3>Multiple Positions</h3>
+  <p>Setiap posisi adalah <strong>independent trade</strong> dari BOS + Zone baru. Bukan grid/averaging.</p>
+  <table>
+    <tr><th>Mode</th><th>Max Trending</th><th>Max Sideways</th><th>Total Teoritis</th></tr>
+    <tr><td>v6 fixed sizing</td><td><code>7</code></td><td><code>8</code></td><td><code>15</code></td></tr>
+  </table>
+
+  <h3>Cara Posisi Close</h3>
+
+  <div class="split">
+    <div class="card buy">
+      <div class="card-title">TP Hit</div>
+      <p>Broker close otomatis. EA: <code>dailyWins++</code>, <code>consLosses = 0</code>. Risk budget kembali ke base.</p>
+    </div>
+    <div class="card sell">
+      <div class="card-title">SL Hit</div>
+      <p>Broker close otomatis. EA: <code>consLosses++</code>, <code>dailyLossUSD += |loss|</code>, cooldown 15 menit. Risk budget berikutnya diturunkan jika streak loss menumpuk.</p>
+    </div>
+  </div>
+
+  <div class="card info">
+    <div class="card-title">Timed Profit Close</div>
+    <p>Setiap tick, EA scan semua posisi. Jika:</p>
+    <div class="formula">
+      Trend: profit + swap &ge; (lot / 0.01) &times; $24 &nbsp;&nbsp;DAN&nbsp;&nbsp; umur posisi &gt; 4 jam
+      <br>Sideways: profit + swap &ge; (lot / 0.01) &times; $15 &nbsp;&nbsp;DAN&nbsp;&nbsp; umur posisi &gt; 2 jam
+    </div>
+    <p style="margin-bottom:0">Jadi ini <strong>bukan max holding time keras</strong>. Posisi hanya dipanen kalau sudah cukup lama <em>dan</em> sudah profit sesuai threshold.</p>
+  </div>
+
+  <h3>State Setelah Close</h3>
+  <div class="split">
+    <div class="card buy">
+      <div class="card-title">Setelah WIN</div>
+      <ul>
+        <li><code>dailyWins++</code></li>
+        <li><code>consLosses = 0</code></li>
+        <li>Risk budget kembali ke base multiplier</li>
+      </ul>
+    </div>
+    <div class="card sell">
+      <div class="card-title">Setelah LOSS</div>
+      <ul>
+        <li><code>consLosses++</code></li>
+        <li><code>dailyLossUSD += |loss|</code></li>
+        <li>Cooldown 15 menit dimulai</li>
+        <li>Risk modifier: <code>0.80x</code> pada 3+, <code>0.60x</code> pada 5+, <code>0.40x</code> pada 8+ losses</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Contoh Timeline</h3>
+  <pre>
+10:00  BOS zone A → Posisi #1 BUY, lot dihitung dari 1.75% equity dan SL aktual
+10:30  BOS zone B → Posisi #2 BUY, lot dihitung ulang dari stopDistance baru
+10:45  ADX H4=18 → Sideways aktif
+11:00  Range bounce → Posisi #3 BUY(SW), lot dihitung dari 0.80% equity
+12:15  #1 TP hit → win, dailyWins=1
+13:30  #3 SL hit → sw_consLosses=1, cooldown 15m
+13:45  Cooldown selesai, pipeline jalan lagi
+14:15  #2 profit $40 + open 3.5jam → belum 4 jam, tetap hold
+14:45  #2 profit $52 + open 4 jam → timed profit close untuk trend
+  </pre>
+</section>
+
+<!-- ============================================================ -->
+<!-- 8. LIMIT ORDER -->
+<!-- ============================================================ -->
+<section id="s8">
+  <h2><span class="ic" style="background:rgba(248,81,73,0.12)">08</span> Limit Order, Expired, Tidak Kena</h2>
+
+  <h3>Status di v6: Pending Entry Sudah Tidak Dipakai</h3>
+  <p>Pada current `v6`, jalur submit order trending dan sideways sama-sama memakai <strong>market order</strong>. Jadi arsitektur limit order dari generasi lama saat ini <strong>tidak aktif</strong>.</p>
+  <table>
+    <tr><th>Kondisi</th><th>Order Type</th></tr>
+    <tr><td>Trending BUY</td><td>Market Buy</td></tr>
+    <tr><td>Trending SELL</td><td>Market Sell</td></tr>
+    <tr><td>Sideways BUY</td><td>Market Buy</td></tr>
+    <tr><td>Pending order manager</td><td>Masih ada di kode, tetapi dormant selama tidak ada limit order yang dibuat</td></tr>
+  </table>
+
+  <h3>Expiry</h3>
+  <div class="formula">
+    Parameter expiry 8 bar / 2 jam masih tersisa sebagai warisan spec,
+    <br>tetapi tidak aktif selama current v6 tidak mengirim pending order
+  </div>
+  <p>Jadi pada perilaku nyata EA sekarang, tidak ada siklus "pending - filled - expired".</p>
+
+  <h3>Jika Limit Tidak Kena (Expired)</h3>
+  <table>
+    <tr><th>Aspek</th><th>Impact</th></tr>
+    <tr><td>Position count</td><td>Tidak berubah (pending bukan posisi)</td></tr>
+    <tr><td>Consecutive losses</td><td>Tidak bertambah</td></tr>
+    <tr><td>Daily wins/loss</td><td>Tidak terpengaruh</td></tr>
+    <tr><td>Zone cooldown</td><td>Sudah tersimpan &mdash; zone yang sama kena cooldown 1 bar</td></tr>
+    <tr><td>Re-entry</td><td>Bar berikutnya bisa generate setup baru</td></tr>
+  </table>
+
+  <h3>Cancel Order</h3>
+  <div class="card info">
+    <p>v6 <strong>sudah memiliki</strong> <code>IF1ManagePendingOrders()</code> dan <code>OrderDelete()</code>, tetapi karena submit path saat ini tidak membuat limit order, blok ini praktis menjadi safety layer cadangan.</p>
+    <p style="margin-bottom:0">Kalau nanti pending entry diaktifkan lagi, manager ini akan cancel order saat bias flip atau daily loss melewati batas tertentu.</p>
+  </div>
+
+  <h3>OnTradeTransaction &mdash; Apa yang Di-track</h3>
+  <p>Telemetry utama tetap berfokus ke <code>DEAL_ENTRY_OUT</code> (posisi ditutup), tetapi lifecycle lain seperti pending delete dan breakeven modify sekarang sudah punya handler aktif di <code>OnTick</code>.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 9. RISK + LOT -->
+<!-- ============================================================ -->
+<section id="s9">
+  <h2><span class="ic" style="background:rgba(227,179,65,0.12)">09</span> Risk Management &amp; Lot Sizing</h2>
+
+  <h3>5 Layer Proteksi</h3>
+  <table>
+    <tr><th>Layer</th><th>Trending M15</th><th>Sideways</th></tr>
+    <tr><td>Weekend</td><td colspan="2">No trade Sat/Sun, Fri &ge; 15:00</td></tr>
+    <tr><td>Toxic Hours</td><td>03, 17</td><td>03, 19</td></tr>
+    <tr><td>Cooldown</td><td colspan="2">15 menit setelah loss</td></tr>
+    <tr><td>Max Wins/Day</td><td>50</td><td>20</td></tr>
+    <tr><td>Daily Loss Cap</td><td>6%</td><td>4%</td></tr>
+    <tr><td>Max Positions</td><td>7</td><td>8</td></tr>
+    <tr><td>Zone Cooldown</td><td>$1 / 1 bar</td><td>Cluster 5/range</td></tr>
+    <tr><td>SL Boundaries</td><td>$12-$30</td><td>$5-$20</td></tr>
+  </table>
+
+  <h3>Fixed-Fractional Sizing</h3>
+  <div class="formula">
+    risk_usd = equity &times; risk_pct
+    <br>loss_per_lot = |OrderCalcProfit(1 lot, entry, stop)|
+    <br>lot = risk_usd / loss_per_lot
+  </div>
+  <p>Karena lot dibentuk dari <strong>risk budget dalam USD</strong> dan <strong>jarak SL aktual</strong>, dua akun dengan modal berbeda akan cenderung punya profil hasil yang lebih dekat dibanding arsitektur compounding lama.</p>
+
+  <h3>Risk Inputs Aktif</h3>
+  <table>
+    <tr><th>Komponen</th><th>Nilai</th><th>Keterangan</th></tr>
+    <tr><td>Trend base risk</td><td><code>1.75%</code></td><td>Basis risk trending sebelum multiplier arah/score</td></tr>
+    <tr><td>Sideways base risk</td><td><code>0.80%</code></td><td>Basis risk sideways</td></tr>
+    <tr><td>Global sell multiplier</td><td><code>0.85x</code></td><td>Haircut semua sell</td></tr>
+    <tr><td>Low-score sell multiplier</td><td><code>0.50x</code></td><td>Haircut ekstra pada sell score rendah</td></tr>
+    <tr><td>High-score buy multiplier</td><td><code>1.15x</code></td><td>Boost ringan untuk buy score tinggi</td></tr>
+    <tr><td>Sell min score</td><td><code>85</code></td><td>Default resmi memotong low-score sell</td></tr>
+    <tr><td>Below min lot</td><td><code>skip</code></td><td>Tidak dipaksa ke minimum broker</td></tr>
+  </table>
+
+  <h3>Konsekuensi Praktis</h3>
+  <table>
+    <tr><th>Aspek</th><th>Dampak di v6</th></tr>
+    <tr><td>Akun kecil</td><td>Lebih sering skip trade jika risk lot jatuh di bawah minimum broker</td></tr>
+    <tr><td>Akun besar</td><td>Tidak lagi otomatis naik agresif hanya karena balance tier lebih tinggi</td></tr>
+    <tr><td>Stop lebih lebar</td><td>Lot otomatis turun agar risk USD tetap terjaga</td></tr>
+    <tr><td>Stop lebih rapat</td><td>Lot bisa naik, tetapi tetap dibatasi volume step broker</td></tr>
+  </table>
+
+  <h3>Worst Case Exposure di M15</h3>
+  <pre>
+Worst case v6 tidak lagi dihitung dari "berapa lot per tier balance".
+Exposure maksimum sekarang bergantung pada:
+  1) jumlah posisi terbuka saat itu
+  2) risk % masing-masing strategy
+  3) jarak SL aktual tiap posisi
+
+Secara konsep:
+  7 trend positions × ~1.75% risk  = risk kotor trend
+  8 sideways positions × ~0.80% risk = risk kotor sideways
+
+Tetapi risk aktual akan lebih rendah saat:
+  - sell terkena haircut multiplier
+  - trade di-skip karena di bawah minimum lot
+  - daily loss cap atau filter entry menghentikan setup lanjutan
+  </pre>
+</section>
+
+<!-- ============================================================ -->
+<!-- 10. REKOMENDASI -->
+<!-- ============================================================ -->
+<section id="s10">
+  <h2><span class="ic" style="background:linear-gradient(135deg,rgba(88,166,255,0.2),rgba(188,140,255,0.2))">10</span> Rekomendasi</h2>
+
+  <div class="rec">
+    <div class="rt">1. Fixed-Fractional Sizing Sudah Masuk <span class="rp rp-h">DONE</span></div>
+    <p>Masalah utama versi lama adalah sizing terlalu tergantung balance tier dan minimum lot. Di <strong>v6</strong>, risk sekarang dihitung dari <strong>equity %</strong> dan <strong>stop distance aktual</strong>, sehingga perilaku akun kecil dan besar jauh lebih dekat.</p>
+    <p><strong>Dampak:</strong> perubahan ini paling penting untuk deposit invariance, dan menjadi fondasi utama `v6`.</p>
+  </div>
+
+  <div class="rec">
+    <div class="rt">2. Dynamic SL/TP Dipertahankan <span class="rp rp-h">DONE</span></div>
+    <p>Trend stop sudah tidak fixed $25 lagi. Jarak SL dibentuk dari zone + ATR buffer lalu di-clamp ke range yang lebih masuk akal, dan TP tetap mengikuti RR dinamis berdasarkan kualitas setup.</p>
+    <p><strong>Dampak:</strong> risk per trade sekarang jauh lebih konsisten terhadap struktur market saat itu.</p>
+  </div>
+
+  <div class="rec">
+    <div class="rt">3. Pending Order dan Breakeven Sudah Dikelola <span class="rp rp-m">DONE</span></div>
+    <p>Versi ini sudah memiliki <code>IF1ManagePendingOrders()</code> dan proteksi <code>PositionModify()</code> untuk breakeven management. Jadi dua kelemahan besar di generasi awal sudah tidak lagi relevan sebagai masalah utama.</p>
+    <p><strong>Fokus berikutnya:</strong> bukan lagi cleanup lifecycle, tapi kualitas entry dan kestabilan recent regime.</p>
+  </div>
+
+  <div class="rec">
+    <div class="rt">4. Recent-Regime DD Masih Bisa Ditekan <span class="rp rp-m">OPEN</span></div>
+    <p>Pada window 6 bulan terakhir, hasil antar deposit sudah dekat di profit % dan PF, tetapi akun besar masih mengalami drawdown sedikit lebih tinggi. Ini menandakan sizing sudah membaik, tapi karakter entry recent-market masih perlu diperhalus.</p>
+    <p><strong>Arah berikutnya:</strong> fokus ke validasi entry buruk, bukan balik ke compounding lama.</p>
+  </div>
+
+  <div class="rec">
+    <div class="rt">5. Skip-Below-Min-Lot Perlu Dipantau <span class="rp rp-l">OPEN</span></div>
+    <p>Keputusan untuk skip trade jika lot hasil risk sizing berada di bawah minimum broker membuat perilaku akun kecil lebih jujur, tetapi juga bisa mengurangi sample size di kondisi tertentu.</p>
+    <p><strong>Arah berikutnya:</strong> monitor berapa banyak signal valid yang diblok karena min lot, terutama pada deposit sangat kecil.</p>
+  </div>
+
+  <h3>Prioritas</h3>
+  <table>
+    <tr><th>Priority</th><th>Items</th><th>Impact</th></tr>
+    <tr><td><span class="badge" style="background:rgba(248,81,73,0.2);color:var(--red)">HIGH</span></td><td>Deposit invariance, risk-based sizing</td><td>Arsitektur utama `v6`</td></tr>
+    <tr><td><span class="badge" style="background:rgba(210,153,34,0.2);color:var(--orange)">MED</span></td><td>Recent-regime DD, entry quality</td><td>Masih perlu tuning lanjutan</td></tr>
+    <tr><td><span class="badge" style="background:rgba(63,185,80,0.2);color:var(--green)">LOW</span></td><td>Telemetry min-lot skip, logging</td><td>Observability</td></tr>
+  </table>
+
+  <div class="card info" style="margin-top: 20px;">
+    <div class="card-title">Bottom Line</div>
+    <p style="margin-bottom:0"><strong>v6</strong> adalah langkah arsitektural, bukan sekadar tuning angka. Fokus utamanya adalah membuat bot tetap waras saat pindah dari modal kecil ke modal besar dengan fixed-fractional sizing yang dihitung dari stop aktual. Hasilnya belum sempurna, tetapi sudah jauh lebih invariant dibanding generasi sebelumnya dan lebih layak dijadikan fondasi versi berikutnya.</p>
+  </div>
+</section>
+
+</div>
+
+<div class="footer">
+  <p>InvictusForward-1 v1.10 &bull; M15 Only &bull; Generated 2026-04-14</p>
+</div>
+
+</body>
+</html>

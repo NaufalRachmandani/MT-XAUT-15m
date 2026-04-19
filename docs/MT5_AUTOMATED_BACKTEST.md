@@ -262,6 +262,16 @@ Biasanya bukan masalah MT5, tapi logika EA terlalu ketat atau filter entry tidak
 - parse tester log
 - cek layer mana yang memblokir entry
 
+### 5. Stem expert sama tetapi input yang terbaca masih lama
+
+MT5 Strategy Tester bisa menyimpan input terakhir berdasarkan nama expert (`.ex5` stem), jadi ada kasus source sudah berubah tetapi tester headless tetap menjalankan nilai input lama untuk stem yang sama.
+
+Kalau ini terjadi:
+
+- cek bagian `started with inputs:` di tester log, jangan asumsi default source sedang dipakai
+- untuk validasi bersih, compile ke stem baru sementara, misalnya `MyEA_recheck_01.ex5`
+- kalau harus memakai stem yang sama, reset input manual di Strategy Tester atau siapkan run yang memang memaksa clean stem
+
 ## Template Python Runner Sederhana
 
 Kalau mau yang paling cepat diimplementasikan, struktur dasar runner seperti ini:

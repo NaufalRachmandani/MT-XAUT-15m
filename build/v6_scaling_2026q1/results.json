@@ -1,0 +1,68 @@
+[
+  {
+    "variant": "baseline_sell85",
+    "deposit": 100,
+    "net_profit": -27.89,
+    "profit_pct": -27.889999999999997,
+    "profit_factor": 0.92,
+    "win_rate": 49.24,
+    "trades": 589,
+    "equity_dd_pct": 61.39,
+    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v6_2026q1_baseline_sell85_100_XAUUSDc_M15_20260101_20260415.htm"
+  },
+  {
+    "variant": "baseline_sell85",
+    "deposit": 10000,
+    "net_profit": -1790.38,
+    "profit_pct": -17.9038,
+    "profit_factor": 0.95,
+    "win_rate": 50.88,
+    "trades": 568,
+    "equity_dd_pct": 57.61,
+    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v6_2026q1_baseline_sell85_10000_XAUUSDc_M15_20260101_20260415.htm"
+  },
+  {
+    "variant": "toxic_7_8_10_11",
+    "deposit": 100,
+    "net_profit": 48.95,
+    "profit_pct": 48.95,
+    "profit_factor": 1.13,
+    "win_rate": 52.21,
+    "trades": 521,
+    "equity_dd_pct": 37.25,
+    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v6_2026q1_toxic_7_8_10_11_100_XAUUSDc_M15_20260101_20260415.htm"
+  },
+  {
+    "variant": "toxic_7_8_10_11",
+    "deposit": 10000,
+    "net_profit": 6393.14,
+    "profit_pct": 63.931400000000004,
+    "profit_factor": 1.16,
+    "win_rate": 53.14,
+    "trades": 510,
+    "equity_dd_pct": 37.74,
+    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v6_2026q1_toxic_7_8_10_11_10000_XAUUSDc_M15_20260101_20260415.htm"
+  },
+  {
+    "variant": "toxic_7_8_9_10_impulsive",
+    "deposit": 100,
+    "net_profit": 44.98,
+    "profit_pct": 44.98,
+    "profit_factor": 1.13,
+    "win_rate": 52.71,
+    "trades": 516,
+    "equity_dd_pct": 32.02,
+    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v6_2026q1_toxic_7_8_9_10_impulsive_100_XAUUSDc_M15_20260101_20260415.htm"
+  },
+  {
+    "variant": "toxic_7_8_9_10_impulsive",
+    "deposit": 10000,
+    "net_profit": 5877.55,
+    "profit_pct": 58.7755,
+    "profit_factor": 1.16,
+    "win_rate": 53.65,
+    "trades": 507,
+    "equity_dd_pct": 32.65,
+    "report_path": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusForward1M15_v6_2026q1_toxic_7_8_9_10_impulsive_10000_XAUUSDc_M15_20260101_20260415.htm"
+  }
+]

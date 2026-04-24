@@ -1,0 +1,98 @@
+[
+  {
+    "bot": "combined",
+    "stem": "InvictusCombinedM5_v11",
+    "set": "InvictusCombinedM5_v11.default_2026.set",
+    "profile": "zone_loose",
+    "metrics": {
+      "last_2w": {
+        "net_profit": 15.30,
+        "profit_factor": 4.30,
+        "expected_payoff": 1.53,
+        "total_trades": 10,
+        "win_rate": 80.00,
+        "equity_dd_pct": 4.87
+      },
+      "2026_ytd": {
+        "net_profit": 504.76,
+        "profit_factor": 2.53,
+        "expected_payoff": 3.32,
+        "total_trades": 152,
+        "win_rate": 61.18,
+        "equity_dd_pct": 21.28
+      },
+      "2025_current": {
+        "net_profit": 426.34,
+        "profit_factor": 1.44,
+        "expected_payoff": 0.69,
+        "total_trades": 614,
+        "win_rate": 56.51,
+        "equity_dd_pct": 55.03
+      }
+    }
+  },
+  {
+    "bot": "bull",
+    "stem": "InvictusBullM5_v11",
+    "set": "InvictusBullM5_v11.default_2026.set",
+    "profile": "zone_loose",
+    "metrics": {
+      "last_2w": {
+        "net_profit": 16.67,
+        "profit_factor": 9.51,
+        "expected_payoff": 1.67,
+        "total_trades": 10,
+        "win_rate": 70.00,
+        "equity_dd_pct": 5.06
+      },
+      "2026_ytd": {
+        "net_profit": 135.95,
+        "profit_factor": 1.85,
+        "expected_payoff": 1.01,
+        "total_trades": 135,
+        "win_rate": 48.15,
+        "equity_dd_pct": 13.68
+      },
+      "2025_current": {
+        "net_profit": 74.95,
+        "profit_factor": 1.14,
+        "expected_payoff": 0.13,
+        "total_trades": 567,
+        "win_rate": 39.86,
+        "equity_dd_pct": 46.82
+      }
+    }
+  },
+  {
+    "bot": "bear",
+    "stem": "InvictusBearM5_v11",
+    "set": "InvictusBearM5_v11.default_2026.set",
+    "profile": "zone_loose",
+    "metrics": {
+      "last_2w": {
+        "net_profit": -1.01,
+        "profit_factor": 0.00,
+        "expected_payoff": -1.01,
+        "total_trades": 1,
+        "win_rate": 0.00,
+        "equity_dd_pct": 1.71
+      },
+      "2026_ytd": {
+        "net_profit": 59.61,
+        "profit_factor": 3.13,
+        "expected_payoff": 1.92,
+        "total_trades": 31,
+        "win_rate": 64.52,
+        "equity_dd_pct": 9.35
+      },
+      "2025_current": {
+        "net_profit": 20.01,
+        "profit_factor": 1.15,
+        "expected_payoff": 0.16,
+        "total_trades": 126,
+        "win_rate": 53.97,
+        "equity_dd_pct": 36.10
+      }
+    }
+  }
+]

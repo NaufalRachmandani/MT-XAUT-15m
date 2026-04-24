@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invictus Forward 1 Docs - v10</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #172033;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --line: rgba(148, 163, 184, 0.18);
+      --accent: #60a5fa;
+      --accent-2: #fbbf24;
+      --good: #34d399;
+      --bad: #f87171;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+      color: var(--text);
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 72px;
+    }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 16px; }
+    h1 { font-size: clamp(2.25rem, 4vw, 3.4rem); }
+    h2 { font-size: 1.45rem; margin-top: 32px; }
+    p, ul { margin: 0 0 14px; }
+    .hero, .panel {
+      background: rgba(17, 24, 39, 0.86);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+    }
+    .hero { margin-bottom: 24px; }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(96, 165, 250, 0.12);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .muted { color: var(--muted); }
+    code {
+      background: rgba(96, 165, 250, 0.09);
+      color: #fcd34d;
+      border-radius: 8px;
+      padding: 0.12rem 0.38rem;
+      font-size: 0.95em;
+    }
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin: 18px 0 0;
+    }
+    .stat {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .stat .label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+    .stat .value {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: rgba(96, 165, 250, 0.08);
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .good { color: var(--good); }
+    .bad { color: var(--bad); }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Invictus Forward 1 · v10 Variant</div>
+      <h1>Dual-Engine M5 Research</h1>
+      <p class="muted">
+        <code>v10</code> adalah jalur riset <code>M5</code> yang menggabungkan
+        <strong>bearish engine</strong> yang terbukti dari <code>v9</code> dengan
+        <strong>bullish hybrid engine</strong>, lalu sekarang ditambah
+        <strong>base-style zone retest engine</strong> dan <strong>buy-only add-on engine</strong>
+        untuk menaikkan quantity secara agresif di <code>M5</code>.
+      </p>
+      <div class="grid">
+        <div class="stat">
+          <div class="label">2026-Only Net Profit</div>
+          <div class="value good">+318.57%</div>
+        </div>
+        <div class="stat">
+          <div class="label">2026-Only Profit Factor</div>
+          <div class="value">2.93</div>
+        </div>
+        <div class="stat">
+          <div class="label">2026-Only Max Equity DD</div>
+          <div class="value bad">9.26%</div>
+        </div>
+        <div class="stat">
+          <div class="label">2025-Current Net Profit</div>
+          <div class="value good">+305.71%</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What Changed from Base</h2>
+      <ul>
+        <li><code>v10</code> tidak lagi memakai satu jalur trend generik; sekarang ia punya jalur <strong>bullish hybrid</strong>, jalur <strong>bearish dedicated</strong>, dan tambahan <strong>zone retest</strong> yang diadaptasi dari cara pikir <code>base</code>.</li>
+        <li>Sell side kembali memakai pola <code>v9-style bearish breakdown</code> karena itu yang paling terbukti untuk regime 2026.</li>
+        <li>Buy side memakai kombinasi <code>breakout</code> dan <code>pullback reclaim</code>, bukan breakout mentah saja.</li>
+        <li>Upgrade terbaru yang resmi dibekukan adalah <strong>zone_buyheavy</strong>: buy risk dinaikkan, <code>MaxPositions</code> menjadi <code>5</code>, dan zone reclaim dibuka lebih agresif untuk <code>M5</code>.</li>
+        <li>Winner buy dibiarkan hidup lebih lama: <code>BuyRR 1.55 / WeakBuyRR 1.30</code>, <code>MaxHoldBars 36</code>, dan <code>CloseOnRegimeFlip = false</code>.</li>
+        <li>Reclaim bullish dibuat lebih permisif dengan <code>BullTouchATR 0.15</code> dan <code>BullReclaimATR 0.00</code>.</li>
+        <li>Tambahan awal yang paling berdampak adalah <strong>anti-chop gate</strong>: <code>ChopLookbackBars 10</code>, <code>MaxEmaFlips 3</code>, <code>HoldBars 2</code>, <code>HoldBufferATR 0.05</code>.</li>
+        <li>Repair DD yang lebih lama tetap dipakai sebagai fondasi: <strong>buy core-hour whitelist</strong> menahan buy fast-fail di jam lemah.</li>
+        <li>Upgrade quantity terbaru yang resmi menang adalah <strong>base-style zone retest engine</strong>: reclaim ke midpoint body candle dipakai untuk menambah entry M5 yang lebih sering.</li>
+        <li><strong>Buy-only add-on engine</strong> tetap aktif: add-on hanya dibuka jika trade buy utama sudah profit, tetap searah trend, dan kualitas candle lanjutan masih sehat.</li>
+        <li><code>v10</code> sekarang juga punya <strong>score + notes layer</strong>: setiap trade punya engine code, score, grade, tags, dan note ringkas untuk audit.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Snapshot Backtest: 2025-Current vs 2026-Only / $100</h2>
+      <p class="muted">
+        Setup: <code>XAUUSDc</code>, <code>M5</code>, <code>Every tick</code>, <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Window</th>
+            <th>Net Profit</th>
+            <th>PF</th>
+            <th>Win Rate</th>
+            <th>Trades</th>
+            <th>EqDD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2025-current</td>
+            <td class="good">+305.71%</td>
+            <td>1.52</td>
+            <td>57.27%</td>
+            <td>447</td>
+            <td class="bad">50.80%</td>
+          </tr>
+          <tr>
+            <td>2026-only</td>
+            <td class="good">+318.57%</td>
+            <td>2.93</td>
+            <td>63.03%</td>
+            <td>119</td>
+            <td>9.26%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Recent 2M / M5 Reality Check</h2>
+      <p class="muted">
+        Window ini dipilih khusus untuk melihat apakah <code>v10</code> cukup aktif sebagai bot <code>M5</code> pada market terbaru:
+        <code>2026.02.22 - 2026.04.22</code>.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Preset</th>
+            <th>Net Profit</th>
+            <th>PF</th>
+            <th>Trades</th>
+            <th>Trades/Week</th>
+            <th>EqDD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>official zone_buyheavy</strong></td>
+            <td class="good"><strong>+142.52%</strong></td>
+            <td><strong>3.61</strong></td>
+            <td><strong>53</strong></td>
+            <td><strong>6.29</strong></td>
+            <td><strong>9.19%</strong></td>
+          </tr>
+          <tr>
+            <td>control lama</td>
+            <td class="good">+84.74%</td>
+            <td>3.99</td>
+            <td>38</td>
+            <td>4.51</td>
+            <td>11.28%</td>
+          </tr>
+          <tr>
+            <td>zone_dual_hold</td>
+            <td class="good">+127.29%</td>
+            <td>3.83</td>
+            <td>53</td>
+            <td>6.29</td>
+            <td>13.14%</td>
+          </tr>
+          <tr>
+            <td>zone_push</td>
+            <td class="good">+133.81%</td>
+            <td>3.83</td>
+            <td>54</td>
+            <td>6.41</td>
+            <td class="bad">13.17%</td>
+          </tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Kesimpulan utamanya: quantity yang sehat di <code>M5</code> tidak datang dari membuka mixed-regime unlock, tetapi dari <strong>base-style zone retest</strong> yang lebih presisi.</li>
+        <li>Winner baru adalah <strong>zone_buyheavy</strong>: lebih aktif daripada control lama, recent profit lebih tinggi, dan tetap menjaga DD recent di bawah <code>10%</code>.</li>
+        <li>Recent 1 bulan juga ikut naik: <code>+58.28%</code>, <code>PF 4.71</code>, <code>24 trades</code>, sekitar <code>5.42 trades/week</code>, <code>EqDD 9.16%</code>.</li>
+        <li>Trade-off-nya jelas: full-window <code>2025-current</code> profit naik keras, tetapi DD juga ikut naik ke sekitar <code>50.80%</code>.</li>
+        <li>Saya juga siapkan jalur pendamping dari arsitektur yang sama: <strong>zone_mid</strong> sebagai mode lebih jinak, dengan <code>2025-current +228.46%</code> dan <code>EqDD 38.96%</code>.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Score &amp; Trade Notes</h2>
+      <ul>
+        <li>Comment order MT5 sekarang compact, misalnya <code>Inv|PB|S90|A|RG|CH|BX</code>.</li>
+        <li>Log <code>Experts</code> menulis note yang lebih panjang: engine, score, grade, tags, RR, SL/TP, dan alasan singkat trade.</li>
+        <li>Engine code yang dipakai:
+          <code>BE</code> = bearish engine,
+          <code>PB</code> = bullish pullback reclaim,
+          <code>BO</code> = bullish breakout,
+          <code>SB</code> = bullish sub-engine.
+        </li>
+        <li>Live review <code>2026.04.24</code> menunjukkan trade <code>BE S68 WG XH</code> terlalu rendah untuk dibiarkan masuk. Karena itu default sekarang tidak lagi score-neutral.</li>
+        <li>Default score guard sekarang:
+          <code>MinTradeScore = 72</code>,
+          <code>ScoreRRBonus = 0.00</code>,
+          <code>ScoreRiskBonus = 1.00</code>.
+          Score <code>R</code> seperti <code>S68</code> diblokir dari default official.
+        </li>
+        <li>Tambahan live guard: <code>WeakOutsideSellQuickExit = true</code> dan <code>WeakOutsideSellExitBars = 6</code>, khusus base sell <code>BE</code> yang weak-regime + outside-core dan masih merah setelah 6 bar.</li>
+        <li>Validasi forced-parameter terbaru:
+          <code>2026.04.10-2026.04.25 +12.50% / PF 4.08 / WR 75.00% / 8 trades / EqDD 4.65%</code>,
+          <code>2026.01.01-2026.04.25 +308.93% / PF 2.73 / WR 61.98% / 121 trades / EqDD 9.22%</code>.
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>TP Manager / Partial Runner</h2>
+      <ul>
+        <li><code>v10</code> sekarang punya TP manager bertahap: <code>TP1</code> partial close, runner TP yang lebih jauh, lalu <code>ATR trail</code> untuk menarik <code>SL</code>.</li>
+        <li>State per-ticket sekarang dibersihkan pada <code>OnInit/OnDeinit</code>, jadi backtest tidak lagi tercemar state TP lama dari run sebelumnya.</li>
+        <li>Validasi bersih yang sudah lolos:
+          <code>control_off_fix 2026-only = +180.63% / PF 3.12 / EqDD 9.56%</code>,
+          <code>tp_base_fix 2026-only = +153.88% / PF 2.94 / EqDD 13.07%</code>.
+        </li>
+        <li>TP manager memang menaikkan win rate, tetapi pada validasi yang sudah bersih dia belum mengalahkan default official untuk net profit dan PF.</li>
+        <li>Karena itu TP manager saat ini tetap <strong>experimental / optional</strong>; official <code>v10</code> masih memakai <code>EnableTPManager = false</code>.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>DD Readout</h2>
+      <ul>
+        <li><code>2025-current</code> DD lama memang datang dari underwater stretch April-Desember 2025, bukan dari satu bulan merah saja.</li>
+        <li>Source kebocoran utamanya tetap ada di <strong>long fast-fail</strong>, terutama saat buy dibuka di area yang terlalu lemah atau terlalu terlambat.</li>
+        <li>Ronde terbaru sengaja memilih mode profit-first: <strong>zone_buyheavy</strong> menaikkan entry frequency dan full-window profit, tetapi juga mengangkat <code>2025-current EqDD</code> ke <code>50.80%</code>.</li>
+        <li>Artinya <code>v10</code> sekarang bukan lagi jalur M5 paling bersih, tapi jalur M5 paling agresif yang masih punya 2025-current positif.</li>
+        <li>Kalau nanti targetnya kembali ke stabilitas, baseline repair lama tetap ada di history: buy core-hour whitelist + add-on engine tanpa zone risk yang lebih besar.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Benchmark vs All Versions</h2>
+      <p class="muted">
+        Workspace aktif memang disederhanakan, tetapi tabel ini tetap menyimpan pembanding historis penting agar versi seperti <code>v4</code> dan <code>v5</code> tidak hilang dari konteks.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>TF</th>
+            <th>2026 Profit</th>
+            <th>2026 EqDD</th>
+            <th>2025-Current Profit</th>
+            <th>2025-Current EqDD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>v1</td>
+            <td>M15</td>
+            <td>-56.19%</td>
+            <td>90.92%</td>
+            <td class="good">+1076.45%</td>
+            <td>29.53%</td>
+          </tr>
+          <tr>
+            <td>v4</td>
+            <td>M15</td>
+            <td class="good">+131.60%</td>
+            <td class="bad">89.76%</td>
+            <td class="good">+14968.71%</td>
+            <td class="bad">88.29%</td>
+          </tr>
+          <tr>
+            <td>v5</td>
+            <td>M15</td>
+            <td class="good">+145.47%</td>
+            <td class="bad">85.98%</td>
+            <td class="good">+8337.70%</td>
+            <td class="bad">78.05%</td>
+          </tr>
+          <tr>
+            <td>v6</td>
+            <td>M15</td>
+            <td class="good">+58.96%</td>
+            <td>29.17%</td>
+            <td class="good">+1662.44%</td>
+            <td>29.88%</td>
+          </tr>
+          <tr>
+            <td>v7</td>
+            <td>M15</td>
+            <td class="good">+28.11%</td>
+            <td>9.08%</td>
+            <td class="good">+206.16%</td>
+            <td>17.70%</td>
+          </tr>
+          <tr>
+            <td>v8</td>
+            <td>M15</td>
+            <td class="good">+32.84%</td>
+            <td>8.99%</td>
+            <td class="good">+200.21%</td>
+            <td>17.45%</td>
+          </tr>
+          <tr>
+            <td>v9</td>
+            <td>M5</td>
+            <td class="good">+98.18%</td>
+            <td>19.59%</td>
+            <td class="good">+17.21%</td>
+            <td class="bad">58.50%</td>
+          </tr>
+          <tr>
+            <td><strong>v10</strong></td>
+            <td><strong>M5</strong></td>
+            <td class="good"><strong>+308.93%</strong></td>
+            <td><strong>9.22%</strong></td>
+            <td class="good"><strong>+307.79%</strong></td>
+            <td class="bad"><strong>50.74%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <ul>
+        <li><code>v4</code> dan <code>v5</code> tetap kelihatan sebagai pembanding historis: profitnya sangat besar, tetapi DD-nya ekstrem.</li>
+        <li><code>v8</code> tetap leader kalau target utamanya risk-adjusted dan survivability.</li>
+        <li><code>v6</code> masih jadi opsi <code>M15</code> yang lebih agresif.</li>
+        <li><code>v10</code> sekarang adalah jalur <code>M5</code> paling agresif yang masih saya pertahankan di workspace aktif.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Research Takeaway</h2>
+      <ul>
+        <li><code>v10</code> sekarang bukan lagi sekadar eksperimen netral; dia sudah jadi dual-engine <code>M5</code> yang kuat di recent-market dan tetap positif di full-window.</li>
+        <li>Masalah lama memang benar: saat buy dibuka terlalu lebar, April-Desember 2025 bocor panjang. Solusi pertama yang menang adalah <strong>buy core-hour whitelist</strong>.</li>
+        <li>Upgrade quantity terbaru datang dari <strong>buy-only add-on engine</strong>, bukan dari membuka mixed-regime noise.</li>
+        <li>Kesimpulan praktis: <code>v10</code> sekarang sudah <strong>mengalahkan <code>v9</code></strong> sebagai jalur <code>M5</code> utama, dan quantity-nya juga lebih sehat daripada official lama.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

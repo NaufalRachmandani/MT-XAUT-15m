@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invictus Forward 1 Docs - v11</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #172033;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --line: rgba(148, 163, 184, 0.18);
+      --accent: #60a5fa;
+      --accent-2: #fbbf24;
+      --good: #34d399;
+      --bad: #f87171;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+      color: var(--text);
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 72px;
+    }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 16px; }
+    h1 { font-size: clamp(2.25rem, 4vw, 3.4rem); }
+    h2 { font-size: 1.45rem; margin-top: 32px; }
+    p, ul { margin: 0 0 14px; }
+    .hero, .panel {
+      background: rgba(17, 24, 39, 0.86);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+    }
+    .hero { margin-bottom: 24px; }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(96, 165, 250, 0.12);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .muted { color: var(--muted); }
+    code {
+      background: rgba(96, 165, 250, 0.09);
+      color: #fcd34d;
+      border-radius: 8px;
+      padding: 0.12rem 0.38rem;
+      font-size: 0.95em;
+    }
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin: 18px 0 0;
+    }
+    .stat {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .stat .label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+    .stat .value {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: rgba(96, 165, 250, 0.08);
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .good { color: var(--good); }
+    .bad { color: var(--bad); }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Invictus Forward 1 · v11 Split M5</div>
+      <h1>Bull Bot + Bear Bot + Combined Tester</h1>
+      <p class="muted">
+        <code>v11</code> adalah versi baru untuk pendekatan dua bot:
+        <strong>BUY-only</strong> dan <strong>SELL-only</strong>. Keduanya tetap memakai
+        score/comment layer, zone retest agresif, dynamic SL/TP dari risk distance,
+        breakeven manager, dan cross-direction guard agar tidak saling melawan posisi.
+      </p>
+      <div class="grid">
+        <div class="stat">
+          <div class="label">Combined 2026 Net Profit</div>
+          <div class="value good">+504.76%</div>
+        </div>
+        <div class="stat">
+          <div class="label">Combined 2026 Trades</div>
+          <div class="value">152</div>
+        </div>
+        <div class="stat">
+          <div class="label">Combined 2026 Profit Factor</div>
+          <div class="value">2.53</div>
+        </div>
+        <div class="stat">
+          <div class="label">Combined 2026 Max Equity DD</div>
+          <div class="value bad">21.28%</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What Changed from Base</h2>
+      <ul>
+        <li><code>base</code> memakai satu struktur logic besar; <code>v11</code> memecah eksekusi menjadi <code>InvictusBullM5_v11</code>, <code>InvictusBearM5_v11</code>, dan <code>InvictusCombinedM5_v11</code>.</li>
+        <li>Timeframe execution resmi menjadi <code>M5</code>, bukan <code>M15</code>, agar entry lebih cepat dan trade count naik.</li>
+        <li>Order live dipisah arah: bull-only hanya BUY, bear-only hanya SELL. Combined tester dipakai untuk validasi portfolio dalam satu report.</li>
+        <li>Score gate dilonggarkan menjadi <code>V10_MinTradeScore=68</code> agar <code>M5</code> tidak terlalu ketat.</li>
+        <li>Zone retest dibuat lebih agresif: <code>ZoneLookback=8</code>, <code>ZoneMinBodyRatio=0.46</code>, <code>ZoneBreakATR=0.02</code>, <code>ZoneMidTouchATR=0.10</code>, <code>ZoneOvershootATR=0.35</code>.</li>
+        <li>Risk profile dinaikkan: <code>RiskPercent=5.00</code>, <code>MaxPositions=6</code>, dan <code>WeakRegimeMaxPositions=2</code>.</li>
+        <li>Cross-direction guard aktif: bull magic <code>2026042411</code> akan membaca bear magic <code>2026042412</code>, dan sebaliknya.</li>
+        <li>Comment trade tetap audit-friendly: <code>B11|engine|Sscore|grade|tags</code> untuk bull, <code>S11|...</code> untuk bear, dan <code>C11|...</code> untuk combined tester.</li>
+        <li>Dynamic SL/TP tetap berbasis swing/zone + ATR buffer, lalu RR disesuaikan engine. Breakeven tetap aktif di <code>0.80R</code>.</li>
+        <li>Partial/trailing TP manager masih tersedia sebagai input, tetapi default final <code>false</code> karena pada ronde ini profit leader masih lebih baik tanpa TP manager.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Files</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Tujuan</th>
+            <th>Live?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>mt5/InvictusBullM5_v11.mq5</code></td>
+            <td>BUY-only engine, comment prefix <code>B11</code>.</td>
+            <td>Ya, attach ke chart <code>XAUUSDc M5</code>.</td>
+          </tr>
+          <tr>
+            <td><code>mt5/InvictusBearM5_v11.mq5</code></td>
+            <td>SELL-only engine, comment prefix <code>S11</code>.</td>
+            <td>Ya, attach ke chart <code>XAUUSDc M5</code> kedua.</td>
+          </tr>
+          <tr>
+            <td><code>mt5/InvictusCombinedM5_v11.mq5</code></td>
+            <td>BUY+SELL tester untuk melihat combined equity curve.</td>
+            <td>Bisa, tapi tujuan utamanya backtest portfolio.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Backtest: v11 Champion</h2>
+      <p class="muted">
+        Setup: <code>XAUUSDc</code>, <code>M5</code>, <code>Every tick</code>,
+        <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>.
+        Profil final: <code>zone_loose</code>, sudah disimpan sebagai default source dan <code>.set</code>.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Window</th>
+            <th>Net Profit</th>
+            <th>PF</th>
+            <th>Win Rate</th>
+            <th>Trades</th>
+            <th>EqDD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-only</td>
+            <td class="good"><strong>+504.76%</strong></td>
+            <td>2.53</td>
+            <td>61.18%</td>
+            <td>152</td>
+            <td class="bad">21.28%</td>
+          </tr>
+          <tr>
+            <td>2025-current</td>
+            <td class="good">+426.34%</td>
+            <td>1.44</td>
+            <td>56.51%</td>
+            <td>614</td>
+            <td class="bad">55.03%</td>
+          </tr>
+          <tr>
+            <td>Last 2W</td>
+            <td class="good">+15.30%</td>
+            <td>4.30</td>
+            <td>80.00%</td>
+            <td>10</td>
+            <td>4.87%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Split Contribution Check</h2>
+      <p class="muted">
+        Backtest di bawah menjalankan bull-only dan bear-only secara terpisah. Ini bukan penjumlahan portfolio,
+        karena compounding dan margin tidak sama dengan combined tester.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Bot</th>
+            <th>Window</th>
+            <th>Net Profit</th>
+            <th>PF</th>
+            <th>Win Rate</th>
+            <th>Trades</th>
+            <th>EqDD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bull-only</td>
+            <td>2026-only</td>
+            <td class="good">+135.95%</td>
+            <td>1.85</td>
+            <td>48.15%</td>
+            <td>135</td>
+            <td>13.68%</td>
+          </tr>
+          <tr>
+            <td>Bull-only</td>
+            <td>Last 2W</td>
+            <td class="good">+16.67%</td>
+            <td>9.51</td>
+            <td>70.00%</td>
+            <td>10</td>
+            <td>5.06%</td>
+          </tr>
+          <tr>
+            <td>Bear-only</td>
+            <td>2026-only</td>
+            <td class="good">+59.61%</td>
+            <td>3.13</td>
+            <td>64.52%</td>
+            <td>31</td>
+            <td>9.35%</td>
+          </tr>
+          <tr>
+            <td>Bear-only</td>
+            <td>Last 2W</td>
+            <td class="bad">-1.01%</td>
+            <td>0.00</td>
+            <td>0.00%</td>
+            <td>1</td>
+            <td>1.71%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Iteration Notes</h2>
+      <ul>
+        <li><code>aggressive_qty</code> memberi <code>+426.97%</code> pada 2026, tetapi <code>zone_loose</code> menaikkan hasil ke <code>+504.76%</code>.</li>
+        <li><code>session_all</code> dan <code>trend_allin</code> menaikkan trade count ke 279-284 trade YTD, tetapi PF turun dan DD rusak, jadi tidak dipakai.</li>
+        <li><code>tp_dense</code> memberi win rate tinggi dan 230 trade YTD, tetapi net profit turun ke <code>+209.20%</code>; TP manager tidak jadi default.</li>
+        <li><code>mixed_regime</code> menaikkan quantity, tetapi kualitas entry turun terlalu banyak.</li>
+        <li>Kesimpulan final: untuk target profit agresif, quantity harus dinaikkan lewat <strong>zone retest</strong>, bukan membuka semua jam/regime secara mentah.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Live Setup Note</h2>
+      <ul>
+        <li>MT5 hanya bisa attach satu EA per chart. Untuk dua bot, buka dua chart <code>XAUUSDc M5</code>.</li>
+        <li>Chart pertama attach <code>InvictusBullM5_v11</code>, chart kedua attach <code>InvictusBearM5_v11</code>.</li>
+        <li>Pastikan <code>Algo Trading</code> ON dan input default tidak berubah kecuali sengaja.</li>
+        <li>Untuk backtest portfolio, gunakan <code>InvictusCombinedM5_v11</code>.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

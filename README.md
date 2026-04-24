@@ -1,86 +1,50 @@
-# MT XAU T 15m
+# MT XAU v11
 
-Repository riset EA MT5 untuk `XAUUSDc`.
+Repository ini sekarang difokuskan ke satu versi aktif: `v11` split engine untuk `XAUUSDc` timeframe `M5`.
 
-Workspace aktif sekarang sengaja dipersempit agar tidak penuh versi yang sudah tidak layak pakai. Varian lama yang gagal atau tidak lagi diprioritaskan dipensiunkan dari working tree dan tetap aman di Git history.
+Versi lama `v1` sampai `v10` dan cache iterasinya sudah dipindahkan ke Git history. Jika perlu mengambil ulang data lama, gunakan commit sebelum cleanup: `546f3b6`.
 
-## Versi Aktif
+## File Aktif
 
-- [InvictusForward1M15_v6.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v6.mq5)
-- [InvictusForward1M15_v8.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v8.mq5)
-- [InvictusForward1M15_v10.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v10.mq5)
-- [InvictusBullM5_v11.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBullM5_v11.mq5)
-- [InvictusBearM5_v11.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBearM5_v11.mq5)
-- [InvictusCombinedM5_v11.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusCombinedM5_v11.mq5)
+- [InvictusBullM5_v11.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBullM5_v11.mq5): BUY-only engine.
+- [InvictusBearM5_v11.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBearM5_v11.mq5): SELL-only engine.
+- [InvictusCombinedM5_v11.mq5](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusCombinedM5_v11.mq5): combined tester untuk backtest portfolio.
 
-## Mana yang Dipakai
+## Preset
 
-- `v8` = pilihan utama `M15` untuk `2026-only`
-  - profit lebih rendah, tapi DD paling sehat
-  - cocok kalau prioritasnya survivability dan equity curve bersih
-- `v6` = pilihan agresif `M15`
-  - profit lebih tinggi dari `v8`
-  - DD sekitar `30%`, jadi jelas lebih kasar
-- `v10` = jalur utama `M5`
-  - sekarang memakai arsitektur `base-style zone retest` yang diadaptasi ke `M5`
-  - lebih agresif daripada `v8`
-  - jadi kandidat `M5` utama kalau target utamanya profit dan trade count, bukan DD paling rendah
-- `v11` = eksperimen utama split `M5`
-  - `BullM5_v11` khusus BUY, `BearM5_v11` khusus SELL
-  - `CombinedM5_v11` dipakai untuk backtest portfolio bull+bear
-  - kandidat paling agresif saat ini untuk `2026-only`, tapi DD `2025-current` masih kasar
+- [InvictusBullM5_v11.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBullM5_v11.default_2026.set)
+- [InvictusBearM5_v11.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBearM5_v11.default_2026.set)
+- [InvictusCombinedM5_v11.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusCombinedM5_v11.default_2026.set)
 
-## Snapshot Ringkas
+## Dokumentasi
 
-- `v6`
-  - `2026-only`: `+58.96%`, `EqDD 29.17%`
-  - `2025-current`: `+1662.44%`, `EqDD 29.88%`
-- `v8`
-  - `2026-only`: `+32.84%`, `EqDD 8.99%`
-  - `2025-current`: `+200.21%`, `EqDD 17.45%`
-- `v10`
-  - `2026-only`: `+308.93%`, `EqDD 9.22%`
-  - `2025-current`: `+307.79%`, `EqDD 50.74%`
-  - live guard aktif: `MinTradeScore=72` dan quick-exit khusus weak/out-of-session base sell
-- `v11 combined`
-  - `2026-only`: `+504.76%`, `EqDD 21.28%`, `152 trades`
-  - `2025-current`: `+426.34%`, `EqDD 55.03%`, `614 trades`
-  - split live aktif: bull magic `2026042411`, bear magic `2026042412`
-
-Ringkasan lintas-window ada di:
-- [compare_active_windows_2025current_vs_2026only.md](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/compare_active_windows_2025current_vs_2026only.md)
-- [compare_2026_active_summary.md](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/compare_2026_active_summary.md)
-- [version_catalog.md](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/version_catalog.md)
-
-## Preset / Config
-
-- `v6`
-  - [InvictusForward1M15_v6.backtest.ini](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v6.backtest.ini)
-  - [InvictusForward1M15_v6.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v6.default_2026.set)
-  - [InvictusForward1M15_v6.live_safe_5400usc.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v6.live_safe_5400usc.set)
-- `v8`
-  - [InvictusForward1M15_v8.backtest.ini](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v8.backtest.ini)
-- `v10`
-  - [InvictusForward1M15_v10.backtest.ini](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v10.backtest.ini)
-  - [InvictusForward1M15_v10.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v10.default_2026.set)
-  - [InvictusForward1M15_v10.trim_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusForward1M15_v10.trim_2026.set)
-- `v11`
-  - [InvictusBullM5_v11.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBullM5_v11.default_2026.set)
-  - [InvictusBearM5_v11.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusBearM5_v11.default_2026.set)
-  - [InvictusCombinedM5_v11.default_2026.set](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/mt5/InvictusCombinedM5_v11.default_2026.set)
-
-## Dokumentasi HTML
-
-- [InvictusForward-1-Docs_v6.html](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/InvictusForward-1-Docs_v6.html)
-- [InvictusForward-1-Docs_v8.html](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/InvictusForward-1-Docs_v8.html)
-- [InvictusForward-1-Docs_v10.html](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/InvictusForward-1-Docs_v10.html)
 - [InvictusForward-1-Docs_v11.html](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/InvictusForward-1-Docs_v11.html)
+- [v11_summary.md](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/v11_summary.md)
+- [v11_split_m5/summary.md](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/build/v11_split_m5/summary.md)
 
-## Backtest Automation
+## Backtest Snapshot
+
+Setup: `XAUUSDc`, `M5`, `Deposit 100 USD`, `Leverage 1:100`, mode `Every tick`.
+
+| Bot | Window | Net Profit | Trades | Win Rate | PF | EqDD |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Combined tester | 2026-only | +504.76% | 152 | 61.18% | 2.53 | 21.28% |
+| Combined tester | 2025-current | +426.34% | 614 | 56.51% | 1.44 | 55.03% |
+| Bull-only | 2026-only | +135.95% | 135 | 48.15% | 1.85 | 13.68% |
+| Bear-only | 2026-only | +59.61% | 31 | 64.52% | 3.13 | 9.35% |
+
+## Live Setup
+
+MT5 hanya bisa attach satu EA per chart. Untuk live split:
+
+1. Buka chart pertama: `XAUUSDc`, timeframe `M5`, attach `InvictusBullM5_v11`.
+2. Buka chart kedua: `XAUUSDc`, timeframe `M5`, attach `InvictusBearM5_v11`.
+3. Pastikan `Algo Trading` ON.
+4. Gunakan default input/preset kecuali memang sedang eksperimen.
+
+`InvictusCombinedM5_v11` sebaiknya dipakai untuk backtest portfolio, bukan setup live utama.
+
+## Automation
 
 - [MT5_AUTOMATED_BACKTEST.md](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/docs/MT5_AUTOMATED_BACKTEST.md)
-
-## Catatan
-
-- Semua varian lama yang tidak lagi dipakai sengaja dihapus dari working tree untuk menjaga riset tetap fokus.
-- Kalau suatu saat perlu melihat jalur lama, ambil dari Git history, bukan dari workspace aktif.
+- [backtest_v11_split.py](/Users/naufalrachmandani/Hobby/MT5%20XAU%2015m/tools/backtest_v11_split.py)

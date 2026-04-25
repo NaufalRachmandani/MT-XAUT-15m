@@ -67,6 +67,12 @@ input double V10_BearSubMinBodyRatio = 0.58;
 input double V10_BearSubRiskMultiplier = 0.28;
 input double V10_BearSubRR = 1.75;
 input int    V10_BearSubMaxHoldBars = 24;
+input bool   V11_EnableBearSafeMode = false;
+input int    V11_BearSafeStrongMinScore = 60;
+input int    V11_BearSafeWeakMinScore = 72;
+input double V11_BearSafeWeakMinBodyRatio = 0.50;
+input bool   V11_BearSafeBlockWeakZone = false;
+input bool   V11_BearSafeBlockWeakAddOns = true;
 input bool   V10_EnableZoneRetestEngine = true;
 input bool   V10_ZoneAllowWeakRegime = true;
 input bool   V10_ZoneUseCoreHours = false;
@@ -78,7 +84,7 @@ input double V10_ZoneReclaimATR = 0.00;
 input double V10_ZoneOvershootATR = 0.35;
 input double V10_ZoneRiskMultiplier = 0.70;
 input double V10_ZoneRR = 1.20;
-input int    V10_ZoneMaxHoldBars = 18;
+input int    V10_ZoneMaxHoldBars = 12;
 input bool   V10_StrongBullRelaxCoreHours = false;
 input bool   V10_StrongBullPullbackOnlyOutsideCore = true;
 input bool   V10_BlockBuyHour07 = false;
@@ -116,7 +122,7 @@ input double V10_BuyRR = 1.55;
 input double V10_WeakSellRR = 1.10;
 input double V10_WeakBuyRR = 1.30;
 
-input int    V10_MaxHoldBars = 36;
+input int    V10_MaxHoldBars = 24;
 input double V10_BreakevenR = 0.80;
 input double V10_BreakevenLockUsd = 0.20;
 input bool   V10_FastFailBuyGuard = false;
@@ -126,7 +132,7 @@ input double V10_FastFailMinProgressR = 0.10;
 input bool   V10_WeakOutsideSellQuickExit = true;
 input int    V10_WeakOutsideSellExitBars = 6;
 input bool   V10_CloseOnRegimeFlip = false;
-input bool   V10_TimeCloseProfitOnly = true;
+input bool   V10_TimeCloseProfitOnly = false;
 input int    V10_ScoreGradeAMin = 85;
 input int    V10_ScoreGradeBMin = 72;
 input int    V10_MinTradeScore = 68;
@@ -134,6 +140,11 @@ input int    V10_ScoreBoostMin = 90;
 input double V10_ScoreRRBonus = 0.00;
 input double V10_ScoreRiskBonus = 1.00;
 input bool   V10_EnableTPManager = false;
+input bool   V11_LogExitActions = true;
+input bool   V11_LogRejectedSignals = false;
+input int    V11_MinRejectedScoreToLog = 55;
+input bool   V11_LogStatusOnNewBar = false;
+input int    V11_StatusEveryBars = 12;
 input double V10_TP1R = 1.15;
 input double V10_TP1CloseFraction = 0.50;
 input double V10_RunnerRR = 2.40;
@@ -150,7 +161,15 @@ input double V10_AddOnBreakATR = 0.02;
 input double V10_AddOnMinBodyRatio = 0.58;
 input double V10_AddOnRiskMultiplier = 0.32;
 input double V10_AddOnRR = 1.10;
-input int    V10_AddOnMaxHoldBars = 12;
+input int    V10_AddOnMaxHoldBars = 8;
+input bool   V11_BuyBreakTimeCloseProfitOnly = false;
+input bool   V11_BuyZoneTimeCloseProfitOnly = false;
+input bool   V11_BuyCompTimeCloseProfitOnly = false;
+input bool   V11_BuyAddOnTimeCloseProfitOnly = false;
+input bool   V11_SellBreakTimeCloseProfitOnly = true;
+input bool   V11_SellZoneTimeCloseProfitOnly = true;
+input bool   V11_SellCompTimeCloseProfitOnly = true;
+input bool   V11_SellAddOnTimeCloseProfitOnly = true;
 
 enum V10Regime
   {
@@ -190,6 +209,7 @@ int               g_atrH1 = INVALID_HANDLE;
 int               g_emaM5 = INVALID_HANDLE;
 int               g_atrM5 = INVALID_HANDLE;
 datetime          g_lastBarTime = 0;
+int               g_statusBarCounter = 0;
 static const ulong V10_MAGIC = 2026042411;
 static const ENUM_TIMEFRAMES V10_EXEC_TF = PERIOD_M5;
 
@@ -265,6 +285,237 @@ string V10GradeForScore(const int score)
   }
 
 
+string V11EngineLabel(const string engineCode)
+  {
+   if(engineCode == "ZB")
+      return("Zone Retest Buy");
+   if(engineCode == "ZS")
+      return("Zone Retest Sell");
+   if(engineCode == "BE")
+      return("Bearish Breakout Sell");
+   if(engineCode == "BO")
+      return("Bullish Breakout Buy");
+   if(engineCode == "PB")
+      return("Bullish Pullback Buy");
+   if(engineCode == "SB")
+      return("Bull Compression Breakout");
+   if(engineCode == "SS")
+      return("Bear Compression Breakdown");
+   if(engineCode == "AB")
+      return("Buy Add-on Continuation");
+   if(engineCode == "AS")
+      return("Sell Add-on Continuation");
+   return(engineCode);
+  }
+
+
+string V11EngineComment(const string engineCode)
+  {
+   if(engineCode == "ZB")
+      return("BUY_ZONE");
+   if(engineCode == "ZS")
+      return("SELL_ZONE");
+   if(engineCode == "BE")
+      return("SELL_BREAK");
+   if(engineCode == "BO")
+      return("BUY_BREAK");
+   if(engineCode == "PB")
+      return("BUY_PULLBACK");
+   if(engineCode == "SB")
+      return("BUY_COMP");
+   if(engineCode == "SS")
+      return("SELL_COMP");
+   if(engineCode == "AB")
+      return("BUY_ADDON");
+   if(engineCode == "AS")
+      return("SELL_ADDON");
+   return(engineCode);
+  }
+
+
+string V11TagLabel(const string tag)
+  {
+   if(tag == "RG")
+      return("strong-regime");
+   if(tag == "WG")
+      return("weak-regime");
+   if(tag == "RJ")
+      return("rejection");
+   if(tag == "BR")
+      return("breakout");
+   if(tag == "SE")
+      return("sell-session");
+   if(tag == "CH")
+      return("core-hour");
+   if(tag == "XH")
+      return("outside-core-hour");
+   if(tag == "RC")
+      return("reclaim");
+   if(tag == "ZN")
+      return("zone");
+   if(tag == "RT")
+      return("retest");
+   if(tag == "BM")
+      return("body-midpoint");
+   if(tag == "CM")
+      return("compression");
+   if(tag == "EM")
+      return("ema-touch");
+   if(tag == "AD")
+      return("add-on");
+   if(tag == "CT")
+      return("continuation");
+   if(tag == "BX")
+      return("boosted");
+   return(tag);
+  }
+
+
+string V11TagsHuman(const string tags)
+  {
+   if(tags == "")
+      return("-");
+
+   string parts[];
+   ushort separator = StringGetCharacter("|", 0);
+   int count = StringSplit(tags, separator, parts);
+   string human = "";
+   for(int i = 0; i < count; i++)
+     {
+      if(i > 0)
+         human += ", ";
+      human += V11TagLabel(parts[i]);
+     }
+   return(human);
+  }
+
+
+void V11RejectedSignalLog(const string direction,
+                          const string engineCode,
+                          const string reason,
+                          const int score,
+                          const V10Regime regime,
+                          const int hour,
+                          const double bodyRatio,
+                          const double breakAtr,
+                          const string note)
+  {
+   if(!V11_LogRejectedSignals || score < V11_MinRejectedScoreToLog)
+      return;
+   PrintFormat("V11 REJECT %s | engine=%s (%s) | reason=%s | score=%d min=%d | regime=%s | hour=%02d | body=%.2f breakATR=%.2f | note=%s",
+               direction,
+               V11EngineLabel(engineCode),
+               engineCode,
+               reason,
+               score,
+               V10_MinTradeScore,
+               V10RegimeLabel(regime),
+               hour,
+               bodyRatio,
+               breakAtr,
+               note);
+  }
+
+
+void V11ExitActionLog(const string action,
+                      const ulong ticket,
+                      const string comment,
+                      const string reason,
+                      const int barsHeld,
+                      const double progressR,
+                      const double stopLoss,
+                      const double takeProfit)
+  {
+   if(!V11_LogExitActions)
+      return;
+   PrintFormat("V11 EXIT %s | ticket=%I64u | %s | reason=%s | bars=%d progressR=%.2f | sl=%.2f tp=%.2f",
+               action,
+               ticket,
+               comment,
+               reason,
+               barsHeld,
+               progressR,
+               stopLoss,
+               takeProfit);
+  }
+
+
+bool V11BearSafePass(const string engineCode,
+                     const V10Regime regime,
+                     const int score,
+                     const int hour,
+                     const double bodyRatio,
+                     const double breakAtr)
+  {
+   if(!V11_EnableBearSafeMode)
+      return(true);
+   if(!V10RegimeIsBear(regime))
+      return(true);
+
+   bool strongBear = regime == V10_REGIME_STRONG_BEAR;
+   if(strongBear)
+      return(score >= V11_BearSafeStrongMinScore);
+
+   if(score < V11_BearSafeWeakMinScore)
+      return(false);
+   if(bodyRatio < V11_BearSafeWeakMinBodyRatio)
+      return(false);
+   if(V11_BearSafeBlockWeakZone && engineCode == "ZS")
+      return(false);
+   if(V11_BearSafeBlockWeakAddOns && engineCode == "AS")
+      return(false);
+   return(true);
+  }
+
+
+bool V11EngineTimeCloseProfitOnly(const ENUM_POSITION_TYPE type, const string comment)
+  {
+   if(type == POSITION_TYPE_BUY)
+     {
+      if(StringFind(comment, "|ZB|") >= 0)
+         return(V11_BuyZoneTimeCloseProfitOnly);
+      if(StringFind(comment, "|SB|") >= 0)
+         return(V11_BuyCompTimeCloseProfitOnly);
+      if(StringFind(comment, "|AB|") >= 0)
+         return(V11_BuyAddOnTimeCloseProfitOnly);
+      return(V11_BuyBreakTimeCloseProfitOnly);
+     }
+
+   if(StringFind(comment, "|ZS|") >= 0)
+      return(V11_SellZoneTimeCloseProfitOnly);
+   if(StringFind(comment, "|SS|") >= 0)
+      return(V11_SellCompTimeCloseProfitOnly);
+   if(StringFind(comment, "|AS|") >= 0)
+      return(V11_SellAddOnTimeCloseProfitOnly);
+   return(V11_SellBreakTimeCloseProfitOnly);
+  }
+
+
+void V11StatusLog(const bool entered)
+  {
+   if(!V11_LogStatusOnNewBar)
+      return;
+   g_statusBarCounter++;
+   if(V11_StatusEveryBars > 1 && (g_statusBarCounter % V11_StatusEveryBars) != 0)
+      return;
+
+   double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+   double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+   double spread = (ask > 0.0 && bid > 0.0) ? (ask - bid) : 0.0;
+   V10Regime regime = V10DetectRegime();
+   PrintFormat("V11 STATUS | symbol=%s tf=M5 | regime=%s | open=%d buy=%d sell=%d | spread=%.2f | equity=%.2f | entered=%s | rejectLog=%s",
+               _Symbol,
+               V10RegimeLabel(regime),
+               V10CountOpenPositions(),
+               V10CountOpenPositionsByType(false),
+               V10CountOpenPositionsByType(true),
+               spread,
+               AccountInfoDouble(ACCOUNT_EQUITY),
+               entered ? "yes" : "no",
+               V11_LogRejectedSignals ? "on" : "off");
+  }
+
+
 string V10AppendTag(const string tags, const string tag)
   {
    if(tag == "")
@@ -277,7 +528,7 @@ string V10AppendTag(const string tags, const string tag)
 
 string V10BuildComment(const string engineCode, const int score, const string grade, const string tags)
   {
-   string comment = "B11|" + engineCode + "|S" + IntegerToString(score) + "|" + grade;
+   string comment = "B11|" + V11EngineComment(engineCode) + "|" + engineCode + "|S" + IntegerToString(score) + "|" + grade;
    if(tags != "")
       comment += "|" + tags;
    if(StringLen(comment) > 31)
@@ -1015,7 +1266,17 @@ bool V10BuildSellSignal(const MqlRates &rates[], const double emaM5, const doubl
    if(cleanStretch)
       score += 5;
    if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+     {
+      V11RejectedSignalLog("SELL", "BE", "score below gate", score, regime, currentHour, bodyRatio, breakAtr,
+                           StringFormat("minBreakATR=%.2f rejection=%s coreSession=%s", minBreakAtr, rejectionSeen ? "yes" : "no", sessionCore ? "yes" : "no"));
       return(false);
+     }
+   if(!V11BearSafePass("BE", regime, score, currentHour, bodyRatio, breakAtr))
+     {
+      V11RejectedSignalLog("SELL", "BE", "bear safe mode", score, regime, currentHour, bodyRatio, breakAtr,
+                           StringFormat("weakMinScore=%d weakMinBody=%.2f", V11_BearSafeWeakMinScore, V11_BearSafeWeakMinBodyRatio));
+      return(false);
+     }
 
    int stopEnd = MathMin(V10_StopLookbackBars, ArraySize(rates) - 1);
    double swingHigh = V10HighestHigh(rates, 1, stopEnd);
@@ -1114,7 +1375,11 @@ bool V10BuildBullSubSignal(const MqlRates &rates[], const double emaM5, const do
    if(tightToEma)
       score += 10;
    if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+     {
+      V11RejectedSignalLog("BUY", "SB", "score below gate", score, regime, currentHour, bodyRatio, boxRange / atr,
+                           StringFormat("compressionBoxATR=%.2f compact=%s tightToEma=%s", boxRange / atr, compactBox ? "yes" : "no", tightToEma ? "yes" : "no"));
       return(false);
+     }
 
    double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
    if(ask <= 0.0)
@@ -1210,7 +1475,17 @@ bool V10BuildBearSubSignal(const MqlRates &rates[], const double emaM5, const do
    if(tightToEma)
       score += 10;
    if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+     {
+      V11RejectedSignalLog("SELL", "SS", "score below gate", score, regime, currentHour, bodyRatio, boxRange / atr,
+                           StringFormat("compressionBoxATR=%.2f compact=%s tightToEma=%s", boxRange / atr, compactBox ? "yes" : "no", tightToEma ? "yes" : "no"));
       return(false);
+     }
+   if(!V11BearSafePass("SS", regime, score, currentHour, bodyRatio, boxRange / atr))
+     {
+      V11RejectedSignalLog("SELL", "SS", "bear safe mode", score, regime, currentHour, bodyRatio, boxRange / atr,
+                           StringFormat("compressionBoxATR=%.2f", boxRange / atr));
+      return(false);
+     }
 
    double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
    if(bid <= 0.0)
@@ -1343,7 +1618,17 @@ bool V10BuildZoneRetestSignal(const MqlRates &rates[], const double emaM5, const
       if(reclaimed)
          score += 6;
       if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+        {
+         V11RejectedSignalLog("SELL", "ZS", "score below gate", score, regime, currentHour, V10BodyRatio(retest), breakAtr,
+                              StringFormat("anchorBody=%.2f touchedMid=%s reclaimed=%s", V10BodyRatio(anchor), touchedMid ? "yes" : "no", reclaimed ? "yes" : "no"));
          return(false);
+        }
+      if(!V11BearSafePass("ZS", regime, score, currentHour, V10BodyRatio(retest), breakAtr))
+        {
+         V11RejectedSignalLog("SELL", "ZS", "bear safe mode", score, regime, currentHour, V10BodyRatio(retest), breakAtr,
+                              StringFormat("anchorBody=%.2f blockWeakZone=%s", V10BodyRatio(anchor), V11_BearSafeBlockWeakZone ? "yes" : "no"));
+         return(false);
+        }
 
       double takeProfit = V10NormalizePrice(bid - (stopDistance * rr));
       if(!V10StopsValid(true, bid, stopLoss, takeProfit))
@@ -1411,7 +1696,11 @@ bool V10BuildZoneRetestSignal(const MqlRates &rates[], const double emaM5, const
    if(reclaimed)
       score += 6;
    if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+     {
+      V11RejectedSignalLog("BUY", "ZB", "score below gate", score, regime, currentHour, V10BodyRatio(retest), breakAtr,
+                           StringFormat("anchorBody=%.2f touchedMid=%s reclaimed=%s", V10BodyRatio(anchor), touchedMid ? "yes" : "no", reclaimed ? "yes" : "no"));
       return(false);
+     }
 
    double takeProfit = V10NormalizePrice(ask + (stopDistance * rr));
    if(!V10StopsValid(false, ask, stopLoss, takeProfit))
@@ -1509,7 +1798,12 @@ bool V10BuildBuySignal(const MqlRates &rates[], const double emaM5, const double
    if(pullbackSeen)
       score += 10;
    if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+     {
+      string rejectEngine = pullbackSetup && !breakoutSetup ? "PB" : "BO";
+      V11RejectedSignalLog("BUY", rejectEngine, "score below gate", score, regime, currentHour, bodyRatio, breakAtr,
+                           StringFormat("core=%s pullbackSeen=%s breakout=%s pullback=%s", inCoreHour ? "yes" : "no", pullbackSeen ? "yes" : "no", breakoutSetup ? "yes" : "no", pullbackSetup ? "yes" : "no"));
       return(false);
+     }
 
    double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
    if(ask <= 0.0)
@@ -1635,6 +1929,12 @@ bool V10BuildAddOnSignal(const MqlRates &rates[], const double emaM5, const doub
       signal.lot = lot;
       signal.stopDistance = stopDistance;
       signal.rr = V10_AddOnRR;
+      if(!V11BearSafePass("AS", regime, 76, currentHour, bodyRatio, 0.0))
+        {
+         V11RejectedSignalLog("SELL", "AS", "bear safe mode", 76, regime, currentHour, bodyRatio, 0.0,
+                              StringFormat("blockWeakAddOns=%s", V11_BearSafeBlockWeakAddOns ? "yes" : "no"));
+         return(false);
+        }
       string tags = V10AppendTag("", V10RegimeIsStrong(regime) ? "RG" : "WG");
       tags = V10AppendTag(tags, "AD");
       tags = V10AppendTag(tags, "CT");
@@ -1686,12 +1986,13 @@ bool V10SubmitSignal(const V10Signal &signal)
    g_trade.SetDeviationInPoints(20);
    g_trade.SetTypeFillingBySymbol(_Symbol);
 
-   PrintFormat("V10 ENTRY %s engine=%s score=%d grade=%s tags=%s lot=%.2f rr=%.2f sl=%.2f tp=%.2f note=%s",
+   PrintFormat("V11 ENTRY %s | engine=%s (%s) | score=%d grade=%s | tags=%s | lot=%.2f rr=%.2f sl=%.2f tp=%.2f | note=%s",
                signal.sell ? "SELL" : "BUY",
+               V11EngineLabel(signal.engineCode),
                signal.engineCode,
                signal.score,
                signal.grade,
-               signal.tags,
+               V11TagsHuman(signal.tags),
                signal.lot,
                signal.rr,
                signal.stopLoss,
@@ -1739,7 +2040,9 @@ void V10ManagePositions()
 	      if(riskDistance <= 0.0)
 	         continue;
 
-	      double favorable = (type == POSITION_TYPE_BUY) ? (currentPrice - openPrice) : (openPrice - currentPrice);
+		      double favorable = (type == POSITION_TYPE_BUY) ? (currentPrice - openPrice) : (openPrice - currentPrice);
+      int barsHeld = (int)((TimeCurrent() - (datetime)PositionGetInteger(POSITION_TIME)) / PeriodSeconds(V10_EXEC_TF));
+      double progressR = favorable / riskDistance;
       if(favorable >= (riskDistance * V10_BreakevenR))
         {
          double desiredSl = (type == POSITION_TYPE_BUY)
@@ -1748,9 +2051,15 @@ void V10ManagePositions()
          if(V10StopsValid(type == POSITION_TYPE_SELL, openPrice, desiredSl, takeProfit))
            {
             if(type == POSITION_TYPE_BUY && stopLoss < desiredSl)
-               g_trade.PositionModify(ticket, desiredSl, takeProfit);
+              {
+               if(g_trade.PositionModify(ticket, desiredSl, takeProfit))
+                  V11ExitActionLog("MOVE_SL_TO_BE", ticket, comment, "progress reached breakeven threshold", barsHeld, progressR, desiredSl, takeProfit);
+              }
             if(type == POSITION_TYPE_SELL && stopLoss > desiredSl)
-	               g_trade.PositionModify(ticket, desiredSl, takeProfit);
+              {
+               if(g_trade.PositionModify(ticket, desiredSl, takeProfit))
+                  V11ExitActionLog("MOVE_SL_TO_BE", ticket, comment, "progress reached breakeven threshold", barsHeld, progressR, desiredSl, takeProfit);
+              }
 	           }
 	        }
 
@@ -1788,12 +2097,15 @@ void V10ManagePositions()
 	               double runnerSl = (type == POSITION_TYPE_BUY)
 	                                 ? V10NormalizePrice(MathMax(stopLoss, openPrice + V10_BreakevenLockUsd))
 	                                 : V10NormalizePrice(MathMin(stopLoss, openPrice - V10_BreakevenLockUsd));
-		               if(V10StopFitsMarket(type, currentPrice, runnerSl) &&
-		                  V10TakeProfitFitsMarket(type, currentPrice, runnerTp) &&
-		                  V10StopsValid(type == POSITION_TYPE_SELL, openPrice, runnerSl, runnerTp))
-		                  g_trade.PositionModify(ticket, runnerSl, runnerTp);
-		               V10SetTPStage(ticket, 1);
-		               PrintFormat("V10 TP1 %s ticket=%I64u closeVol=%.2f runnerRR=%.2f", comment, ticket, closeVolume, runnerRr);
+			               if(V10StopFitsMarket(type, currentPrice, runnerSl) &&
+			                  V10TakeProfitFitsMarket(type, currentPrice, runnerTp) &&
+			                  V10StopsValid(type == POSITION_TYPE_SELL, openPrice, runnerSl, runnerTp))
+                            {
+			                  if(g_trade.PositionModify(ticket, runnerSl, runnerTp))
+                              V11ExitActionLog("TP1_RUNNER_SET", ticket, comment, "partial close done; runner TP/SL adjusted", barsHeld, progressR, runnerSl, runnerTp);
+                            }
+			               V10SetTPStage(ticket, 1);
+			               PrintFormat("V11 TP1 | ticket=%I64u | %s | closedVolume=%.2f runnerRR=%.2f", ticket, comment, closeVolume, runnerRr);
 		               continue;
 		              }
 		           }
@@ -1815,11 +2127,13 @@ void V10ManagePositions()
 	            if(V10StopFitsMarket(type, currentPrice, desiredSl) &&
 	               V10TakeProfitFitsMarket(type, currentPrice, takeProfit) &&
 	               ((type == POSITION_TYPE_BUY && desiredSl > stopLoss) || (type == POSITION_TYPE_SELL && desiredSl < stopLoss)))
-	               g_trade.PositionModify(ticket, desiredSl, takeProfit);
+                 {
+	               if(g_trade.PositionModify(ticket, desiredSl, takeProfit))
+                     V11ExitActionLog("TRAIL_SL", ticket, comment, "ATR trailing after TP1", barsHeld, progressR, desiredSl, takeProfit);
+                 }
 	           }
 	        }
 
-	      int barsHeld = (int)((TimeCurrent() - (datetime)PositionGetInteger(POSITION_TIME)) / PeriodSeconds(V10_EXEC_TF));
 	      bool weakOutsideBaseSell = V10_WeakOutsideSellQuickExit &&
 	                                 type == POSITION_TYPE_SELL &&
 	                                 StringFind(comment, "|BE|") >= 0 &&
@@ -1829,20 +2143,22 @@ void V10ManagePositions()
 	         barsHeld >= V10_WeakOutsideSellExitBars &&
 	         PositionGetDouble(POSITION_PROFIT) < 0.0)
 	        {
-	         g_trade.PositionClose(ticket);
+	         if(g_trade.PositionClose(ticket))
+               V11ExitActionLog("WEAK_SELL_QUICK_EXIT", ticket, comment, "weak outside-session sell stayed negative", barsHeld, progressR, stopLoss, takeProfit);
 	         continue;
 	        }
 	      if(V10_FastFailBuyGuard && type == POSITION_TYPE_BUY && barsHeld <= V10_FastFailBars && emaM5 > 0.0)
 	        {
          bool scopeOk = !V10_FastFailPullbackOnly || (StringFind(comment, "|PB|") >= 0);
-         double progressR = favorable / riskDistance;
+	         progressR = favorable / riskDistance;
          double failBuffer = (atrM5 > 0.0) ? (atrM5 * V10_HoldBufferATR) : 0.0;
          bool lostTrend = currentPrice <= (emaM5 + failBuffer);
-         if(scopeOk && lostTrend && progressR < V10_FastFailMinProgressR && PositionGetDouble(POSITION_PROFIT) < 0.0)
-           {
-            g_trade.PositionClose(ticket);
-            continue;
-           }
+	         if(scopeOk && lostTrend && progressR < V10_FastFailMinProgressR && PositionGetDouble(POSITION_PROFIT) < 0.0)
+	           {
+	            if(g_trade.PositionClose(ticket))
+                  V11ExitActionLog("FAST_FAIL_CLOSE", ticket, comment, "buy lost EMA before progress", barsHeld, progressR, stopLoss, takeProfit);
+	            continue;
+	           }
         }
       bool regimeFlip = V10_CloseOnRegimeFlip &&
                         ((type == POSITION_TYPE_BUY && !V10RegimeIsBull(regime)) ||
@@ -1860,10 +2176,15 @@ void V10ManagePositions()
          maxHoldBars = V10_ZoneMaxHoldBars;
       if(type == POSITION_TYPE_SELL && StringFind(comment, "|AS|") >= 0)
          maxHoldBars = V10_AddOnMaxHoldBars;
-      bool timeExpired = barsHeld >= maxHoldBars;
-      bool canTimeClose = !V10_TimeCloseProfitOnly || PositionGetDouble(POSITION_PROFIT) > 0.0;
-      if(regimeFlip || (timeExpired && canTimeClose))
-         g_trade.PositionClose(ticket);
+	      bool timeExpired = barsHeld >= maxHoldBars;
+	      bool timeCloseProfitOnly = V11EngineTimeCloseProfitOnly(type, comment);
+	      bool canTimeClose = !timeCloseProfitOnly || PositionGetDouble(POSITION_PROFIT) > 0.0;
+	      if(regimeFlip || (timeExpired && canTimeClose))
+        {
+         string closeReason = regimeFlip ? "regime flipped against position" : "max hold bars reached";
+         if(g_trade.PositionClose(ticket))
+            V11ExitActionLog(regimeFlip ? "REGIME_FLIP_CLOSE" : "TIME_CLOSE", ticket, comment, closeReason, barsHeld, progressR, stopLoss, takeProfit);
+        }
      }
   }
 
@@ -1991,5 +2312,6 @@ void OnTick()
    V10ManagePositions();
    if(!V10NewBar())
       return;
-   V10EvaluateEntries();
+   bool entered = V10EvaluateEntries();
+   V11StatusLog(entered);
   }

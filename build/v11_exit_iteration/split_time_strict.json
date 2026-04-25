@@ -1,0 +1,68 @@
+[
+  {
+    "bot": "bull",
+    "stem": "InvictusBullM5_v11",
+    "set": "InvictusBullM5_v11_exit_time_strict.set",
+    "metrics": {
+      "recent": {
+        "net_profit": 39.97,
+        "profit_factor": 3.63,
+        "expected_payoff": 1.74,
+        "total_trades": 23.0,
+        "win_rate": 65.22,
+        "balance_dd_abs": 4.32,
+        "balance_dd_pct": 3.05,
+        "equity_dd_abs": 7.29,
+        "equity_dd_pct": 6.52
+      },
+      "ytd": {
+        "net_profit": 269.58,
+        "profit_factor": 2.37,
+        "expected_payoff": 2.12,
+        "total_trades": 127.0,
+        "win_rate": 56.69,
+        "balance_dd_abs": 27.51,
+        "balance_dd_pct": 20.81,
+        "equity_dd_abs": 48.87,
+        "equity_dd_pct": 17.72
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBullM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBullM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "bot": "bear",
+    "stem": "InvictusBearM5_v11",
+    "set": "InvictusBearM5_v11_exit_time_strict.set",
+    "metrics": {
+      "recent": {
+        "net_profit": 6.07,
+        "profit_factor": 1.43,
+        "expected_payoff": 0.43,
+        "total_trades": 14.0,
+        "win_rate": 42.86,
+        "balance_dd_abs": 10.19,
+        "balance_dd_pct": 9.0,
+        "equity_dd_abs": 14.67,
+        "equity_dd_pct": 12.76
+      },
+      "ytd": {
+        "net_profit": 45.32,
+        "profit_factor": 1.33,
+        "expected_payoff": 0.5,
+        "total_trades": 90.0,
+        "win_rate": 51.11,
+        "balance_dd_abs": 42.07,
+        "balance_dd_pct": 35.27,
+        "equity_dd_abs": 42.72,
+        "equity_dd_pct": 35.68
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  }
+]

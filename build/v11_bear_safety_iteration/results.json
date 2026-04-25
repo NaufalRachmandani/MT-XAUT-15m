@@ -1,0 +1,382 @@
+[
+  {
+    "iteration": 9,
+    "preset": "safe_break_quality",
+    "note": "Raise base sell breakout quality.",
+    "overrides": {
+      "V10_MinTradeScore": "64",
+      "V10_MinBreakATR": "0.05",
+      "V10_WeakSellMinBreakATR": "0.08",
+      "V10_MinBodyRatio": "0.46",
+      "V10_WeakSellMinBodyRatio": "0.50"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 11.95,
+        "profit_factor": 1.79,
+        "expected_payoff": 0.8,
+        "total_trades": 15.0,
+        "win_rate": 60.0,
+        "balance_dd_abs": 11.64,
+        "balance_dd_pct": 9.67,
+        "equity_dd_abs": 15.23,
+        "equity_dd_pct": 12.56
+      },
+      "ytd": {
+        "net_profit": 68.37,
+        "profit_factor": 1.5,
+        "expected_payoff": 0.79,
+        "total_trades": 87.0,
+        "win_rate": 55.17,
+        "balance_dd_abs": 37.51,
+        "balance_dd_pct": 31.45,
+        "equity_dd_abs": 38.83,
+        "equity_dd_pct": 32.25
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 8,
+    "preset": "safe_zone_quality",
+    "note": "Raise sell-zone quality while keeping weak regime allowed.",
+    "overrides": {
+      "V10_ZoneMinBodyRatio": "0.48",
+      "V10_ZoneBreakATR": "0.04",
+      "V10_ZoneOvershootATR": "0.40",
+      "V10_ZoneRR": "1.15"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 11.94,
+        "profit_factor": 1.91,
+        "expected_payoff": 0.92,
+        "total_trades": 13.0,
+        "win_rate": 61.54,
+        "balance_dd_abs": 9.73,
+        "balance_dd_pct": 8.21,
+        "equity_dd_abs": 15.23,
+        "equity_dd_pct": 12.56
+      },
+      "ytd": {
+        "net_profit": 77.47,
+        "profit_factor": 1.62,
+        "expected_payoff": 0.93,
+        "total_trades": 83.0,
+        "win_rate": 56.63,
+        "balance_dd_abs": 39.41,
+        "balance_dd_pct": 34.16,
+        "equity_dd_abs": 40.06,
+        "equity_dd_pct": 34.58
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 5,
+    "preset": "safe_block_weak_zone",
+    "note": "Block weak-regime sell zone retests.",
+    "overrides": {
+      "V11_EnableBearSafeMode": "true",
+      "V11_BearSafeWeakMinScore": "68",
+      "V11_BearSafeBlockWeakZone": "true"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 10.39,
+        "profit_factor": 1.8,
+        "expected_payoff": 0.87,
+        "total_trades": 12.0,
+        "win_rate": 58.33,
+        "balance_dd_abs": 9.63,
+        "balance_dd_pct": 8.24,
+        "equity_dd_abs": 15.08,
+        "equity_dd_pct": 12.62
+      },
+      "ytd": {
+        "net_profit": 60.05,
+        "profit_factor": 1.47,
+        "expected_payoff": 0.76,
+        "total_trades": 79.0,
+        "win_rate": 55.7,
+        "balance_dd_abs": 39.63,
+        "balance_dd_pct": 33.88,
+        "equity_dd_abs": 40.55,
+        "equity_dd_pct": 34.45
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 1,
+    "preset": "bear_current",
+    "note": "Current bear dense mix default.",
+    "overrides": {},
+    "metrics": {
+      "recent": {
+        "net_profit": 11.95,
+        "profit_factor": 1.79,
+        "expected_payoff": 0.8,
+        "total_trades": 15.0,
+        "win_rate": 60.0,
+        "balance_dd_abs": 11.64,
+        "balance_dd_pct": 9.67,
+        "equity_dd_abs": 15.23,
+        "equity_dd_pct": 12.56
+      },
+      "ytd": {
+        "net_profit": 60.73,
+        "profit_factor": 1.43,
+        "expected_payoff": 0.67,
+        "total_trades": 91.0,
+        "win_rate": 54.95,
+        "balance_dd_abs": 43.37,
+        "balance_dd_pct": 36.36,
+        "equity_dd_abs": 44.02,
+        "equity_dd_pct": 36.76
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 10,
+    "preset": "safe_sell_time_strict_selective",
+    "note": "Allow time-close loss only for sell add-ons and compression, not base/zone sell.",
+    "overrides": {
+      "V11_SellCompTimeCloseProfitOnly": "false",
+      "V11_SellAddOnTimeCloseProfitOnly": "false",
+      "V10_BearSubMaxHoldBars": "18",
+      "V10_AddOnMaxHoldBars": "8"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 11.95,
+        "profit_factor": 1.79,
+        "expected_payoff": 0.8,
+        "total_trades": 15.0,
+        "win_rate": 60.0,
+        "balance_dd_abs": 11.64,
+        "balance_dd_pct": 9.67,
+        "equity_dd_abs": 15.23,
+        "equity_dd_pct": 12.56
+      },
+      "ytd": {
+        "net_profit": 60.73,
+        "profit_factor": 1.43,
+        "expected_payoff": 0.67,
+        "total_trades": 91.0,
+        "win_rate": 54.95,
+        "balance_dd_abs": 43.37,
+        "balance_dd_pct": 36.36,
+        "equity_dd_abs": 44.02,
+        "equity_dd_pct": 36.76
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 4,
+    "preset": "safe_block_weak_addons",
+    "note": "Keep weak bear entries but block weak sell add-ons.",
+    "overrides": {
+      "V11_EnableBearSafeMode": "true",
+      "V11_BearSafeWeakMinScore": "68",
+      "V11_BearSafeWeakMinBodyRatio": "0.48",
+      "V11_BearSafeBlockWeakAddOns": "true"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 11.55,
+        "profit_factor": 1.88,
+        "expected_payoff": 0.89,
+        "total_trades": 13.0,
+        "win_rate": 61.54,
+        "balance_dd_abs": 9.73,
+        "balance_dd_pct": 8.24,
+        "equity_dd_abs": 15.23,
+        "equity_dd_pct": 12.61
+      },
+      "ytd": {
+        "net_profit": 58.92,
+        "profit_factor": 1.44,
+        "expected_payoff": 0.69,
+        "total_trades": 85.0,
+        "win_rate": 55.29,
+        "balance_dd_abs": 43.33,
+        "balance_dd_pct": 36.33,
+        "equity_dd_abs": 43.98,
+        "equity_dd_pct": 36.73
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 6,
+    "preset": "safe_strong_only",
+    "note": "Disable weak-bear sell engines entirely.",
+    "overrides": {
+      "V10_WeakRegimeMaxPositions": "0",
+      "V10_BearSubAllowWeakBear": "false",
+      "V10_ZoneAllowWeakRegime": "false",
+      "V10_AddOnAllowWeakRegime": "false"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 4.91,
+        "profit_factor": 1.56,
+        "expected_payoff": 0.7,
+        "total_trades": 7.0,
+        "win_rate": 57.14,
+        "balance_dd_abs": 5.53,
+        "balance_dd_pct": 5.01,
+        "equity_dd_abs": 8.08,
+        "equity_dd_pct": 7.15
+      },
+      "ytd": {
+        "net_profit": 43.85,
+        "profit_factor": 1.41,
+        "expected_payoff": 0.71,
+        "total_trades": 62.0,
+        "win_rate": 56.45,
+        "balance_dd_abs": 38.42,
+        "balance_dd_pct": 33.89,
+        "equity_dd_abs": 39.32,
+        "equity_dd_pct": 34.47
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 7,
+    "preset": "safe_no_addons",
+    "note": "Turn off sell add-ons to reduce stacked DD.",
+    "overrides": {
+      "V10_EnableSellAddOns": "false"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 13.91,
+        "profit_factor": 2.21,
+        "expected_payoff": 1.16,
+        "total_trades": 12.0,
+        "win_rate": 66.67,
+        "balance_dd_abs": 9.93,
+        "balance_dd_pct": 8.24,
+        "equity_dd_abs": 15.57,
+        "equity_dd_pct": 12.63
+      },
+      "ytd": {
+        "net_profit": 65.08,
+        "profit_factor": 1.5,
+        "expected_payoff": 0.83,
+        "total_trades": 78.0,
+        "win_rate": 56.41,
+        "balance_dd_abs": 46.19,
+        "balance_dd_pct": 38.72,
+        "equity_dd_abs": 47.19,
+        "equity_dd_pct": 39.41
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 3,
+    "preset": "safe_weak_score76",
+    "note": "Tighter weak-bear sell filter.",
+    "overrides": {
+      "V11_EnableBearSafeMode": "true",
+      "V11_BearSafeWeakMinScore": "76",
+      "V11_BearSafeWeakMinBodyRatio": "0.52"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 11.19,
+        "profit_factor": 1.91,
+        "expected_payoff": 1.02,
+        "total_trades": 11.0,
+        "win_rate": 63.64,
+        "balance_dd_abs": 8.83,
+        "balance_dd_pct": 7.56,
+        "equity_dd_abs": 14.28,
+        "equity_dd_pct": 11.95
+      },
+      "ytd": {
+        "net_profit": 45.67,
+        "profit_factor": 1.38,
+        "expected_payoff": 0.61,
+        "total_trades": 75.0,
+        "win_rate": 54.67,
+        "balance_dd_abs": 43.02,
+        "balance_dd_pct": 37.89,
+        "equity_dd_abs": 43.64,
+        "equity_dd_pct": 38.29
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  },
+  {
+    "iteration": 2,
+    "preset": "safe_weak_score72",
+    "note": "Require weak-bear sells to score at least 72 and have stronger body.",
+    "overrides": {
+      "V11_EnableBearSafeMode": "true",
+      "V11_BearSafeWeakMinScore": "72",
+      "V11_BearSafeWeakMinBodyRatio": "0.50"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 10.39,
+        "profit_factor": 1.8,
+        "expected_payoff": 0.87,
+        "total_trades": 12.0,
+        "win_rate": 58.33,
+        "balance_dd_abs": 9.63,
+        "balance_dd_pct": 8.24,
+        "equity_dd_abs": 15.08,
+        "equity_dd_pct": 12.62
+      },
+      "ytd": {
+        "net_profit": 42.17,
+        "profit_factor": 1.34,
+        "expected_payoff": 0.53,
+        "total_trades": 80.0,
+        "win_rate": 52.5,
+        "balance_dd_abs": 43.38,
+        "balance_dd_pct": 38.21,
+        "equity_dd_abs": 44.0,
+        "equity_dd_pct": 38.6
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    }
+  }
+]

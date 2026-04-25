@@ -16,32 +16,35 @@
       --accent-2: #fbbf24;
       --good: #34d399;
       --bad: #f87171;
+      --warn: #f59e0b;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+      background: radial-gradient(circle at top left, rgba(96,165,250,.14), transparent 30%), linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
       color: var(--text);
       font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     main {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
       padding: 40px 0 72px;
     }
     h1, h2, h3 { line-height: 1.2; margin: 0 0 16px; }
-    h1 { font-size: clamp(2.25rem, 4vw, 3.4rem); }
-    h2 { font-size: 1.45rem; margin-top: 32px; }
+    h1 { font-size: clamp(2.25rem, 4vw, 3.55rem); }
+    h2 { font-size: 1.55rem; margin-top: 32px; }
+    h3 { font-size: 1.05rem; color: var(--accent); margin-top: 18px; }
     p, ul { margin: 0 0 14px; }
     .hero, .panel {
-      background: rgba(17, 24, 39, 0.86);
+      background: rgba(17, 24, 39, 0.88);
       border: 1px solid var(--line);
-      border-radius: 20px;
+      border-radius: 22px;
       padding: 24px;
       backdrop-filter: blur(14px);
       box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
     }
     .hero { margin-bottom: 24px; }
+    .panel { margin-bottom: 24px; }
     .eyebrow {
       display: inline-block;
       padding: 6px 10px;
@@ -65,10 +68,10 @@
     .grid {
       display: grid;
       gap: 18px;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
       margin: 18px 0 0;
     }
-    .stat {
+    .stat, .card {
       background: var(--panel-2);
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -106,6 +109,54 @@
     tr:last-child td { border-bottom: 0; }
     .good { color: var(--good); }
     .bad { color: var(--bad); }
+    .warn { color: var(--warn); }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .step {
+      position: relative;
+      min-height: 132px;
+      background: linear-gradient(180deg, rgba(96,165,250,.12), rgba(17,24,39,.88));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .step::after {
+      content: "→";
+      position: absolute;
+      right: -12px;
+      top: 42%;
+      color: var(--accent-2);
+      font-weight: 900;
+    }
+    .step:last-child::after { content: ""; }
+    .step b { display: block; color: var(--accent); margin-bottom: 8px; }
+    .score {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+    }
+    .bar {
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(148,163,184,.18);
+      overflow: hidden;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--good));
+    }
+    @media (max-width: 900px) {
+      .flow { grid-template-columns: 1fr; }
+      .step::after { content: "↓"; right: 18px; top: auto; bottom: -16px; }
+      .step:last-child::after { content: ""; }
+    }
   </style>
 </head>
 <body>
@@ -114,27 +165,27 @@
       <div class="eyebrow">Invictus Forward 1 · v11 Split M5</div>
       <h1>Bull Bot + Bear Bot + Combined Tester</h1>
       <p class="muted">
-        <code>v11</code> adalah versi baru untuk pendekatan dua bot:
-        <strong>BUY-only</strong> dan <strong>SELL-only</strong>. Keduanya tetap memakai
-        score/comment layer, zone retest agresif, dynamic SL/TP dari risk distance,
-        breakeven manager, dan cross-direction guard agar tidak saling melawan posisi.
+        <code>v11</code> adalah sistem M5 yang dipisah menjadi <strong>BUY-only</strong> dan
+        <strong>SELL-only</strong>. Versi ini memakai score/comment yang lebih mudah dibaca,
+        zone retest, breakout/pullback, add-on continuation, dynamic SL/TP, breakeven,
+        exit diagnostics, dan cross-direction guard agar dua bot tidak saling melawan posisi.
       </p>
       <div class="grid">
         <div class="stat">
           <div class="label">Combined 2026 Net Profit</div>
-          <div class="value good">+504.76%</div>
+          <div class="value good">+558.51%</div>
         </div>
         <div class="stat">
           <div class="label">Combined 2026 Trades</div>
-          <div class="value">152</div>
+          <div class="value">155</div>
         </div>
         <div class="stat">
           <div class="label">Combined 2026 Profit Factor</div>
-          <div class="value">2.53</div>
+          <div class="value">2.70</div>
         </div>
         <div class="stat">
           <div class="label">Combined 2026 Max Equity DD</div>
-          <div class="value bad">21.28%</div>
+          <div class="value">17.71%</div>
         </div>
       </div>
     </section>
@@ -143,101 +194,186 @@
       <h2>What Changed from Base</h2>
       <ul>
         <li><code>base</code> memakai satu struktur logic besar; <code>v11</code> memecah eksekusi menjadi <code>InvictusBullM5_v11</code>, <code>InvictusBearM5_v11</code>, dan <code>InvictusCombinedM5_v11</code>.</li>
-        <li>Timeframe execution resmi menjadi <code>M5</code>, bukan <code>M15</code>, agar entry lebih cepat dan trade count naik.</li>
-        <li>Order live dipisah arah: bull-only hanya BUY, bear-only hanya SELL. Combined tester dipakai untuk validasi portfolio dalam satu report.</li>
-        <li>Score gate dilonggarkan menjadi <code>V10_MinTradeScore=68</code> agar <code>M5</code> tidak terlalu ketat.</li>
-        <li>Zone retest dibuat lebih agresif: <code>ZoneLookback=8</code>, <code>ZoneMinBodyRatio=0.46</code>, <code>ZoneBreakATR=0.02</code>, <code>ZoneMidTouchATR=0.10</code>, <code>ZoneOvershootATR=0.35</code>.</li>
-        <li>Risk profile dinaikkan: <code>RiskPercent=5.00</code>, <code>MaxPositions=6</code>, dan <code>WeakRegimeMaxPositions=2</code>.</li>
-        <li>Cross-direction guard aktif: bull magic <code>2026042411</code> akan membaca bear magic <code>2026042412</code>, dan sebaliknya.</li>
-        <li>Comment trade tetap audit-friendly: <code>B11|engine|Sscore|grade|tags</code> untuk bull, <code>S11|...</code> untuk bear, dan <code>C11|...</code> untuk combined tester.</li>
-        <li>Dynamic SL/TP tetap berbasis swing/zone + ATR buffer, lalu RR disesuaikan engine. Breakeven tetap aktif di <code>0.80R</code>.</li>
-        <li>Partial/trailing TP manager masih tersedia sebagai input, tetapi default final <code>false</code> karena pada ronde ini profit leader masih lebih baik tanpa TP manager.</li>
+        <li>Timeframe execution resmi <code>M5</code>, bukan <code>M15</code>, agar entry lebih cepat dan jumlah setup lebih banyak.</li>
+        <li>Log/comment diperbaiki: contoh lama <code>ZB</code> sekarang muncul sebagai <code>B11|BUY_ZONE|ZB|S76|B|WG|ZN</code>. Jadi manusia melihat <code>BUY_ZONE</code> dulu, dan EA tetap bisa membaca marker internal <code>|ZB|</code>.</li>
+        <li>Bull bot tetap memakai profil paling kuat dari 10 iterasi karena semua pelonggaran agresif menurunkan profit/PF.</li>
+        <li>Bear bot diperbaiki dengan profil <code>bear_dense_mix</code>: sell session dibuka lebih luas, score floor turun ke <code>60</code>, bear compression engine aktif, dan sell add-on dibuat lebih aktif.</li>
+        <li>Bear safety iteration memilih <code>safe_break_quality</code>: SELL breakout dibuat lebih selektif agar DD turun tanpa mematikan recent trade.</li>
+        <li>Exit matrix 10 preset memilih <code>time_strict</code> untuk bull dan combined: posisi yang terlalu lama boleh ditutup walau minus. Bear tetap default karena time-strict merusak performa sell.</li>
+        <li>Cross-direction guard aktif: bull magic <code>2026042411</code> membaca posisi bear magic <code>2026042412</code>, dan sebaliknya.</li>
       </ul>
     </section>
 
     <section class="panel">
-      <h2>Files</h2>
+      <h2>Visual Entry Flow</h2>
+      <div class="flow">
+        <div class="step">
+          <b>1. Regime</b>
+          H1/H4 EMA dan ADX menentukan market: strong/weak bull, strong/weak bear, atau mixed.
+        </div>
+        <div class="step">
+          <b>2. Direction</b>
+          Bull bot hanya cari BUY. Bear bot hanya cari SELL. Mixed/off-regime diblok kecuali input khusus dinyalakan.
+        </div>
+        <div class="step">
+          <b>3. Setup</b>
+          EA cari zone retest, breakout/pullback, compression break, atau add-on continuation.
+        </div>
+        <div class="step">
+          <b>4. Score</b>
+          Setup diberi score. Grade <code>A</code> jika score ≥ 85, <code>B</code> jika ≥ 72, dan <code>R</code> jika di bawahnya.
+        </div>
+        <div class="step">
+          <b>5. Execute</b>
+          SL/TP dihitung dari swing/zone + ATR buffer. Lot dihitung dari risk percent dan jarak SL.
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Entry Engines</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>BUY_ZONE / SELL_ZONE</h3>
+          <p>Anchor candle harus break struktur, lalu candle retest menyentuh midpoint zone dan reclaim. Ini engine utama untuk entry M5 yang tidak terlalu telat.</p>
+        </div>
+        <div class="card">
+          <h3>BUY_BREAK / SELL_BREAK</h3>
+          <p>Breakout searah regime: candle harus searah, body cukup kuat, close di sisi EMA, dan break prior high/low minimal ATR threshold.</p>
+        </div>
+        <div class="card">
+          <h3>BUY_PULLBACK</h3>
+          <p>Buy setelah pullback ke EMA/area support lalu reclaim. Dipakai bull bot untuk masuk setelah harga tidak terlalu extended.</p>
+        </div>
+        <div class="card">
+          <h3>BUY_COMP / SELL_COMP</h3>
+          <p>Compression box: harga sempit dekat EMA, lalu break keluar box. Bear dense mix mengaktifkan <code>SELL_COMP</code> agar sell tidak terlalu jarang.</p>
+        </div>
+        <div class="card">
+          <h3>BUY_ADDON / SELL_ADDON</h3>
+          <p>Add-on hanya boleh masuk kalau posisi utama sudah profit minimal progress tertentu. Tujuannya menambah size saat trend sudah terbukti jalan.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Scoring System</h2>
+      <p class="muted">Score bukan prediksi pasti menang; score adalah quality gate agar setup M5 tidak asal entry.</p>
       <table>
         <thead>
           <tr>
-            <th>File</th>
-            <th>Tujuan</th>
-            <th>Live?</th>
+            <th>Komponen</th>
+            <th>Efek Score</th>
+            <th>Makna</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>mt5/InvictusBullM5_v11.mq5</code></td>
-            <td>BUY-only engine, comment prefix <code>B11</code>.</td>
-            <td>Ya, attach ke chart <code>XAUUSDc M5</code>.</td>
+            <td>Base setup valid</td>
+            <td>+35 sampai +45</td>
+            <td>Setup minimal sudah memenuhi bentuk engine: zone, breakout, pullback, compression, atau add-on.</td>
           </tr>
           <tr>
-            <td><code>mt5/InvictusBearM5_v11.mq5</code></td>
-            <td>SELL-only engine, comment prefix <code>S11</code>.</td>
-            <td>Ya, attach ke chart <code>XAUUSDc M5</code> kedua.</td>
+            <td>Regime kuat</td>
+            <td>+15 atau +8</td>
+            <td>Strong regime diberi bobot lebih besar daripada weak regime.</td>
           </tr>
           <tr>
-            <td><code>mt5/InvictusCombinedM5_v11.mq5</code></td>
-            <td>BUY+SELL tester untuk melihat combined equity curve.</td>
-            <td>Bisa, tapi tujuan utamanya backtest portfolio.</td>
+            <td>Body candle kuat</td>
+            <td>+8 sampai +10</td>
+            <td>Candle dengan body besar dianggap lebih impulsif dan lebih layak entry.</td>
           </tr>
+          <tr>
+            <td>Break distance / reclaim</td>
+            <td>+6 sampai +15</td>
+            <td>Break atau reclaim harus cukup jauh dari noise ATR.</td>
+          </tr>
+          <tr>
+            <td>Session / core hour</td>
+            <td>+10</td>
+            <td>Jam yang historis lebih bersih mendapat score tambahan.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="score"><code>Score 60</code><div class="bar"><span style="width:60%"></span></div><span>bear dense minimum</span></div>
+      <div class="score"><code>Score 68</code><div class="bar"><span style="width:68%"></span></div><span>bull/combined minimum</span></div>
+      <div class="score"><code>Score 72</code><div class="bar"><span style="width:72%"></span></div><span>grade B</span></div>
+      <div class="score"><code>Score 85</code><div class="bar"><span style="width:85%"></span></div><span>grade A</span></div>
+    </section>
+
+    <section class="panel">
+      <h2>Comment & Log Format</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Contoh</th>
+            <th>Arti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>B11|BUY_ZONE|ZB|S76|B|WG|ZN</code></td>
+            <td>Bull bot, zone buy, score 76, grade B, weak regime, zone setup.</td>
+          </tr>
+          <tr>
+            <td><code>S11|SELL_BREAK|BE|S72|B|RG</code></td>
+            <td>Bear bot, bearish breakout sell, score 72, grade B, strong regime.</td>
+          </tr>
+          <tr>
+            <td><code>C11|BUY_ADDON|AB|S76|B|AD</code></td>
+            <td>Combined tester, buy add-on, score 76, grade B, add-on continuation.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted">Di tab <code>Experts</code>, log entry lebih panjang: engine lengkap, score, grade, tag manusiawi, lot, RR, SL, TP, dan note detail seperti <code>breakATR</code>, <code>body</code>, <code>regime</code>, dan <code>hour</code>. Kalau <code>V11_LogRejectedSignals=true</code>, EA juga mencetak <code>V11 REJECT</code> untuk kandidat yang score-nya hampir masuk tapi ditolak.</p>
+      <p class="muted">Untuk monitor live ringkas, aktifkan <code>V11_LogStatusOnNewBar=true</code>. Log <code>V11 STATUS</code> akan menampilkan regime, posisi aktif, spread, equity, dan apakah bar itu menghasilkan entry.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Exit Management</h2>
+      <div class="flow">
+        <div class="step">
+          <b>1. Initial SL/TP</b>
+          Entry langsung punya SL dan TP. SL dihitung dari swing/zone + ATR buffer; TP dihitung dari RR engine.
+        </div>
+        <div class="step">
+          <b>2. Breakeven</b>
+          Jika posisi sudah bergerak <code>0.80R</code>, SL digeser ke area entry plus lock kecil <code>0.20</code>. Log: <code>MOVE_SL_TO_BE</code>.
+        </div>
+        <div class="step">
+          <b>3. Time Strict</b>
+          Bull dan combined menutup posisi saat lewat batas bar, walau masih minus. Ini mengurangi posisi yang terlalu lama menggantung. Log: <code>TIME_CLOSE</code>.
+        </div>
+        <div class="step">
+          <b>4. Partial/Trailing</b>
+          TP manager bisa partial close dan trailing, tapi default tetap <code>false</code> karena 10 preset exit menunjukkan profit turun saat dinyalakan.
+        </div>
+        <div class="step">
+          <b>5. Special Exit</b>
+          Ada exit tambahan untuk weak outside-session sell, fast-fail buy, dan optional regime-flip close. Semua action sekarang punya log yang jelas.
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Exit Action</th>
+            <th>Makna</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>MOVE_SL_TO_BE</code></td><td>SL digeser ke breakeven setelah progress cukup.</td></tr>
+          <tr><td><code>TIME_CLOSE</code></td><td>Posisi ditutup karena sudah terlalu lama berjalan.</td></tr>
+          <tr><td><code>TP1_RUNNER_SET</code></td><td>Partial close berhasil dan sisa posisi dijadikan runner.</td></tr>
+          <tr><td><code>TRAIL_SL</code></td><td>SL runner digeser mengikuti ATR trail.</td></tr>
+          <tr><td><code>FAST_FAIL_CLOSE</code></td><td>Buy cepat ditutup karena gagal mempertahankan EMA.</td></tr>
+          <tr><td><code>WEAK_SELL_QUICK_EXIT</code></td><td>Sell weak/outside-session ditutup kalau tetap negatif.</td></tr>
         </tbody>
       </table>
     </section>
 
     <section class="panel">
-      <h2>Backtest: v11 Champion</h2>
-      <p class="muted">
-        Setup: <code>XAUUSDc</code>, <code>M5</code>, <code>Every tick</code>,
-        <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>.
-        Profil final: <code>zone_loose</code>, sudah disimpan sebagai default source dan <code>.set</code>.
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Window</th>
-            <th>Net Profit</th>
-            <th>PF</th>
-            <th>Win Rate</th>
-            <th>Trades</th>
-            <th>EqDD</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2026-only</td>
-            <td class="good"><strong>+504.76%</strong></td>
-            <td>2.53</td>
-            <td>61.18%</td>
-            <td>152</td>
-            <td class="bad">21.28%</td>
-          </tr>
-          <tr>
-            <td>2025-current</td>
-            <td class="good">+426.34%</td>
-            <td>1.44</td>
-            <td>56.51%</td>
-            <td>614</td>
-            <td class="bad">55.03%</td>
-          </tr>
-          <tr>
-            <td>Last 2W</td>
-            <td class="good">+15.30%</td>
-            <td>4.30</td>
-            <td>80.00%</td>
-            <td>10</td>
-            <td>4.87%</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="panel">
-      <h2>Split Contribution Check</h2>
-      <p class="muted">
-        Backtest di bawah menjalankan bull-only dan bear-only secara terpisah. Ini bukan penjumlahan portfolio,
-        karena compounding dan margin tidak sama dengan combined tester.
-      </p>
+      <h2>Backtest Final</h2>
+      <p class="muted">Setup: <code>XAUUSDc</code>, <code>M5</code>, <code>Every tick</code>, <code>Deposit 100 USD</code>, <code>Leverage 1:100</code>.</p>
       <table>
         <thead>
           <tr>
@@ -252,54 +388,191 @@
         </thead>
         <tbody>
           <tr>
+            <td>Combined tester</td>
+            <td>2026-only</td>
+            <td class="good"><strong>+558.51%</strong></td>
+            <td>2.70</td>
+            <td>58.06%</td>
+            <td>155</td>
+            <td>17.71%</td>
+          </tr>
+          <tr>
+            <td>Combined tester</td>
+            <td>2026.04.01-04.25</td>
+            <td class="good">+40.25%</td>
+            <td>3.12</td>
+            <td>64.00%</td>
+            <td>25</td>
+            <td>7.30%</td>
+          </tr>
+          <tr>
             <td>Bull-only</td>
             <td>2026-only</td>
-            <td class="good">+135.95%</td>
-            <td>1.85</td>
-            <td>48.15%</td>
-            <td>135</td>
-            <td>13.68%</td>
+            <td class="good">+269.58%</td>
+            <td>2.37</td>
+            <td>56.69%</td>
+            <td>127</td>
+            <td>17.72%</td>
           </tr>
           <tr>
             <td>Bull-only</td>
-            <td>Last 2W</td>
-            <td class="good">+16.67%</td>
-            <td>9.51</td>
-            <td>70.00%</td>
-            <td>10</td>
-            <td>5.06%</td>
+            <td>2026.04.01-04.25</td>
+            <td class="good">+39.97%</td>
+            <td>3.63</td>
+            <td>65.22%</td>
+            <td>23</td>
+            <td>6.52%</td>
           </tr>
           <tr>
-            <td>Bear-only</td>
+            <td>Bear-only dense</td>
             <td>2026-only</td>
-            <td class="good">+59.61%</td>
-            <td>3.13</td>
-            <td>64.52%</td>
-            <td>31</td>
-            <td>9.35%</td>
+            <td class="good">+68.37%</td>
+            <td>1.50</td>
+            <td>55.17%</td>
+            <td>87</td>
+            <td class="bad">32.25%</td>
           </tr>
           <tr>
-            <td>Bear-only</td>
-            <td>Last 2W</td>
-            <td class="bad">-1.01%</td>
-            <td>0.00</td>
-            <td>0.00%</td>
-            <td>1</td>
-            <td>1.71%</td>
+            <td>Bear-only dense</td>
+            <td>2026.04.01-04.25</td>
+            <td class="good">+11.95%</td>
+            <td>1.79</td>
+            <td>60.00%</td>
+            <td>15</td>
+            <td>12.56%</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted">Jika bull dan bear dijalankan sebagai dua EA live, recent split total adalah <code>38 trades</code> dari <code>2026.04.01-2026.04.25</code>. Itu sudah lebih dari rata-rata satu trade per hari kalender.</p>
+    </section>
+
+    <section class="panel">
+      <h2>10x Iteration Result</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Side</th>
+            <th>Winner</th>
+            <th>Why</th>
+            <th>Rejected Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bull</td>
+            <td><code>bull_control</code></td>
+            <td>Setelah exit matrix: recent <code>+39.97%</code>, 23 trades, PF <code>3.63</code>; YTD <code>+269.58%</code>, 127 trades.</td>
+            <td>Session-all, fast scalp, and dense mix raised trades but damaged PF and net profit.</td>
+          </tr>
+          <tr>
+            <td>Bear</td>
+            <td><code>safe_break_quality</code></td>
+            <td>Recent tetap <code>+11.95%</code> / 15 trades; YTD naik ke <code>+68.37%</code> dan EqDD turun ke <code>32.25%</code>.</td>
+            <td>Safe mode yang terlalu ketat memotong profit; tightening terbaik ada di kualitas breakout SELL.</td>
           </tr>
         </tbody>
       </table>
     </section>
 
     <section class="panel">
-      <h2>Iteration Notes</h2>
-      <ul>
-        <li><code>aggressive_qty</code> memberi <code>+426.97%</code> pada 2026, tetapi <code>zone_loose</code> menaikkan hasil ke <code>+504.76%</code>.</li>
-        <li><code>session_all</code> dan <code>trend_allin</code> menaikkan trade count ke 279-284 trade YTD, tetapi PF turun dan DD rusak, jadi tidak dipakai.</li>
-        <li><code>tp_dense</code> memberi win rate tinggi dan 230 trade YTD, tetapi net profit turun ke <code>+209.20%</code>; TP manager tidak jadi default.</li>
-        <li><code>mixed_regime</code> menaikkan quantity, tetapi kualitas entry turun terlalu banyak.</li>
-        <li>Kesimpulan final: untuk target profit agresif, quantity harus dinaikkan lewat <strong>zone retest</strong>, bukan membuka semua jam/regime secara mentah.</li>
-      </ul>
+      <h2>Bear Safety Result</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Preset</th>
+            <th>Recent</th>
+            <th>YTD</th>
+            <th>Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><code>safe_break_quality</code></td>
+            <td><code>+11.95%</code>, 15 trades, PF <code>1.79</code></td>
+            <td><code>+68.37%</code>, 87 trades, PF <code>1.50</code>, DD <code>32.25%</code></td>
+            <td>Dipakai sebagai default Bear.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><code>safe_zone_quality</code></td>
+            <td><code>+11.94%</code>, 13 trades, PF <code>1.91</code></td>
+            <td><code>+77.47%</code>, 83 trades, PF <code>1.62</code>, DD <code>34.58%</code></td>
+            <td>Profit lebih tinggi, tetapi DD lebih kasar dari champion.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><code>bear_current</code></td>
+            <td><code>+11.95%</code>, 15 trades, PF <code>1.79</code></td>
+            <td><code>+60.73%</code>, 91 trades, PF <code>1.43</code>, DD <code>36.76%</code></td>
+            <td>Ditinggalkan karena risk-adjusted kalah.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted">Default Bear sekarang: <code>V10_MinTradeScore=64</code>, <code>V10_MinBreakATR=0.05</code>, <code>V10_WeakSellMinBreakATR=0.08</code>, <code>V10_MinBodyRatio=0.46</code>, <code>V10_WeakSellMinBodyRatio=0.50</code>.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Diagnostic Run</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Window</th>
+            <th>Entries</th>
+            <th>Exit Actions</th>
+            <th>Rejects Near Threshold</th>
+            <th>Interpretation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bear recent <code>2026.04.01-04.25</code></td>
+            <td>15</td>
+            <td>1 <code>TIME_CLOSE</code></td>
+            <td>0</td>
+            <td>Setup yang mendekati score threshold tidak banyak. Bottleneck berikutnya ada di struktur setup sebelum scoring, bukan sekadar score gate.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Exit Matrix Result</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Preset</th>
+            <th>Recent</th>
+            <th>YTD</th>
+            <th>Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><code>time_strict</code></td>
+            <td><code>+40.25%</code>, PF <code>3.12</code>, DD <code>7.30%</code></td>
+            <td><code>+558.51%</code>, PF <code>2.70</code>, DD <code>17.71%</code></td>
+            <td>Dipakai untuk bull dan combined.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><code>exit_control</code></td>
+            <td><code>+41.36%</code>, PF <code>3.00</code>, DD <code>10.15%</code></td>
+            <td><code>+505.95%</code>, PF <code>2.46</code>, DD <code>21.28%</code></td>
+            <td>Masih valid, tetapi kalah risk-adjusted.</td>
+          </tr>
+          <tr>
+            <td>7-10</td>
+            <td><code>TP manager variants</code></td>
+            <td>Trade count naik ke 36-39.</td>
+            <td>Profit turun ke <code>+223.96%</code> sampai <code>+425.32%</code>.</td>
+            <td>Tidak dijadikan default.</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section class="panel">
@@ -308,7 +581,7 @@
         <li>MT5 hanya bisa attach satu EA per chart. Untuk dua bot, buka dua chart <code>XAUUSDc M5</code>.</li>
         <li>Chart pertama attach <code>InvictusBullM5_v11</code>, chart kedua attach <code>InvictusBearM5_v11</code>.</li>
         <li>Pastikan <code>Algo Trading</code> ON dan input default tidak berubah kecuali sengaja.</li>
-        <li>Untuk backtest portfolio, gunakan <code>InvictusCombinedM5_v11</code>.</li>
+        <li>Untuk backtest portfolio satu equity curve, gunakan <code>InvictusCombinedM5_v11</code>.</li>
       </ul>
     </section>
   </main>

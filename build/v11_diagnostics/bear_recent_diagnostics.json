@@ -1,0 +1,25 @@
+{
+  "bot": "InvictusBearM5_v11",
+  "window": "2026.04.01-2026.04.25",
+  "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusBearM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+  "metrics": {
+    "net_profit": 11.95,
+    "profit_factor": 1.79,
+    "expected_payoff": 0.8,
+    "total_trades": 15.0,
+    "win_rate": 60.0,
+    "balance_dd_abs": 11.64,
+    "balance_dd_pct": 9.67,
+    "equity_dd_abs": 15.23,
+    "equity_dd_pct": 12.56
+  },
+  "entries": 15,
+  "exits": 1,
+  "rejects": 0,
+  "reject_by_engine": {},
+  "reject_by_reason": {},
+  "exit_by_action": {
+    "TIME_CLOSE ": 1
+  },
+  "sample_rejects": []
+}

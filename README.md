@@ -28,10 +28,52 @@ Setup: `XAUUSDc`, `M5`, `Deposit 100 USD`, `Leverage 1:100`, mode `Every tick`.
 
 | Bot | Window | Net Profit | Trades | Win Rate | PF | EqDD |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Combined tester | 2026-only | +504.76% | 152 | 61.18% | 2.53 | 21.28% |
-| Combined tester | 2025-current | +426.34% | 614 | 56.51% | 1.44 | 55.03% |
-| Bull-only | 2026-only | +135.95% | 135 | 48.15% | 1.85 | 13.68% |
-| Bear-only | 2026-only | +59.61% | 31 | 64.52% | 3.13 | 9.35% |
+| Combined tester | 2026 YTD | +558.51% | 155 | 58.06% | 2.70 | 17.71% |
+| Combined tester | 2026.04.01-2026.04.25 | +40.25% | 25 | 64.00% | 3.12 | 7.30% |
+| Bull-only | 2026 YTD | +269.58% | 127 | 56.69% | 2.37 | 17.72% |
+| Bull-only | 2026.04.01-2026.04.25 | +39.97% | 23 | 65.22% | 3.63 | 6.52% |
+| Bear-only | 2026 YTD | +68.37% | 87 | 55.17% | 1.50 | 32.25% |
+| Bear-only | 2026.04.01-2026.04.25 | +11.95% | 15 | 60.00% | 1.79 | 12.56% |
+
+Catatan: untuk live split, jumlah trade aktual berasal dari `Bull-only + Bear-only`. Window `2026.04.01-2026.04.25` menghasilkan 38 trade split; combined tester hanya 25 karena simulasi memakai satu equity curve dan exposure bersama.
+
+## Log dan Comment
+
+Comment trade sekarang dibuat lebih mudah dibaca tanpa merusak marker internal EA.
+
+Contoh comment lama yang membingungkan: `B11|ZB|S76|B|WG|ZN`.
+
+Contoh comment baru: `B11|BUY_ZONE|ZB|S76|B|WG|ZN`.
+
+Kode penting:
+
+- `BUY_ZONE` / `SELL_ZONE`: entry dari retest area harga.
+- `BUY_BREAK` / `SELL_BREAK`: entry breakout sesuai arah.
+- `BUY_PULLBACK`: buy setelah pullback di trend bullish.
+- `BUY_COMP` / `SELL_COMP`: breakout dari kompresi/range sempit.
+- `BUY_ADDON` / `SELL_ADDON`: posisi tambahan ketika trade sebelumnya sudah bergerak benar.
+- Untuk riset kenapa setup ditolak, ubah input `V11_LogRejectedSignals=true`. EA akan print `V11 REJECT` untuk kandidat yang score-nya dekat threshold.
+- Untuk monitor ringkas di tab `Experts`, ubah `V11_LogStatusOnNewBar=true`. EA akan print regime, jumlah posisi, spread, equity, dan apakah bar itu entry.
+
+## Exit Management
+
+- Breakeven aktif: saat posisi bergerak `0.80R`, SL digeser ke area entry plus lock kecil `0.20`.
+- TP manager / partial close masih default `false`. Hasil exit matrix menunjukkan partial/trailing menurunkan profit walau trade count naik.
+- Bull-only dan combined tester memakai `time_strict`: posisi boleh ditutup saat melewati batas bar walau masih minus. Ini menaikkan combined YTD ke `+558.51%` dan menurunkan EqDD ke `17.71%`.
+- Bear-only tidak memakai `time_strict` karena validasi split menunjukkan performa sell memburuk.
+- Log exit sekarang lebih jelas: `MOVE_SL_TO_BE`, `TIME_CLOSE`, `TP1_RUNNER_SET`, `TRAIL_SL`, `FAST_FAIL_CLOSE`, dan `WEAK_SELL_QUICK_EXIT`.
+
+## Bear Safety Update
+
+Iterasi khusus Bear memilih `safe_break_quality`, bukan safe mode yang terlalu ketat. Default Bear sekarang memperketat kualitas SELL breakout:
+
+- `V10_MinTradeScore=64`
+- `V10_MinBreakATR=0.05`
+- `V10_WeakSellMinBreakATR=0.08`
+- `V10_MinBodyRatio=0.46`
+- `V10_WeakSellMinBodyRatio=0.50`
+
+Efek YTD Bear: net profit naik dari `+60.73%` ke `+68.37%`, PF naik dari `1.43` ke `1.50`, dan EqDD turun dari `36.76%` ke `32.25%`.
 
 ## Live Setup
 

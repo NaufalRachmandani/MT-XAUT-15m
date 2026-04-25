@@ -1,0 +1,722 @@
+[
+  {
+    "month": "2023-01",
+    "from": "2023.01.01",
+    "to": "2023.01.31",
+    "metrics": {
+      "net_profit": 10.7,
+      "profit_factor": 1.21,
+      "expected_payoff": 0.21,
+      "total_trades": 51.0,
+      "win_rate": 54.9,
+      "balance_dd_abs": 14.3,
+      "balance_dd_pct": 11.87,
+      "equity_dd_abs": 19.65,
+      "equity_dd_pct": 17.91
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230101_20230131.htm"
+  },
+  {
+    "month": "2023-02",
+    "from": "2023.02.01",
+    "to": "2023.02.28",
+    "metrics": {
+      "net_profit": -14.74,
+      "profit_factor": 0.64,
+      "expected_payoff": -0.45,
+      "total_trades": 33.0,
+      "win_rate": 36.36,
+      "balance_dd_abs": 18.82,
+      "balance_dd_pct": 18.08,
+      "equity_dd_abs": 23.17,
+      "equity_dd_pct": 21.77
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230201_20230228.htm"
+  },
+  {
+    "month": "2023-03",
+    "from": "2023.03.01",
+    "to": "2023.03.31",
+    "metrics": {
+      "net_profit": 35.53,
+      "profit_factor": 1.44,
+      "expected_payoff": 0.53,
+      "total_trades": 67.0,
+      "win_rate": 58.21,
+      "balance_dd_abs": 13.53,
+      "balance_dd_pct": 12.81,
+      "equity_dd_abs": 16.94,
+      "equity_dd_pct": 12.17
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230301_20230331.htm"
+  },
+  {
+    "month": "2023-04",
+    "from": "2023.04.01",
+    "to": "2023.04.30",
+    "metrics": {
+      "net_profit": -22.08,
+      "profit_factor": 0.37,
+      "expected_payoff": -0.82,
+      "total_trades": 27.0,
+      "win_rate": 25.93,
+      "balance_dd_abs": 23.71,
+      "balance_dd_pct": 23.33,
+      "equity_dd_abs": 28.88,
+      "equity_dd_pct": 27.19
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230401_20230430.htm"
+  },
+  {
+    "month": "2023-05",
+    "from": "2023.05.01",
+    "to": "2023.05.31",
+    "metrics": {
+      "net_profit": -5.14,
+      "profit_factor": 0.89,
+      "expected_payoff": -0.15,
+      "total_trades": 34.0,
+      "win_rate": 50.0,
+      "balance_dd_abs": 12.2,
+      "balance_dd_pct": 11.47,
+      "equity_dd_abs": 16.03,
+      "equity_dd_pct": 14.7
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230501_20230531.htm"
+  },
+  {
+    "month": "2023-06",
+    "from": "2023.06.01",
+    "to": "2023.06.30",
+    "metrics": {
+      "net_profit": -7.23,
+      "profit_factor": 0.69,
+      "expected_payoff": -0.29,
+      "total_trades": 25.0,
+      "win_rate": 36.0,
+      "balance_dd_abs": 10.2,
+      "balance_dd_pct": 9.97,
+      "equity_dd_abs": 13.22,
+      "equity_dd_pct": 12.62
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230601_20230630.htm"
+  },
+  {
+    "month": "2023-07",
+    "from": "2023.07.01",
+    "to": "2023.07.31",
+    "metrics": {
+      "net_profit": -4.49,
+      "profit_factor": 0.85,
+      "expected_payoff": -0.14,
+      "total_trades": 33.0,
+      "win_rate": 42.42,
+      "balance_dd_abs": 13.13,
+      "balance_dd_pct": 12.43,
+      "equity_dd_abs": 16.02,
+      "equity_dd_pct": 15.02
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230701_20230731.htm"
+  },
+  {
+    "month": "2023-08",
+    "from": "2023.08.01",
+    "to": "2023.08.31",
+    "metrics": {
+      "net_profit": 5.04,
+      "profit_factor": 1.12,
+      "expected_payoff": 0.11,
+      "total_trades": 46.0,
+      "win_rate": 50.0,
+      "balance_dd_abs": 12.41,
+      "balance_dd_pct": 10.57,
+      "equity_dd_abs": 18.1,
+      "equity_dd_pct": 14.7
+    },
+    "regime_note": "LOW_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230801_20230831.htm"
+  },
+  {
+    "month": "2023-09",
+    "from": "2023.09.01",
+    "to": "2023.09.30",
+    "metrics": {
+      "net_profit": 4.37,
+      "profit_factor": 1.29,
+      "expected_payoff": 0.17,
+      "total_trades": 26.0,
+      "win_rate": 53.85,
+      "balance_dd_abs": 7.7,
+      "balance_dd_pct": 7.33,
+      "equity_dd_abs": 12.23,
+      "equity_dd_pct": 11.42
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20230901_20230930.htm"
+  },
+  {
+    "month": "2023-10",
+    "from": "2023.10.01",
+    "to": "2023.10.31",
+    "metrics": {
+      "net_profit": 14.62,
+      "profit_factor": 1.17,
+      "expected_payoff": 0.24,
+      "total_trades": 60.0,
+      "win_rate": 43.33,
+      "balance_dd_abs": 35.36,
+      "balance_dd_pct": 23.58,
+      "equity_dd_abs": 39.78,
+      "equity_dd_pct": 25.94
+    },
+    "regime_note": "LOW_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20231001_20231031.htm"
+  },
+  {
+    "month": "2023-11",
+    "from": "2023.11.01",
+    "to": "2023.11.30",
+    "metrics": {
+      "net_profit": -17.96,
+      "profit_factor": 0.45,
+      "expected_payoff": -0.56,
+      "total_trades": 32.0,
+      "win_rate": 34.38,
+      "balance_dd_abs": 25.32,
+      "balance_dd_pct": 24.6,
+      "equity_dd_abs": 32.28,
+      "equity_dd_pct": 29.43
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20231101_20231130.htm"
+  },
+  {
+    "month": "2023-12",
+    "from": "2023.12.01",
+    "to": "2023.12.31",
+    "metrics": {
+      "net_profit": -17.99,
+      "profit_factor": 0.48,
+      "expected_payoff": -0.58,
+      "total_trades": 31.0,
+      "win_rate": 32.26,
+      "balance_dd_abs": 18.23,
+      "balance_dd_pct": 18.19,
+      "equity_dd_abs": 21.86,
+      "equity_dd_pct": 21.05
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20231201_20231231.htm"
+  },
+  {
+    "month": "2024-01",
+    "from": "2024.01.01",
+    "to": "2024.01.31",
+    "metrics": {
+      "net_profit": -16.62,
+      "profit_factor": 0.66,
+      "expected_payoff": -0.55,
+      "total_trades": 30.0,
+      "win_rate": 46.67,
+      "balance_dd_abs": 37.95,
+      "balance_dd_pct": 32.39,
+      "equity_dd_abs": 38.44,
+      "equity_dd_pct": 32.74
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240101_20240131.htm"
+  },
+  {
+    "month": "2024-02",
+    "from": "2024.02.01",
+    "to": "2024.02.29",
+    "metrics": {
+      "net_profit": 1.91,
+      "profit_factor": 1.11,
+      "expected_payoff": 0.08,
+      "total_trades": 25.0,
+      "win_rate": 52.0,
+      "balance_dd_abs": 9.07,
+      "balance_dd_pct": 8.66,
+      "equity_dd_abs": 9.69,
+      "equity_dd_pct": 9.25
+    },
+    "regime_note": "LOW_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240201_20240229.htm"
+  },
+  {
+    "month": "2024-03",
+    "from": "2024.03.01",
+    "to": "2024.03.31",
+    "metrics": {
+      "net_profit": 16.85,
+      "profit_factor": 1.42,
+      "expected_payoff": 0.46,
+      "total_trades": 37.0,
+      "win_rate": 43.24,
+      "balance_dd_abs": 19.93,
+      "balance_dd_pct": 19.93,
+      "equity_dd_abs": 23.62,
+      "equity_dd_pct": 23.36
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240301_20240331.htm"
+  },
+  {
+    "month": "2024-04",
+    "from": "2024.04.01",
+    "to": "2024.04.30",
+    "metrics": {
+      "net_profit": -14.08,
+      "profit_factor": 0.81,
+      "expected_payoff": -0.31,
+      "total_trades": 45.0,
+      "win_rate": 44.44,
+      "balance_dd_abs": 31.21,
+      "balance_dd_pct": 26.65,
+      "equity_dd_abs": 33.59,
+      "equity_dd_pct": 28.11
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240401_20240430.htm"
+  },
+  {
+    "month": "2024-05",
+    "from": "2024.05.01",
+    "to": "2024.05.31",
+    "metrics": {
+      "net_profit": -31.42,
+      "profit_factor": 0.46,
+      "expected_payoff": -0.9,
+      "total_trades": 35.0,
+      "win_rate": 34.29,
+      "balance_dd_abs": 31.42,
+      "balance_dd_pct": 31.42,
+      "equity_dd_abs": 39.19,
+      "equity_dd_pct": 36.43
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240501_20240531.htm"
+  },
+  {
+    "month": "2024-06",
+    "from": "2024.06.01",
+    "to": "2024.06.30",
+    "metrics": {
+      "net_profit": 8.36,
+      "profit_factor": 1.33,
+      "expected_payoff": 0.4,
+      "total_trades": 21.0,
+      "win_rate": 57.14,
+      "balance_dd_abs": 23.13,
+      "balance_dd_pct": 23.13,
+      "equity_dd_abs": 25.38,
+      "equity_dd_pct": 25.18
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240601_20240630.htm"
+  },
+  {
+    "month": "2024-07",
+    "from": "2024.07.01",
+    "to": "2024.07.31",
+    "metrics": {
+      "net_profit": -12.44,
+      "profit_factor": 0.76,
+      "expected_payoff": -0.32,
+      "total_trades": 39.0,
+      "win_rate": 46.15,
+      "balance_dd_abs": 29.46,
+      "balance_dd_pct": 29.28,
+      "equity_dd_abs": 30.74,
+      "equity_dd_pct": 30.38
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240701_20240731.htm"
+  },
+  {
+    "month": "2024-08",
+    "from": "2024.08.01",
+    "to": "2024.08.31",
+    "metrics": {
+      "net_profit": 4.87,
+      "profit_factor": 1.12,
+      "expected_payoff": 0.14,
+      "total_trades": 36.0,
+      "win_rate": 50.0,
+      "balance_dd_abs": 22.56,
+      "balance_dd_pct": 18.03,
+      "equity_dd_abs": 27.79,
+      "equity_dd_pct": 21.37
+    },
+    "regime_note": "LOW_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240801_20240831.htm"
+  },
+  {
+    "month": "2024-09",
+    "from": "2024.09.01",
+    "to": "2024.09.30",
+    "metrics": {
+      "net_profit": -10.13,
+      "profit_factor": 0.73,
+      "expected_payoff": -0.32,
+      "total_trades": 32.0,
+      "win_rate": 40.62,
+      "balance_dd_abs": 11.15,
+      "balance_dd_pct": 11.15,
+      "equity_dd_abs": 13.92,
+      "equity_dd_pct": 13.66
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20240901_20240930.htm"
+  },
+  {
+    "month": "2024-10",
+    "from": "2024.10.01",
+    "to": "2024.10.31",
+    "metrics": {
+      "net_profit": -13.05,
+      "profit_factor": 0.76,
+      "expected_payoff": -0.32,
+      "total_trades": 41.0,
+      "win_rate": 51.22,
+      "balance_dd_abs": 22.68,
+      "balance_dd_pct": 21.1,
+      "equity_dd_abs": 25.16,
+      "equity_dd_pct": 22.92
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20241001_20241031.htm"
+  },
+  {
+    "month": "2024-11",
+    "from": "2024.11.01",
+    "to": "2024.11.30",
+    "metrics": {
+      "net_profit": -7.64,
+      "profit_factor": 0.86,
+      "expected_payoff": -0.2,
+      "total_trades": 38.0,
+      "win_rate": 44.74,
+      "balance_dd_abs": 19.88,
+      "balance_dd_pct": 19.86,
+      "equity_dd_abs": 22.45,
+      "equity_dd_pct": 22.1
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20241101_20241130.htm"
+  },
+  {
+    "month": "2024-12",
+    "from": "2024.12.01",
+    "to": "2024.12.31",
+    "metrics": {
+      "net_profit": 1.2,
+      "profit_factor": 1.04,
+      "expected_payoff": 0.05,
+      "total_trades": 25.0,
+      "win_rate": 40.0,
+      "balance_dd_abs": 12.88,
+      "balance_dd_pct": 12.88,
+      "equity_dd_abs": 19.28,
+      "equity_dd_pct": 18.41
+    },
+    "regime_note": "LOW_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20241201_20241231.htm"
+  },
+  {
+    "month": "2025-01",
+    "from": "2025.01.01",
+    "to": "2025.01.31",
+    "metrics": {
+      "net_profit": -12.72,
+      "profit_factor": 0.72,
+      "expected_payoff": -0.39,
+      "total_trades": 33.0,
+      "win_rate": 42.42,
+      "balance_dd_abs": 19.95,
+      "balance_dd_pct": 19.95,
+      "equity_dd_abs": 20.84,
+      "equity_dd_pct": 20.75
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250101_20250131.htm"
+  },
+  {
+    "month": "2025-02",
+    "from": "2025.02.01",
+    "to": "2025.02.28",
+    "metrics": {
+      "net_profit": 9.78,
+      "profit_factor": 1.33,
+      "expected_payoff": 0.3,
+      "total_trades": 33.0,
+      "win_rate": 54.55,
+      "balance_dd_abs": 17.34,
+      "balance_dd_pct": 14.43,
+      "equity_dd_abs": 22.51,
+      "equity_dd_pct": 18.28
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250201_20250228.htm"
+  },
+  {
+    "month": "2025-03",
+    "from": "2025.03.01",
+    "to": "2025.03.31",
+    "metrics": {
+      "net_profit": 22.9,
+      "profit_factor": 1.83,
+      "expected_payoff": 0.76,
+      "total_trades": 30.0,
+      "win_rate": 63.33,
+      "balance_dd_abs": 19.99,
+      "balance_dd_pct": 19.14,
+      "equity_dd_abs": 21.17,
+      "equity_dd_pct": 20.14
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250301_20250331.htm"
+  },
+  {
+    "month": "2025-04",
+    "from": "2025.04.01",
+    "to": "2025.04.30",
+    "metrics": {
+      "net_profit": -15.08,
+      "profit_factor": 0.61,
+      "expected_payoff": -0.52,
+      "total_trades": 29.0,
+      "win_rate": 41.38,
+      "balance_dd_abs": 23.07,
+      "balance_dd_pct": 21.75,
+      "equity_dd_abs": 25.45,
+      "equity_dd_pct": 23.82
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250401_20250430.htm"
+  },
+  {
+    "month": "2025-05",
+    "from": "2025.05.01",
+    "to": "2025.05.31",
+    "metrics": {
+      "net_profit": 3.59,
+      "profit_factor": 1.08,
+      "expected_payoff": 0.12,
+      "total_trades": 31.0,
+      "win_rate": 51.61,
+      "balance_dd_abs": 17.67,
+      "balance_dd_pct": 16.58,
+      "equity_dd_abs": 20.42,
+      "equity_dd_pct": 19.02
+    },
+    "regime_note": "LOW_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250501_20250531.htm"
+  },
+  {
+    "month": "2025-06",
+    "from": "2025.06.01",
+    "to": "2025.06.30",
+    "metrics": {
+      "net_profit": -9.91,
+      "profit_factor": 0.74,
+      "expected_payoff": -0.32,
+      "total_trades": 31.0,
+      "win_rate": 41.94,
+      "balance_dd_abs": 18.73,
+      "balance_dd_pct": 18.4,
+      "equity_dd_abs": 21.96,
+      "equity_dd_pct": 21.1
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250601_20250630.htm"
+  },
+  {
+    "month": "2025-07",
+    "from": "2025.07.01",
+    "to": "2025.07.31",
+    "metrics": {
+      "net_profit": 2.33,
+      "profit_factor": 1.08,
+      "expected_payoff": 0.11,
+      "total_trades": 22.0,
+      "win_rate": 45.45,
+      "balance_dd_abs": 15.6,
+      "balance_dd_pct": 13.23,
+      "equity_dd_abs": 19.81,
+      "equity_dd_pct": 16.22
+    },
+    "regime_note": "LOW_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250701_20250731.htm"
+  },
+  {
+    "month": "2025-08",
+    "from": "2025.08.01",
+    "to": "2025.08.31",
+    "metrics": {
+      "net_profit": -11.72,
+      "profit_factor": 0.69,
+      "expected_payoff": -0.39,
+      "total_trades": 30.0,
+      "win_rate": 43.33,
+      "balance_dd_abs": 28.85,
+      "balance_dd_pct": 28.85,
+      "equity_dd_abs": 31.52,
+      "equity_dd_pct": 31.19
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250801_20250831.htm"
+  },
+  {
+    "month": "2025-09",
+    "from": "2025.09.01",
+    "to": "2025.09.30",
+    "metrics": {
+      "net_profit": -38.65,
+      "profit_factor": 0.48,
+      "expected_payoff": -0.66,
+      "total_trades": 59.0,
+      "win_rate": 37.29,
+      "balance_dd_abs": 38.84,
+      "balance_dd_pct": 38.84,
+      "equity_dd_abs": 44.7,
+      "equity_dd_pct": 42.83
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20250901_20250930.htm"
+  },
+  {
+    "month": "2025-10",
+    "from": "2025.10.01",
+    "to": "2025.10.31",
+    "metrics": {
+      "net_profit": -2.09,
+      "profit_factor": 0.98,
+      "expected_payoff": -0.04,
+      "total_trades": 54.0,
+      "win_rate": 51.85,
+      "balance_dd_abs": 21.98,
+      "balance_dd_pct": 18.33,
+      "equity_dd_abs": 24.57,
+      "equity_dd_pct": 20.06
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20251001_20251031.htm"
+  },
+  {
+    "month": "2025-11",
+    "from": "2025.11.01",
+    "to": "2025.11.30",
+    "metrics": {
+      "net_profit": -1.54,
+      "profit_factor": 0.97,
+      "expected_payoff": -0.05,
+      "total_trades": 34.0,
+      "win_rate": 38.24,
+      "balance_dd_abs": 44.37,
+      "balance_dd_pct": 31.06,
+      "equity_dd_abs": 48.4,
+      "equity_dd_pct": 32.98
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20251101_20251130.htm"
+  },
+  {
+    "month": "2025-12",
+    "from": "2025.12.01",
+    "to": "2025.12.31",
+    "metrics": {
+      "net_profit": -15.92,
+      "profit_factor": 0.73,
+      "expected_payoff": -0.33,
+      "total_trades": 48.0,
+      "win_rate": 35.42,
+      "balance_dd_abs": 34.58,
+      "balance_dd_pct": 34.58,
+      "equity_dd_abs": 36.66,
+      "equity_dd_pct": 36.04
+    },
+    "regime_note": "RED",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20251201_20251231.htm"
+  },
+  {
+    "month": "2026-01",
+    "from": "2026.01.01",
+    "to": "2026.01.31",
+    "metrics": {
+      "net_profit": 100.13,
+      "profit_factor": 1.94,
+      "expected_payoff": 1.35,
+      "total_trades": 74.0,
+      "win_rate": 54.05,
+      "balance_dd_abs": 27.51,
+      "balance_dd_pct": 20.81,
+      "equity_dd_abs": 36.2,
+      "equity_dd_pct": 26.03
+    },
+    "regime_note": "EXPANSION_EDGE",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260131.htm"
+  },
+  {
+    "month": "2026-02",
+    "from": "2026.02.01",
+    "to": "2026.02.28",
+    "metrics": {
+      "net_profit": 31.13,
+      "profit_factor": 2.01,
+      "expected_payoff": 1.0,
+      "total_trades": 31.0,
+      "win_rate": 54.84,
+      "balance_dd_abs": 8.41,
+      "balance_dd_pct": 6.37,
+      "equity_dd_abs": 25.65,
+      "equity_dd_pct": 17.63
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260201_20260228.htm"
+  },
+  {
+    "month": "2026-03",
+    "from": "2026.03.01",
+    "to": "2026.03.31",
+    "metrics": {
+      "net_profit": 77.92,
+      "profit_factor": 3.92,
+      "expected_payoff": 3.12,
+      "total_trades": 25.0,
+      "win_rate": 68.0,
+      "balance_dd_abs": 9.86,
+      "balance_dd_pct": 8.82,
+      "equity_dd_abs": 14.18,
+      "equity_dd_pct": 12.44
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260301_20260331.htm"
+  },
+  {
+    "month": "2026-04",
+    "from": "2026.04.01",
+    "to": "2026.04.25",
+    "metrics": {
+      "net_profit": 40.25,
+      "profit_factor": 3.12,
+      "expected_payoff": 1.61,
+      "total_trades": 25.0,
+      "win_rate": 64.0,
+      "balance_dd_abs": 5.38,
+      "balance_dd_pct": 3.8,
+      "equity_dd_abs": 10.44,
+      "equity_dd_pct": 7.3
+    },
+    "regime_note": "NORMAL",
+    "report": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm"
+  }
+]

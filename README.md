@@ -28,14 +28,41 @@ Setup: `XAUUSDc`, `M5`, `Deposit 100 USD`, `Leverage 1:100`, mode `Every tick`.
 
 | Bot | Window | Net Profit | Trades | Win Rate | PF | EqDD |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Combined tester | 2026 YTD | +558.51% | 155 | 58.06% | 2.70 | 17.71% |
-| Combined tester | 2026.04.01-2026.04.25 | +40.25% | 25 | 64.00% | 3.12 | 7.30% |
-| Bull-only | 2026 YTD | +269.58% | 127 | 56.69% | 2.37 | 17.72% |
-| Bull-only | 2026.04.01-2026.04.25 | +39.97% | 23 | 65.22% | 3.63 | 6.52% |
-| Bear-only | 2026 YTD | +68.37% | 87 | 55.17% | 1.50 | 32.25% |
-| Bear-only | 2026.04.01-2026.04.25 | +11.95% | 15 | 60.00% | 1.79 | 12.56% |
+| Combined tester | 2026 YTD | +677.97% | 146 | 60.96% | 2.98 | 17.74% |
+| Combined tester | 2026.04.10-2026.04.25 | +10.43% | 12 | 50.00% | 2.22 | 7.30% |
+| Bull-only | 2026 YTD | +335.28% | 118 | 60.17% | 2.82 | 17.71% |
+| Bull-only | 2026.04.10-2026.04.25 | +10.23% | 10 | 50.00% | 2.84 | 4.87% |
+| Bear-only | 2026 YTD | +19.02% | 73 | 50.68% | 1.16 | 32.20% |
+| Bear-only | 2026.04.10-2026.04.25 | +12.28% | 13 | 61.54% | 1.91 | 12.60% |
 
-Catatan: untuk live split, jumlah trade aktual berasal dari `Bull-only + Bear-only`. Window `2026.04.01-2026.04.25` menghasilkan 38 trade split; combined tester hanya 25 karena simulasi memakai satu equity curve dan exposure bersama.
+Catatan: untuk live split, jumlah trade aktual berasal dari `Bull-only + Bear-only`. Combined tester tetap dipakai sebagai portfolio proxy karena satu equity curve lebih dekat untuk membaca DD total.
+
+## Market Regime Study
+
+Monthly matrix dari `2023.01` sampai `2026.04` menunjukkan v11 sangat regime-specific:
+
+| Year | Base Sum Monthly Net | Guard Sum Monthly Net | Base Red Months | Guard Red Months | Base Worst DD | Guard Worst DD |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 2023 | -19.37 | -26.86 | 7 | 7 | 29.43% | 26.03% |
+| 2024 | -72.19 | -75.08 | 7 | 7 | 36.43% | 32.35% |
+| 2025 | -69.03 | -57.20 | 8 | 8 | 42.83% | 39.38% |
+| 2026 | +249.43 | +285.16 | 0 | 0 | 26.03% | 20.23% |
+
+Interpretasi: `v11` cocok untuk 2026 expansion regime, tetapi tidak otomatis robust untuk 2023-2025. Daily Guard mengurangi DD dan membantu 2025/2026, tetapi belum mengubah hostile months menjadi edge positif.
+
+## Daily Guard Default
+
+Default sekarang memakai `balanced_guard`:
+
+- `V11_EnableDailyGuard=true`
+- `V11_DailyMaxLossPct=8.00`
+- `V11_DailyProfitLockStartPct=12.00`
+- `V11_DailyMaxGivebackPct=4.00`
+- `V11_MaxConsecutiveLosses=3`
+- `V11_LossCooldownMinutes=180`
+- `V11_DailyClosePositionsOnStop=false`
+
+Ini adalah entry guard, bukan hard liquidation guard. Jika daily loss menyentuh limit, EA berhenti membuka entry baru sampai hari berikutnya. Posisi aktif tidak dipaksa close karena varian close-on-stop menurunkan hasil backtest.
 
 ## Weekend Technical Research
 
@@ -43,7 +70,7 @@ Setelah baseline v11 dipush, branch `codex/v11-technical-improvement` menambahka
 
 - Marker comment: `BUY_IMPULSE` / `SELL_IMPULSE`, internal marker `IB` / `IS`.
 - Default tetap `V11_EnableImpulsePullbackEngine=false`.
-- Hasil 11 kandidat di combined tester menunjukkan control masih menang: `+558.51%` YTD, 155 trades, PF `2.70`, EqDD `17.71%`.
+- Hasil 11 kandidat di combined tester menunjukkan control sebelum Daily Guard masih menang atas impulse variants: `+558.51%` YTD, 155 trades, PF `2.70`, EqDD `17.71%`.
 - Kandidat terbaik impulse hanya mendekati control, bukan mengalahkan: `sell_runner` `+547.94%` YTD dengan trade count sama; `sell_aggressive` menaikkan trades ke 201 tetapi net turun ke `+485.94%`.
 
 Keputusan: engine ini disimpan sebagai opsi riset/diagnostic, bukan default live.
@@ -71,7 +98,8 @@ Kode penting:
 
 - Breakeven aktif: saat posisi bergerak `0.80R`, SL digeser ke area entry plus lock kecil `0.20`.
 - TP manager / partial close masih default `false`. Hasil exit matrix menunjukkan partial/trailing menurunkan profit walau trade count naik.
-- Bull-only dan combined tester memakai `time_strict`: posisi boleh ditutup saat melewati batas bar walau masih minus. Ini menaikkan combined YTD ke `+558.51%` dan menurunkan EqDD ke `17.71%`.
+- Bull-only dan combined tester memakai `time_strict`: posisi boleh ditutup saat melewati batas bar walau masih minus.
+- Daily Guard sekarang aktif sebagai risk layer setelah exit matrix: combined 2026 YTD naik ke `+677.97%` dengan EqDD `17.74%`.
 - Bear-only tidak memakai `time_strict` karena validasi split menunjukkan performa sell memburuk.
 - Log exit sekarang lebih jelas: `MOVE_SL_TO_BE`, `TIME_CLOSE`, `TP1_RUNNER_SET`, `TRAIL_SL`, `FAST_FAIL_CLOSE`, dan `WEAK_SELL_QUICK_EXIT`.
 

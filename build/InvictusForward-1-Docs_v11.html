@@ -168,24 +168,24 @@
         <code>v11</code> adalah sistem M5 yang dipisah menjadi <strong>BUY-only</strong> dan
         <strong>SELL-only</strong>. Versi ini memakai score/comment yang lebih mudah dibaca,
         zone retest, breakout/pullback, add-on continuation, dynamic SL/TP, breakeven,
-        exit diagnostics, dan cross-direction guard agar dua bot tidak saling melawan posisi.
+        exit diagnostics, daily risk guard, dan cross-direction guard agar dua bot tidak saling melawan posisi.
       </p>
       <div class="grid">
         <div class="stat">
           <div class="label">Combined 2026 Net Profit</div>
-          <div class="value good">+558.51%</div>
+          <div class="value good">+677.97%</div>
         </div>
         <div class="stat">
           <div class="label">Combined 2026 Trades</div>
-          <div class="value">155</div>
+          <div class="value">146</div>
         </div>
         <div class="stat">
           <div class="label">Combined 2026 Profit Factor</div>
-          <div class="value">2.70</div>
+          <div class="value">2.98</div>
         </div>
         <div class="stat">
           <div class="label">Combined 2026 Max Equity DD</div>
-          <div class="value">17.71%</div>
+          <div class="value">17.74%</div>
         </div>
       </div>
     </section>
@@ -202,6 +202,7 @@
         <li>Exit matrix 10 preset memilih <code>time_strict</code> untuk bull dan combined: posisi yang terlalu lama boleh ditutup walau minus. Bear tetap default karena time-strict merusak performa sell.</li>
         <li>Cross-direction guard aktif: bull magic <code>2026042411</code> membaca posisi bear magic <code>2026042412</code>, dan sebaliknya.</li>
         <li>Weekend technical research menambahkan engine opsional <code>BUY_IMPULSE</code>/<code>SELL_IMPULSE</code>, tetapi default tetap <code>off</code> karena 11 kandidat impulse belum mengalahkan control.</li>
+        <li>Daily Guard menjadi default: daily loss cap <code>8%</code>, profit lock mulai <code>+12%</code> dengan giveback <code>4%</code>, dan cooldown <code>180 menit</code> setelah <code>3</code> loss beruntun.</li>
       </ul>
     </section>
 
@@ -399,60 +400,91 @@
           <tr>
             <td>Combined tester</td>
             <td>2026-only</td>
-            <td class="good"><strong>+558.51%</strong></td>
-            <td>2.70</td>
-            <td>58.06%</td>
-            <td>155</td>
-            <td>17.71%</td>
+            <td class="good"><strong>+677.97%</strong></td>
+            <td>2.98</td>
+            <td>60.96%</td>
+            <td>146</td>
+            <td>17.74%</td>
           </tr>
           <tr>
             <td>Combined tester</td>
-            <td>2026.04.01-04.25</td>
-            <td class="good">+40.25%</td>
-            <td>3.12</td>
-            <td>64.00%</td>
-            <td>25</td>
+            <td>2026.04.10-04.25</td>
+            <td class="good">+10.43%</td>
+            <td>2.22</td>
+            <td>50.00%</td>
+            <td>12</td>
             <td>7.30%</td>
           </tr>
           <tr>
             <td>Bull-only</td>
             <td>2026-only</td>
-            <td class="good">+269.58%</td>
-            <td>2.37</td>
-            <td>56.69%</td>
-            <td>127</td>
-            <td>17.72%</td>
+            <td class="good">+335.28%</td>
+            <td>2.82</td>
+            <td>60.17%</td>
+            <td>118</td>
+            <td>17.71%</td>
           </tr>
           <tr>
             <td>Bull-only</td>
-            <td>2026.04.01-04.25</td>
-            <td class="good">+39.97%</td>
-            <td>3.63</td>
-            <td>65.22%</td>
-            <td>23</td>
-            <td>6.52%</td>
+            <td>2026.04.10-04.25</td>
+            <td class="good">+10.23%</td>
+            <td>2.84</td>
+            <td>50.00%</td>
+            <td>10</td>
+            <td>4.87%</td>
           </tr>
           <tr>
             <td>Bear-only dense</td>
             <td>2026-only</td>
-            <td class="good">+68.37%</td>
-            <td>1.50</td>
-            <td>55.17%</td>
-            <td>87</td>
-            <td class="bad">32.25%</td>
+            <td class="good">+19.02%</td>
+            <td>1.16</td>
+            <td>50.68%</td>
+            <td>73</td>
+            <td class="bad">32.20%</td>
           </tr>
           <tr>
             <td>Bear-only dense</td>
-            <td>2026.04.01-04.25</td>
-            <td class="good">+11.95%</td>
-            <td>1.79</td>
-            <td>60.00%</td>
-            <td>15</td>
-            <td>12.56%</td>
+            <td>2026.04.10-04.25</td>
+            <td class="good">+12.28%</td>
+            <td>1.91</td>
+            <td>61.54%</td>
+            <td>13</td>
+            <td>12.60%</td>
           </tr>
         </tbody>
       </table>
-      <p class="muted">Jika bull dan bear dijalankan sebagai dua EA live, recent split total adalah <code>38 trades</code> dari <code>2026.04.01-2026.04.25</code>. Itu sudah lebih dari rata-rata satu trade per hari kalender.</p>
+      <p class="muted">Jika bull dan bear dijalankan sebagai dua EA live, recent split total adalah <code>23 trades</code> dari <code>2026.04.10-2026.04.25</code>. Combined tester tidak sama dengan penjumlahan split karena memakai satu equity curve.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Daily Guard & Regime Study</h2>
+      <p class="muted">Monthly matrix 2023-2026 menunjukkan v11 sangat kuat di 2026, tetapi tidak otomatis robust di 2023-2025. Karena itu default terbaru memakai <code>balanced_guard</code> sebagai risk layer.</p>
+      <div class="flow">
+        <div class="step"><b>Daily Loss Cap</b> Entry baru diblok jika equity hari itu turun <code>8%</code> dari day-start equity.</div>
+        <div class="step"><b>Profit Lock</b> Jika daily high sudah <code>+12%</code>, entry baru diblok setelah giveback <code>4%</code>.</div>
+        <div class="step"><b>Loss Cooldown</b> Setelah <code>3</code> loss beruntun, EA pause entry <code>180 menit</code>.</div>
+        <div class="step"><b>No Forced Close</b> <code>V11_DailyClosePositionsOnStop=false</code>; varian force-close menurunkan hasil backtest.</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Base Net</th>
+            <th>Guard Net</th>
+            <th>Base Red Months</th>
+            <th>Guard Red Months</th>
+            <th>Base Worst DD</th>
+            <th>Guard Worst DD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2023</td><td>-19.37</td><td>-26.86</td><td>7</td><td>7</td><td>29.43%</td><td>26.03%</td></tr>
+          <tr><td>2024</td><td>-72.19</td><td>-75.08</td><td>7</td><td>7</td><td>36.43%</td><td>32.35%</td></tr>
+          <tr><td>2025</td><td>-69.03</td><td>-57.20</td><td>8</td><td>8</td><td>42.83%</td><td>39.38%</td></tr>
+          <tr><td>2026</td><td class="good">+249.43</td><td class="good">+285.16</td><td>0</td><td>0</td><td>26.03%</td><td>20.23%</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">Kesimpulan: Daily Guard membantu DD dan current regime, tetapi hostile-regime 2023-2025 tetap butuh entry/regime filter baru. Guard bukan pengganti edge entry.</p>
     </section>
 
     <section class="panel">
@@ -462,7 +494,6 @@
           <tr>
             <th>Side</th>
             <th>Winner</th>
-            <th>Why</th>
             <th>Rejected Pattern</th>
           </tr>
         </thead>
@@ -470,13 +501,13 @@
           <tr>
             <td>Bull</td>
             <td><code>bull_control</code></td>
-            <td>Setelah exit matrix: recent <code>+39.97%</code>, 23 trades, PF <code>3.63</code>; YTD <code>+269.58%</code>, 127 trades.</td>
+            <td>Setelah Daily Guard: recent <code>+10.23%</code>, 10 trades, PF <code>2.84</code>; YTD <code>+335.28%</code>, 118 trades.</td>
             <td>Session-all, fast scalp, and dense mix raised trades but damaged PF and net profit.</td>
           </tr>
           <tr>
             <td>Bear</td>
             <td><code>safe_break_quality</code></td>
-            <td>Recent tetap <code>+11.95%</code> / 15 trades; YTD naik ke <code>+68.37%</code> dan EqDD turun ke <code>32.25%</code>.</td>
+            <td>Setelah Daily Guard: recent <code>+12.28%</code> / 13 trades; YTD <code>+19.02%</code> dan EqDD <code>32.20%</code>.</td>
             <td>Safe mode yang terlalu ketat memotong profit; tightening terbaik ada di kualitas breakout SELL.</td>
           </tr>
         </tbody>

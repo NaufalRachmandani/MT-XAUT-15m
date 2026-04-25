@@ -23,6 +23,15 @@ input bool   V10_EnableMixedMomentumEntries = false;
 input bool   V11_BlockOppositeDirection = true;
 input long   V11_OppositeMagic = 0;
 input double V10_MaxSpreadUsd = 1.20;
+input bool   V11_EnableDailyGuard = true;
+input double V11_DailyMaxLossPct = 8.00;
+input double V11_DailyProfitStopPct = 0.00;
+input double V11_DailyProfitLockStartPct = 12.00;
+input double V11_DailyMaxGivebackPct = 4.00;
+input bool   V11_DailyClosePositionsOnStop = false;
+input int    V11_MaxConsecutiveLosses = 3;
+input int    V11_LossCooldownMinutes = 180;
+input bool   V11_DailyGuardLog = true;
 
 input int    V10_H1FastEMA = 20;
 input int    V10_H1SlowEMA = 50;
@@ -226,6 +235,14 @@ int               g_emaM5 = INVALID_HANDLE;
 int               g_atrM5 = INVALID_HANDLE;
 datetime          g_lastBarTime = 0;
 int               g_statusBarCounter = 0;
+int               g_dailyGuardDay = -1;
+double            g_dailyStartEquity = 0.0;
+double            g_dailyHighEquity = 0.0;
+bool              g_dailyStopped = false;
+int               g_consecutiveLosses = 0;
+datetime          g_lossCooldownUntil = 0;
+datetime          g_lastRiskGuardLogTime = 0;
+string            g_lastRiskGuardLogReason = "";
 static const ulong V10_MAGIC = 2026042499;
 static const ENUM_TIMEFRAMES V10_EXEC_TF = PERIOD_M5;
 
@@ -746,6 +763,132 @@ bool V10SpreadAllowed()
    if(ask <= 0.0 || bid <= 0.0)
       return(false);
    return((ask - bid) <= V10_MaxSpreadUsd);
+  }
+
+
+int V11DayKey(const datetime ts)
+  {
+   MqlDateTime dt;
+   TimeToStruct(ts, dt);
+   return((dt.year * 1000) + dt.day_of_year);
+  }
+
+
+void V11RiskGuardLog(const string reason, const bool force = false)
+  {
+   if(!V11_DailyGuardLog)
+      return;
+   datetime now = TimeCurrent();
+   if(!force && reason == g_lastRiskGuardLogReason && (now - g_lastRiskGuardLogTime) < 3600)
+      return;
+   g_lastRiskGuardLogReason = reason;
+   g_lastRiskGuardLogTime = now;
+   PrintFormat("V11 RISK GUARD | %s | dayStart=%.2f dayHigh=%.2f equity=%.2f consecutiveLosses=%d cooldownUntil=%s",
+               reason,
+               g_dailyStartEquity,
+               g_dailyHighEquity,
+               AccountInfoDouble(ACCOUNT_EQUITY),
+               g_consecutiveLosses,
+               TimeToString(g_lossCooldownUntil, TIME_DATE | TIME_MINUTES));
+  }
+
+
+void V11ResetDailyGuardIfNeeded()
+  {
+   int dayKey = V11DayKey(TimeCurrent());
+   if(dayKey == g_dailyGuardDay)
+      return;
+   g_dailyGuardDay = dayKey;
+   g_dailyStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   g_dailyHighEquity = g_dailyStartEquity;
+   g_dailyStopped = false;
+   g_consecutiveLosses = 0;
+   g_lossCooldownUntil = 0;
+   V11RiskGuardLog("new trading day reset", true);
+  }
+
+
+void V11CloseOwnPositions(const string reason)
+  {
+   g_trade.SetExpertMagicNumber(V10_MAGIC);
+   g_trade.SetDeviationInPoints(20);
+   g_trade.SetTypeFillingBySymbol(_Symbol);
+
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0 || !PositionSelectByTicket(ticket))
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
+         continue;
+      if((ulong)PositionGetInteger(POSITION_MAGIC) != V10_MAGIC)
+         continue;
+
+      string comment = PositionGetString(POSITION_COMMENT);
+      double stopLoss = PositionGetDouble(POSITION_SL);
+      double takeProfit = PositionGetDouble(POSITION_TP);
+      if(g_trade.PositionClose(ticket))
+         V11ExitActionLog("RISK_GUARD_CLOSE", ticket, comment, reason, 0, 0.0, stopLoss, takeProfit);
+     }
+  }
+
+
+bool V11RiskGuardAllowsTrading(const bool allowClose)
+  {
+   if(!V11_EnableDailyGuard && (V11_MaxConsecutiveLosses <= 0 || V11_LossCooldownMinutes <= 0))
+      return(true);
+
+   V11ResetDailyGuardIfNeeded();
+   datetime now = TimeCurrent();
+   bool blocked = false;
+   string reason = "";
+
+   if(V11_EnableDailyGuard)
+     {
+      double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+      if(g_dailyStartEquity <= 0.0)
+         g_dailyStartEquity = equity;
+      g_dailyHighEquity = MathMax(g_dailyHighEquity, equity);
+
+      double dayPct = (g_dailyStartEquity > 0.0) ? ((equity - g_dailyStartEquity) / g_dailyStartEquity * 100.0) : 0.0;
+      double highPct = (g_dailyStartEquity > 0.0) ? ((g_dailyHighEquity - g_dailyStartEquity) / g_dailyStartEquity * 100.0) : 0.0;
+      bool hitLoss = V11_DailyMaxLossPct > 0.0 && dayPct <= -V11_DailyMaxLossPct;
+      bool hitProfit = V11_DailyProfitStopPct > 0.0 && dayPct >= V11_DailyProfitStopPct;
+      bool hitGiveback = V11_DailyProfitLockStartPct > 0.0 &&
+                         V11_DailyMaxGivebackPct > 0.0 &&
+                         highPct >= V11_DailyProfitLockStartPct &&
+                         (highPct - dayPct) >= V11_DailyMaxGivebackPct;
+
+      if((hitLoss || hitProfit || hitGiveback) && !g_dailyStopped)
+        {
+         g_dailyStopped = true;
+         if(hitLoss)
+            reason = StringFormat("daily max loss hit %.2f%% <= -%.2f%%", dayPct, V11_DailyMaxLossPct);
+         else if(hitProfit)
+            reason = StringFormat("daily profit stop hit %.2f%% >= %.2f%%", dayPct, V11_DailyProfitStopPct);
+         else
+            reason = StringFormat("daily giveback hit high %.2f%% now %.2f%% giveback %.2f%%", highPct, dayPct, highPct - dayPct);
+         V11RiskGuardLog(reason, true);
+         if(allowClose && V11_DailyClosePositionsOnStop)
+            V11CloseOwnPositions(reason);
+        }
+
+      if(g_dailyStopped)
+        {
+         blocked = true;
+         reason = "daily guard stopped trading until next day";
+        }
+     }
+
+   if(V11_LossCooldownMinutes > 0 && now < g_lossCooldownUntil)
+     {
+      blocked = true;
+      reason = "loss streak cooldown active";
+     }
+
+   if(blocked)
+      V11RiskGuardLog("entry blocked: " + reason);
+   return(!blocked);
   }
 
 
@@ -2406,6 +2549,8 @@ bool V10EvaluateEntries()
       return(false);
    if(!V10SpreadAllowed())
       return(false);
+   if(!V11RiskGuardAllowsTrading(false))
+      return(false);
    V10Regime entryRegime = regime;
    if(regime == V10_REGIME_MIXED)
      {
@@ -2471,6 +2616,7 @@ int OnInit()
      }
 
    V10ClearState();
+   V11ResetDailyGuardIfNeeded();
 
    g_trade.SetExpertMagicNumber(V10_MAGIC);
    g_trade.SetDeviationInPoints(20);
@@ -2523,9 +2669,46 @@ void OnDeinit(const int reason)
 
 void OnTick()
   {
+   V11RiskGuardAllowsTrading(true);
    V10ManagePositions();
    if(!V10NewBar())
       return;
    bool entered = V10EvaluateEntries();
    V11StatusLog(entered);
+  }
+
+
+void OnTradeTransaction(const MqlTradeTransaction &trans,
+                        const MqlTradeRequest &request,
+                        const MqlTradeResult &result)
+  {
+   if(V11_MaxConsecutiveLosses <= 0 || V11_LossCooldownMinutes <= 0)
+      return;
+   if(trans.type != TRADE_TRANSACTION_DEAL_ADD)
+      return;
+   if(!HistoryDealSelect(trans.deal))
+      return;
+   if(HistoryDealGetString(trans.deal, DEAL_SYMBOL) != _Symbol)
+      return;
+   if((ulong)HistoryDealGetInteger(trans.deal, DEAL_MAGIC) != V10_MAGIC)
+      return;
+
+   long entry = HistoryDealGetInteger(trans.deal, DEAL_ENTRY);
+   if(entry != DEAL_ENTRY_OUT && entry != DEAL_ENTRY_OUT_BY && entry != DEAL_ENTRY_INOUT)
+      return;
+
+   double pnl = HistoryDealGetDouble(trans.deal, DEAL_PROFIT) +
+                HistoryDealGetDouble(trans.deal, DEAL_SWAP) +
+                HistoryDealGetDouble(trans.deal, DEAL_COMMISSION);
+   if(pnl < -0.01)
+      g_consecutiveLosses++;
+   else if(pnl > 0.01)
+      g_consecutiveLosses = 0;
+
+   if(g_consecutiveLosses >= V11_MaxConsecutiveLosses)
+     {
+      g_lossCooldownUntil = TimeCurrent() + (V11_LossCooldownMinutes * 60);
+      V11RiskGuardLog(StringFormat("loss streak cooldown start losses=%d pnl=%.2f", g_consecutiveLosses, pnl), true);
+      g_consecutiveLosses = 0;
+     }
   }

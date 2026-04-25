@@ -67,3 +67,18 @@ Catatan: hasil combined tidak sama dengan penjumlahan bull-only + bear-only kare
 - `V11_LogRejectedSignals=true` akan mencetak `V11 REJECT` untuk kandidat yang score-nya dekat threshold.
 - `V11_LogStatusOnNewBar=true` akan mencetak status periodik: regime, posisi aktif, spread, equity, dan apakah bar tersebut entry.
 - Diagnostic run Bear recent mencatat `15` entry, `1` exit action, dan `0` reject dekat threshold. Artinya filter terbaru tidak sedang membuang banyak kandidat high-score; bottleneck berikutnya bukan score gate saja, tetapi struktur setup yang terbentuk sebelum scoring.
+
+## Weekend Technical Research
+
+Branch `codex/v11-technical-improvement` menambahkan engine opsional `Impulse Pullback` dengan marker `BUY_IMPULSE` / `SELL_IMPULSE`.
+
+Hasil 11 kandidat combined tester:
+
+| Rank | Preset | Recent | YTD | Decision |
+| ---: | --- | ---: | ---: | --- |
+| 1 | `control` | +40.25%, 25 trades, PF 3.12, DD 7.30% | +558.51%, 155 trades, PF 2.70, DD 17.71% | Tetap default |
+| 2 | `sell_runner` | +40.25%, 25 trades, PF 3.12, DD 7.30% | +547.94%, 155 trades, PF 2.68, DD 17.73% | Dekat, tapi kalah |
+| 3 | `sell_aggressive` | +35.07%, 32 trades, PF 2.60, DD 5.45% | +485.94%, 201 trades, PF 2.33, DD 17.69% | Trade naik, expectancy turun |
+| 11 | `both_soft_scalp` | +19.19%, 36 trades, PF 1.85, DD 7.56% | +297.42%, 218 trades, PF 2.04, DD 16.70% | Quantity tinggi, profit turun tajam |
+
+Keputusan: `V11_EnableImpulsePullbackEngine=false` tetap default. Engine disimpan untuk riset/diagnostic, bukan untuk live default.

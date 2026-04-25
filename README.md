@@ -37,6 +37,17 @@ Setup: `XAUUSDc`, `M5`, `Deposit 100 USD`, `Leverage 1:100`, mode `Every tick`.
 
 Catatan: untuk live split, jumlah trade aktual berasal dari `Bull-only + Bear-only`. Window `2026.04.01-2026.04.25` menghasilkan 38 trade split; combined tester hanya 25 karena simulasi memakai satu equity curve dan exposure bersama.
 
+## Weekend Technical Research
+
+Setelah baseline v11 dipush, branch `codex/v11-technical-improvement` menambahkan engine eksperimental `Impulse Pullback`:
+
+- Marker comment: `BUY_IMPULSE` / `SELL_IMPULSE`, internal marker `IB` / `IS`.
+- Default tetap `V11_EnableImpulsePullbackEngine=false`.
+- Hasil 11 kandidat di combined tester menunjukkan control masih menang: `+558.51%` YTD, 155 trades, PF `2.70`, EqDD `17.71%`.
+- Kandidat terbaik impulse hanya mendekati control, bukan mengalahkan: `sell_runner` `+547.94%` YTD dengan trade count sama; `sell_aggressive` menaikkan trades ke 201 tetapi net turun ke `+485.94%`.
+
+Keputusan: engine ini disimpan sebagai opsi riset/diagnostic, bukan default live.
+
 ## Log dan Comment
 
 Comment trade sekarang dibuat lebih mudah dibaca tanpa merusak marker internal EA.
@@ -50,6 +61,7 @@ Kode penting:
 - `BUY_ZONE` / `SELL_ZONE`: entry dari retest area harga.
 - `BUY_BREAK` / `SELL_BREAK`: entry breakout sesuai arah.
 - `BUY_PULLBACK`: buy setelah pullback di trend bullish.
+- `BUY_IMPULSE` / `SELL_IMPULSE`: engine riset impulse-pullback. Default nonaktif karena 11 kandidat belum mengalahkan control.
 - `BUY_COMP` / `SELL_COMP`: breakout dari kompresi/range sempit.
 - `BUY_ADDON` / `SELL_ADDON`: posisi tambahan ketika trade sebelumnya sudah bergerak benar.
 - Untuk riset kenapa setup ditolak, ubah input `V11_LogRejectedSignals=true`. EA akan print `V11 REJECT` untuk kandidat yang score-nya dekat threshold.

@@ -73,6 +73,20 @@ input int    V11_BearSafeWeakMinScore = 72;
 input double V11_BearSafeWeakMinBodyRatio = 0.50;
 input bool   V11_BearSafeBlockWeakZone = false;
 input bool   V11_BearSafeBlockWeakAddOns = true;
+input bool   V11_EnableImpulsePullbackEngine = false;
+input bool   V11_EnableBuyImpulsePullback = true;
+input bool   V11_EnableSellImpulsePullback = true;
+input bool   V11_ImpulseAllowWeakRegime = true;
+input int    V11_ImpulseSessionStartHour = 0;
+input int    V11_ImpulseSessionEndHour = 23;
+input double V11_ImpulseMinBodyRatio = 0.52;
+input double V11_ImpulseMinMoveATR = 0.65;
+input double V11_ImpulsePullbackMaxATR = 0.80;
+input double V11_ImpulseEntryBodyRatio = 0.38;
+input double V11_ImpulseBreakATR = 0.00;
+input double V11_ImpulseRiskMultiplier = 0.35;
+input double V11_ImpulseRR = 1.15;
+input int    V11_ImpulseMaxHoldBars = 10;
 input bool   V10_EnableZoneRetestEngine = true;
 input bool   V10_ZoneAllowWeakRegime = true;
 input bool   V10_ZoneUseCoreHours = false;
@@ -163,10 +177,12 @@ input double V10_AddOnRiskMultiplier = 0.32;
 input double V10_AddOnRR = 1.10;
 input int    V10_AddOnMaxHoldBars = 8;
 input bool   V11_BuyBreakTimeCloseProfitOnly = false;
+input bool   V11_BuyImpulseTimeCloseProfitOnly = false;
 input bool   V11_BuyZoneTimeCloseProfitOnly = false;
 input bool   V11_BuyCompTimeCloseProfitOnly = false;
 input bool   V11_BuyAddOnTimeCloseProfitOnly = false;
 input bool   V11_SellBreakTimeCloseProfitOnly = false;
+input bool   V11_SellImpulseTimeCloseProfitOnly = false;
 input bool   V11_SellZoneTimeCloseProfitOnly = false;
 input bool   V11_SellCompTimeCloseProfitOnly = false;
 input bool   V11_SellAddOnTimeCloseProfitOnly = false;
@@ -297,6 +313,10 @@ string V11EngineLabel(const string engineCode)
       return("Bullish Breakout Buy");
    if(engineCode == "PB")
       return("Bullish Pullback Buy");
+   if(engineCode == "IB")
+      return("Impulse Pullback Buy");
+   if(engineCode == "IS")
+      return("Impulse Pullback Sell");
    if(engineCode == "SB")
       return("Bull Compression Breakout");
    if(engineCode == "SS")
@@ -321,6 +341,10 @@ string V11EngineComment(const string engineCode)
       return("BUY_BREAK");
    if(engineCode == "PB")
       return("BUY_PULLBACK");
+   if(engineCode == "IB")
+      return("BUY_IMPULSE");
+   if(engineCode == "IS")
+      return("SELL_IMPULSE");
    if(engineCode == "SB")
       return("BUY_COMP");
    if(engineCode == "SS")
@@ -367,6 +391,8 @@ string V11TagLabel(const string tag)
       return("continuation");
    if(tag == "BX")
       return("boosted");
+   if(tag == "IP")
+      return("impulse");
    return(tag);
   }
 
@@ -474,6 +500,8 @@ bool V11EngineTimeCloseProfitOnly(const ENUM_POSITION_TYPE type, const string co
      {
       if(StringFind(comment, "|ZB|") >= 0)
          return(V11_BuyZoneTimeCloseProfitOnly);
+      if(StringFind(comment, "|IB|") >= 0)
+         return(V11_BuyImpulseTimeCloseProfitOnly);
       if(StringFind(comment, "|SB|") >= 0)
          return(V11_BuyCompTimeCloseProfitOnly);
       if(StringFind(comment, "|AB|") >= 0)
@@ -483,6 +511,8 @@ bool V11EngineTimeCloseProfitOnly(const ENUM_POSITION_TYPE type, const string co
 
    if(StringFind(comment, "|ZS|") >= 0)
       return(V11_SellZoneTimeCloseProfitOnly);
+   if(StringFind(comment, "|IS|") >= 0)
+      return(V11_SellImpulseTimeCloseProfitOnly);
    if(StringFind(comment, "|SS|") >= 0)
       return(V11_SellCompTimeCloseProfitOnly);
    if(StringFind(comment, "|AS|") >= 0)
@@ -1528,6 +1558,182 @@ bool V10BuildBearSubSignal(const MqlRates &rates[], const double emaM5, const do
   }
 
 
+bool V11BuildImpulsePullbackSignal(const MqlRates &rates[], const double emaM5, const double atr, const V10Regime regime, const bool sell, V10Signal &signal)
+  {
+   if(!V11_EnableImpulsePullbackEngine)
+      return(false);
+   if(sell && !V11_EnableSellImpulsePullback)
+      return(false);
+   if(!sell && !V11_EnableBuyImpulsePullback)
+      return(false);
+   if(atr <= 0.0 || emaM5 <= 0.0 || ArraySize(rates) < 6)
+      return(false);
+   if(sell)
+     {
+      if(!V10_EnableSells || !V10RegimeIsBear(regime))
+         return(false);
+     }
+   else
+     {
+      if(!V10_EnableBuys || !V10RegimeIsBull(regime))
+         return(false);
+     }
+   if(!V11_ImpulseAllowWeakRegime && !V10RegimeIsStrong(regime))
+      return(false);
+
+   int currentHour = V10HourOf(TimeCurrent());
+   if(!V10HourInSession(currentHour, V11_ImpulseSessionStartHour, V11_ImpulseSessionEndHour))
+      return(false);
+   if(!sell && V10BuyHourBlocked(currentHour))
+      return(false);
+
+   const MqlRates trigger = rates[1];
+   const MqlRates pullback = rates[2];
+   const MqlRates impulse = rates[3];
+   double impulseBody = V10BodyRatio(impulse);
+   double triggerBody = V10BodyRatio(trigger);
+   double impulseMoveAtr = MathAbs(impulse.close - impulse.open) / atr;
+   double pullbackRangeAtr = (pullback.high - pullback.low) / atr;
+   if(impulseBody < V11_ImpulseMinBodyRatio || impulseMoveAtr < V11_ImpulseMinMoveATR)
+      return(false);
+   if(triggerBody < V11_ImpulseEntryBodyRatio || pullbackRangeAtr > V11_ImpulsePullbackMaxATR)
+      return(false);
+   if(!V10DirectionalHoldOk(sell, rates, atr))
+      return(false);
+
+   if(sell)
+     {
+      if(impulse.close >= impulse.open || trigger.close >= trigger.open)
+         return(false);
+      if(pullback.high > (impulse.open + (atr * V11_ImpulsePullbackMaxATR)))
+         return(false);
+      if(trigger.close >= emaM5)
+         return(false);
+      if(trigger.close > (pullback.low - (atr * V11_ImpulseBreakATR)))
+         return(false);
+      if((emaM5 - trigger.close) > (atr * V10_MaxStretchATR))
+         return(false);
+
+      bool brokeImpulse = trigger.close <= impulse.close;
+      bool compactPullback = pullbackRangeAtr <= 0.55;
+      int score = 42;
+      score += V10RegimeIsStrong(regime) ? 15 : 8;
+      if(triggerBody >= (V11_ImpulseEntryBodyRatio + 0.10))
+         score += 10;
+      if(impulseMoveAtr >= (V11_ImpulseMinMoveATR + 0.35))
+         score += 10;
+      if(compactPullback)
+         score += 8;
+      if(brokeImpulse)
+         score += 8;
+      if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+        {
+         V11RejectedSignalLog("SELL", "IS", "score below gate", score, regime, currentHour, triggerBody, impulseMoveAtr,
+                              StringFormat("impulseBody=%.2f pullbackATR=%.2f brokeImpulse=%s", impulseBody, pullbackRangeAtr, brokeImpulse ? "yes" : "no"));
+         return(false);
+        }
+      if(!V11BearSafePass("IS", regime, score, currentHour, triggerBody, impulseMoveAtr))
+        {
+         V11RejectedSignalLog("SELL", "IS", "bear safe mode", score, regime, currentHour, triggerBody, impulseMoveAtr,
+                              StringFormat("impulseBody=%.2f pullbackATR=%.2f", impulseBody, pullbackRangeAtr));
+         return(false);
+        }
+
+      double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+      if(bid <= 0.0)
+         return(false);
+      double stopAnchor = MathMax(MathMax(impulse.high, pullback.high), trigger.high);
+      double stopDistance = V10Clamp((stopAnchor - bid) + (atr * V10_StopBufferATR), V10_MinSLUsd, V10_MaxSLUsd);
+      double stopLoss = V10NormalizePrice(bid + stopDistance);
+      double takeProfit = V10NormalizePrice(bid - (stopDistance * V11_ImpulseRR));
+      if(!V10StopsValid(true, bid, stopLoss, takeProfit))
+         return(false);
+      double riskUsd = V10RiskBudgetUsd(true, regime) * V11_ImpulseRiskMultiplier;
+      double lot = V10LotForRisk(true, bid, stopLoss, riskUsd);
+      if(lot < SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN))
+         return(false);
+
+      signal.valid = true;
+      signal.sell = true;
+      signal.entry = bid;
+      signal.stopLoss = stopLoss;
+      signal.takeProfit = takeProfit;
+      signal.lot = lot;
+      signal.stopDistance = stopDistance;
+      signal.rr = V11_ImpulseRR;
+      string tags = V10AppendTag("", V10RegimeIsStrong(regime) ? "RG" : "WG");
+      tags = V10AppendTag(tags, "IP");
+      tags = V10AppendTag(tags, "RT");
+      tags = V10AppendTag(tags, brokeImpulse ? "BR" : "CT");
+      string note = StringFormat("IMPULSE SELL score=%d impulseATR=%.2f impulseBody=%.2f triggerBody=%.2f pullbackATR=%.2f regime=%s hour=%02d rr=%.2f",
+                                 score, impulseMoveAtr, impulseBody, triggerBody, pullbackRangeAtr, V10RegimeLabel(regime), currentHour, V11_ImpulseRR);
+      V10FillSignalMeta(signal, "IS", score, tags, note);
+      return(true);
+     }
+
+   if(impulse.close <= impulse.open || trigger.close <= trigger.open)
+      return(false);
+   if(pullback.low < (impulse.open - (atr * V11_ImpulsePullbackMaxATR)))
+      return(false);
+   if(trigger.close <= emaM5)
+      return(false);
+   if(trigger.close < (pullback.high + (atr * V11_ImpulseBreakATR)))
+      return(false);
+   if((trigger.close - emaM5) > (atr * V10_BullMaxStretchATR))
+      return(false);
+
+   bool brokeImpulse = trigger.close >= impulse.close;
+   bool compactPullback = pullbackRangeAtr <= 0.55;
+   int score = 42;
+   score += V10RegimeIsStrong(regime) ? 15 : 8;
+   if(triggerBody >= (V11_ImpulseEntryBodyRatio + 0.10))
+      score += 10;
+   if(impulseMoveAtr >= (V11_ImpulseMinMoveATR + 0.35))
+      score += 10;
+   if(compactPullback)
+      score += 8;
+   if(brokeImpulse)
+      score += 8;
+   if(V10_MinTradeScore > 0 && score < V10_MinTradeScore)
+     {
+      V11RejectedSignalLog("BUY", "IB", "score below gate", score, regime, currentHour, triggerBody, impulseMoveAtr,
+                           StringFormat("impulseBody=%.2f pullbackATR=%.2f brokeImpulse=%s", impulseBody, pullbackRangeAtr, brokeImpulse ? "yes" : "no"));
+      return(false);
+     }
+
+   double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+   if(ask <= 0.0)
+      return(false);
+   double stopAnchor = MathMin(MathMin(impulse.low, pullback.low), trigger.low);
+   double stopDistance = V10Clamp((ask - stopAnchor) + (atr * V10_StopBufferATR), V10_MinSLUsd, V10_MaxSLUsd);
+   double stopLoss = V10NormalizePrice(ask - stopDistance);
+   double takeProfit = V10NormalizePrice(ask + (stopDistance * V11_ImpulseRR));
+   if(!V10StopsValid(false, ask, stopLoss, takeProfit))
+      return(false);
+   double riskUsd = V10BuyRiskBudgetUsd(regime, V11_ImpulseRiskMultiplier);
+   double lot = V10LotForRisk(false, ask, stopLoss, riskUsd);
+   if(lot < SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN))
+      return(false);
+
+   signal.valid = true;
+   signal.sell = false;
+   signal.entry = ask;
+   signal.stopLoss = stopLoss;
+   signal.takeProfit = takeProfit;
+   signal.lot = lot;
+   signal.stopDistance = stopDistance;
+   signal.rr = V11_ImpulseRR;
+   string tags = V10AppendTag("", V10RegimeIsStrong(regime) ? "RG" : "WG");
+   tags = V10AppendTag(tags, "IP");
+   tags = V10AppendTag(tags, "RT");
+   tags = V10AppendTag(tags, brokeImpulse ? "BR" : "CT");
+   string note = StringFormat("IMPULSE BUY score=%d impulseATR=%.2f impulseBody=%.2f triggerBody=%.2f pullbackATR=%.2f regime=%s hour=%02d rr=%.2f",
+                              score, impulseMoveAtr, impulseBody, triggerBody, pullbackRangeAtr, V10RegimeLabel(regime), currentHour, V11_ImpulseRR);
+   V10FillSignalMeta(signal, "IB", score, tags, note);
+   return(true);
+  }
+
+
 bool V10BuildZoneRetestSignal(const MqlRates &rates[], const double emaM5, const double atr, const V10Regime regime, const bool sell, V10Signal &signal)
   {
    if(!V10_EnableZoneRetestEngine)
@@ -2166,12 +2372,16 @@ void V10ManagePositions()
       int maxHoldBars = V10_MaxHoldBars;
       if(type == POSITION_TYPE_BUY && StringFind(comment, "|SB|") >= 0)
          maxHoldBars = V10_BullSubMaxHoldBars;
+      if(type == POSITION_TYPE_BUY && StringFind(comment, "|IB|") >= 0)
+         maxHoldBars = V11_ImpulseMaxHoldBars;
       if(type == POSITION_TYPE_BUY && StringFind(comment, "|ZB|") >= 0)
          maxHoldBars = V10_ZoneMaxHoldBars;
       if(type == POSITION_TYPE_BUY && StringFind(comment, "|AB|") >= 0)
          maxHoldBars = V10_AddOnMaxHoldBars;
       if(type == POSITION_TYPE_SELL && StringFind(comment, "|SS|") >= 0)
          maxHoldBars = V10_BearSubMaxHoldBars;
+      if(type == POSITION_TYPE_SELL && StringFind(comment, "|IS|") >= 0)
+         maxHoldBars = V11_ImpulseMaxHoldBars;
       if(type == POSITION_TYPE_SELL && StringFind(comment, "|ZS|") >= 0)
          maxHoldBars = V10_ZoneMaxHoldBars;
       if(type == POSITION_TYPE_SELL && StringFind(comment, "|AS|") >= 0)
@@ -2223,6 +2433,8 @@ bool V10EvaluateEntries()
          return(false);
       if(V10BuildBearSubSignal(rates, emaM5, atr, entryRegime, signal))
          return(V10SubmitSignal(signal));
+      if(V11BuildImpulsePullbackSignal(rates, emaM5, atr, entryRegime, true, signal))
+         return(V10SubmitSignal(signal));
       if(V10BuildZoneRetestSignal(rates, emaM5, atr, entryRegime, true, signal))
          return(V10SubmitSignal(signal));
       if(V10BuildAddOnSignal(rates, emaM5, atr, entryRegime, true, signal))
@@ -2235,6 +2447,8 @@ bool V10EvaluateEntries()
       if(V11OppositePositionBlocks(false))
          return(false);
       if(V10BuildBullSubSignal(rates, emaM5, atr, entryRegime, signal))
+         return(V10SubmitSignal(signal));
+      if(V11BuildImpulsePullbackSignal(rates, emaM5, atr, entryRegime, false, signal))
          return(V10SubmitSignal(signal));
       if(V10BuildZoneRetestSignal(rates, emaM5, atr, entryRegime, false, signal))
          return(V10SubmitSignal(signal));

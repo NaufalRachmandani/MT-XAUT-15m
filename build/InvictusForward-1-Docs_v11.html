@@ -201,6 +201,7 @@
         <li>Bear safety iteration memilih <code>safe_break_quality</code>: SELL breakout dibuat lebih selektif agar DD turun tanpa mematikan recent trade.</li>
         <li>Exit matrix 10 preset memilih <code>time_strict</code> untuk bull dan combined: posisi yang terlalu lama boleh ditutup walau minus. Bear tetap default karena time-strict merusak performa sell.</li>
         <li>Cross-direction guard aktif: bull magic <code>2026042411</code> membaca posisi bear magic <code>2026042412</code>, dan sebaliknya.</li>
+        <li>Weekend technical research menambahkan engine opsional <code>BUY_IMPULSE</code>/<code>SELL_IMPULSE</code>, tetapi default tetap <code>off</code> karena 11 kandidat impulse belum mengalahkan control.</li>
       </ul>
     </section>
 
@@ -217,7 +218,7 @@
         </div>
         <div class="step">
           <b>3. Setup</b>
-          EA cari zone retest, breakout/pullback, compression break, atau add-on continuation.
+          EA cari zone retest, breakout/pullback, compression break, add-on continuation, atau impulse-pullback jika engine riset dinyalakan.
         </div>
         <div class="step">
           <b>4. Score</b>
@@ -244,6 +245,10 @@
         <div class="card">
           <h3>BUY_PULLBACK</h3>
           <p>Buy setelah pullback ke EMA/area support lalu reclaim. Dipakai bull bot untuk masuk setelah harga tidak terlalu extended.</p>
+        </div>
+        <div class="card">
+          <h3>BUY_IMPULSE / SELL_IMPULSE</h3>
+          <p>Engine riset: candle impulsif, pullback singkat, lalu trigger searah trend. Default <code>V11_EnableImpulsePullbackEngine=false</code> karena hasil iterasi belum mengalahkan control.</p>
         </div>
         <div class="card">
           <h3>BUY_COMP / SELL_COMP</h3>
@@ -322,6 +327,10 @@
           <tr>
             <td><code>C11|BUY_ADDON|AB|S76|B|AD</code></td>
             <td>Combined tester, buy add-on, score 76, grade B, add-on continuation.</td>
+          </tr>
+          <tr>
+            <td><code>C11|SELL_IMPULSE|IS|S75|B|RG</code></td>
+            <td>Combined tester, impulse-pullback sell, score 75, grade B, strong regime. Ini hanya muncul jika engine impulse dinyalakan.</td>
           </tr>
         </tbody>
       </table>
@@ -535,6 +544,53 @@
           </tr>
         </tbody>
       </table>
+    </section>
+
+    <section class="panel">
+      <h2>Weekend Technical Research</h2>
+      <p class="muted">Karena market tutup, improvement teknis difokuskan ke backtest hipotesis baru: menambah setup <code>Impulse Pullback</code> sebelum zone engine. Default live tidak berubah sampai ada kandidat yang benar-benar mengalahkan baseline.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Preset</th>
+            <th>Recent</th>
+            <th>YTD</th>
+            <th>Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><code>control</code></td>
+            <td><code>+40.25%</code>, 25 trades, PF <code>3.12</code>, DD <code>7.30%</code></td>
+            <td><code>+558.51%</code>, 155 trades, PF <code>2.70</code>, DD <code>17.71%</code></td>
+            <td>Tetap default.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><code>sell_runner</code></td>
+            <td><code>+40.25%</code>, 25 trades, PF <code>3.12</code>, DD <code>7.30%</code></td>
+            <td><code>+547.94%</code>, 155 trades, PF <code>2.68</code>, DD <code>17.73%</code></td>
+            <td>Dekat, tapi tidak mengalahkan control.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><code>sell_aggressive</code></td>
+            <td><code>+35.07%</code>, 32 trades, PF <code>2.60</code>, DD <code>5.45%</code></td>
+            <td><code>+485.94%</code>, 201 trades, PF <code>2.33</code>, DD <code>17.69%</code></td>
+            <td>Trade count naik, tetapi expectancy turun.</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td><code>both_soft_scalp</code></td>
+            <td><code>+19.19%</code>, 36 trades, PF <code>1.85</code>, DD <code>7.56%</code></td>
+            <td><code>+297.42%</code>, 218 trades, PF <code>2.04</code>, DD <code>16.70%</code></td>
+            <td>Quantity tinggi, tetapi profit kualitas turun tajam.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted">Kesimpulan: masalah saat ini bukan sekadar kurang trade. Pola tambahan harus punya edge lebih kuat; melonggarkan impulse-pullback memang menaikkan jumlah trade, tapi tidak meningkatkan equity curve.</p>
     </section>
 
     <section class="panel">

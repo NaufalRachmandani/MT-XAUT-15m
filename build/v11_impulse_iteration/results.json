@@ -1,0 +1,535 @@
+[
+  {
+    "iteration": 1,
+    "preset": "control",
+    "note": "Current pushed v11 default; impulse engine disabled.",
+    "overrides": {},
+    "metrics": {
+      "recent": {
+        "net_profit": 40.25,
+        "profit_factor": 3.12,
+        "expected_payoff": 1.61,
+        "total_trades": 25.0,
+        "win_rate": 64.0,
+        "balance_dd_abs": 5.38,
+        "balance_dd_pct": 3.8,
+        "equity_dd_abs": 10.44,
+        "equity_dd_pct": 7.3
+      },
+      "ytd": {
+        "net_profit": 558.51,
+        "profit_factor": 2.7,
+        "expected_payoff": 3.6,
+        "total_trades": 155.0,
+        "win_rate": 58.06,
+        "balance_dd_abs": 27.51,
+        "balance_dd_pct": 20.81,
+        "equity_dd_abs": 51.64,
+        "equity_dd_pct": 17.71
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 861.135
+  },
+  {
+    "iteration": 8,
+    "preset": "sell_runner",
+    "note": "Sell-only stronger impulse setup for clean breakdown legs.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "false",
+      "V11_EnableSellImpulsePullback": "true",
+      "V11_ImpulseMinBodyRatio": "0.58",
+      "V11_ImpulseMinMoveATR": "0.85",
+      "V11_ImpulsePullbackMaxATR": "0.75",
+      "V11_ImpulseEntryBodyRatio": "0.44",
+      "V11_ImpulseRiskMultiplier": "0.30",
+      "V11_ImpulseRR": "1.35",
+      "V11_ImpulseMaxHoldBars": "14"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 40.25,
+        "profit_factor": 3.12,
+        "expected_payoff": 1.61,
+        "total_trades": 25.0,
+        "win_rate": 64.0,
+        "balance_dd_abs": 5.38,
+        "balance_dd_pct": 3.8,
+        "equity_dd_abs": 10.44,
+        "equity_dd_pct": 7.3
+      },
+      "ytd": {
+        "net_profit": 547.94,
+        "profit_factor": 2.68,
+        "expected_payoff": 3.54,
+        "total_trades": 155.0,
+        "win_rate": 58.06,
+        "balance_dd_abs": 27.51,
+        "balance_dd_pct": 20.81,
+        "equity_dd_abs": 50.84,
+        "equity_dd_pct": 17.73
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 850.565
+  },
+  {
+    "iteration": 10,
+    "preset": "sell_aggressive",
+    "note": "Aggressive sell impulse mode for 2026 drop behavior.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V10_MinTradeScore": "60",
+      "V11_EnableBuyImpulsePullback": "false",
+      "V11_EnableSellImpulsePullback": "true",
+      "V11_ImpulseMinBodyRatio": "0.40",
+      "V11_ImpulseMinMoveATR": "0.35",
+      "V11_ImpulsePullbackMaxATR": "1.50",
+      "V11_ImpulseEntryBodyRatio": "0.26",
+      "V11_ImpulseRiskMultiplier": "0.28",
+      "V11_ImpulseRR": "0.90",
+      "V11_ImpulseMaxHoldBars": "6",
+      "V11_SellImpulseTimeCloseProfitOnly": "false"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 35.07,
+        "profit_factor": 2.6,
+        "expected_payoff": 1.1,
+        "total_trades": 32.0,
+        "win_rate": 53.12,
+        "balance_dd_abs": 6.48,
+        "balance_dd_pct": 4.58,
+        "equity_dd_abs": 7.78,
+        "equity_dd_pct": 5.45
+      },
+      "ytd": {
+        "net_profit": 485.94,
+        "profit_factor": 2.33,
+        "expected_payoff": 2.42,
+        "total_trades": 201.0,
+        "win_rate": 56.72,
+        "balance_dd_abs": 28.83,
+        "balance_dd_pct": 4.69,
+        "equity_dd_abs": 50.96,
+        "equity_dd_pct": 17.69
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 834.515
+  },
+  {
+    "iteration": 4,
+    "preset": "both_runner",
+    "note": "Stronger impulse only, wider RR, lets continuation breathe longer.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "true",
+      "V11_EnableSellImpulsePullback": "true",
+      "V11_ImpulseMinBodyRatio": "0.58",
+      "V11_ImpulseMinMoveATR": "0.85",
+      "V11_ImpulsePullbackMaxATR": "0.75",
+      "V11_ImpulseEntryBodyRatio": "0.44",
+      "V11_ImpulseRiskMultiplier": "0.28",
+      "V11_ImpulseRR": "1.45",
+      "V11_ImpulseMaxHoldBars": "16"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 39.75,
+        "profit_factor": 3.09,
+        "expected_payoff": 1.59,
+        "total_trades": 25.0,
+        "win_rate": 64.0,
+        "balance_dd_abs": 5.38,
+        "balance_dd_pct": 3.81,
+        "equity_dd_abs": 10.44,
+        "equity_dd_pct": 7.32
+      },
+      "ytd": {
+        "net_profit": 520.62,
+        "profit_factor": 2.63,
+        "expected_payoff": 3.34,
+        "total_trades": 156.0,
+        "win_rate": 57.69,
+        "balance_dd_abs": 27.51,
+        "balance_dd_pct": 20.81,
+        "equity_dd_abs": 48.87,
+        "equity_dd_pct": 17.72
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 822.895
+  },
+  {
+    "iteration": 7,
+    "preset": "sell_soft",
+    "note": "Sell-only soft impulse continuation for fast bearish drops.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "false",
+      "V11_EnableSellImpulsePullback": "true",
+      "V11_ImpulseMinBodyRatio": "0.44",
+      "V11_ImpulseMinMoveATR": "0.45",
+      "V11_ImpulsePullbackMaxATR": "1.25",
+      "V11_ImpulseEntryBodyRatio": "0.30",
+      "V11_ImpulseRiskMultiplier": "0.20",
+      "V11_ImpulseRR": "1.00",
+      "V11_ImpulseMaxHoldBars": "8",
+      "V11_SellImpulseTimeCloseProfitOnly": "false"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 34.2,
+        "profit_factor": 2.58,
+        "expected_payoff": 1.18,
+        "total_trades": 29.0,
+        "win_rate": 55.17,
+        "balance_dd_abs": 7.35,
+        "balance_dd_pct": 5.19,
+        "equity_dd_abs": 8.56,
+        "equity_dd_pct": 6.0
+      },
+      "ytd": {
+        "net_profit": 487.01,
+        "profit_factor": 2.39,
+        "expected_payoff": 2.66,
+        "total_trades": 183.0,
+        "win_rate": 57.38,
+        "balance_dd_abs": 33.01,
+        "balance_dd_pct": 11.42,
+        "equity_dd_abs": 52.22,
+        "equity_dd_pct": 17.72
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 809.71
+  },
+  {
+    "iteration": 6,
+    "preset": "buy_runner",
+    "note": "Buy-only higher quality impulse that targets extended bullish legs.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "true",
+      "V11_EnableSellImpulsePullback": "false",
+      "V11_ImpulseMinBodyRatio": "0.56",
+      "V11_ImpulseMinMoveATR": "0.80",
+      "V11_ImpulsePullbackMaxATR": "0.85",
+      "V11_ImpulseEntryBodyRatio": "0.42",
+      "V11_ImpulseRiskMultiplier": "0.30",
+      "V11_ImpulseRR": "1.45",
+      "V11_ImpulseMaxHoldBars": "16"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 39.78,
+        "profit_factor": 3.1,
+        "expected_payoff": 1.59,
+        "total_trades": 25.0,
+        "win_rate": 64.0,
+        "balance_dd_abs": 5.38,
+        "balance_dd_pct": 3.81,
+        "equity_dd_abs": 10.44,
+        "equity_dd_pct": 7.32
+      },
+      "ytd": {
+        "net_profit": 491.07,
+        "profit_factor": 2.59,
+        "expected_payoff": 3.09,
+        "total_trades": 159.0,
+        "win_rate": 57.23,
+        "balance_dd_abs": 26.21,
+        "balance_dd_pct": 20.68,
+        "equity_dd_abs": 44.45,
+        "equity_dd_pct": 7.37
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 796.12
+  },
+  {
+    "iteration": 11,
+    "preset": "no_weak_runner",
+    "note": "Only strong bull/bear regimes; fewer trades but higher structural quality.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "false",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "true",
+      "V11_EnableSellImpulsePullback": "true",
+      "V11_ImpulseMinBodyRatio": "0.52",
+      "V11_ImpulseMinMoveATR": "0.70",
+      "V11_ImpulsePullbackMaxATR": "0.80",
+      "V11_ImpulseEntryBodyRatio": "0.40",
+      "V11_ImpulseRiskMultiplier": "0.30",
+      "V11_ImpulseRR": "1.35",
+      "V11_ImpulseMaxHoldBars": "14"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 39.78,
+        "profit_factor": 3.1,
+        "expected_payoff": 1.59,
+        "total_trades": 25.0,
+        "win_rate": 64.0,
+        "balance_dd_abs": 5.38,
+        "balance_dd_pct": 3.81,
+        "equity_dd_abs": 10.44,
+        "equity_dd_pct": 7.32
+      },
+      "ytd": {
+        "net_profit": 474.32,
+        "profit_factor": 2.47,
+        "expected_payoff": 2.93,
+        "total_trades": 162.0,
+        "win_rate": 56.17,
+        "balance_dd_abs": 27.64,
+        "balance_dd_pct": 10.26,
+        "equity_dd_abs": 43.16,
+        "equity_dd_pct": 7.36
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 782.0699999999999
+  },
+  {
+    "iteration": 9,
+    "preset": "buy_aggressive",
+    "note": "Aggressive buy impulse mode: lower gate, higher risk, still quick exit.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V10_MinTradeScore": "60",
+      "V11_EnableBuyImpulsePullback": "true",
+      "V11_EnableSellImpulsePullback": "false",
+      "V11_ImpulseMinBodyRatio": "0.40",
+      "V11_ImpulseMinMoveATR": "0.35",
+      "V11_ImpulsePullbackMaxATR": "1.50",
+      "V11_ImpulseEntryBodyRatio": "0.26",
+      "V11_ImpulseRiskMultiplier": "0.28",
+      "V11_ImpulseRR": "0.95",
+      "V11_ImpulseMaxHoldBars": "6",
+      "V11_BuyImpulseTimeCloseProfitOnly": "false"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 19.64,
+        "profit_factor": 1.72,
+        "expected_payoff": 0.58,
+        "total_trades": 34.0,
+        "win_rate": 52.94,
+        "balance_dd_abs": 8.83,
+        "balance_dd_pct": 7.06,
+        "equity_dd_abs": 11.78,
+        "equity_dd_pct": 9.42
+      },
+      "ytd": {
+        "net_profit": 363.22,
+        "profit_factor": 2.09,
+        "expected_payoff": 1.81,
+        "total_trades": 201.0,
+        "win_rate": 54.73,
+        "balance_dd_abs": 34.85,
+        "balance_dd_pct": 7.19,
+        "equity_dd_abs": 46.56,
+        "equity_dd_pct": 9.61
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 678.22
+  },
+  {
+    "iteration": 5,
+    "preset": "buy_soft",
+    "note": "Buy-only soft impulse continuation for 2026 rebound legs.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "true",
+      "V11_EnableSellImpulsePullback": "false",
+      "V11_ImpulseMinBodyRatio": "0.44",
+      "V11_ImpulseMinMoveATR": "0.45",
+      "V11_ImpulsePullbackMaxATR": "1.25",
+      "V11_ImpulseEntryBodyRatio": "0.30",
+      "V11_ImpulseRiskMultiplier": "0.20",
+      "V11_ImpulseRR": "1.05",
+      "V11_ImpulseMaxHoldBars": "8",
+      "V11_BuyImpulseTimeCloseProfitOnly": "false"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 25.31,
+        "profit_factor": 2.04,
+        "expected_payoff": 0.77,
+        "total_trades": 33.0,
+        "win_rate": 48.48,
+        "balance_dd_abs": 9.45,
+        "balance_dd_pct": 7.21,
+        "equity_dd_abs": 12.59,
+        "equity_dd_pct": 9.6
+      },
+      "ytd": {
+        "net_profit": 364.67,
+        "profit_factor": 2.17,
+        "expected_payoff": 1.97,
+        "total_trades": 185.0,
+        "win_rate": 54.59,
+        "balance_dd_abs": 35.46,
+        "balance_dd_pct": 7.29,
+        "equity_dd_abs": 47.26,
+        "equity_dd_pct": 9.72
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 676.9449999999999
+  },
+  {
+    "iteration": 3,
+    "preset": "both_balanced",
+    "note": "Balanced impulse-pullback candidate, still lower risk than primary entries.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "true",
+      "V11_EnableSellImpulsePullback": "true",
+      "V11_ImpulseMinBodyRatio": "0.52",
+      "V11_ImpulseMinMoveATR": "0.65",
+      "V11_ImpulsePullbackMaxATR": "0.90",
+      "V11_ImpulseEntryBodyRatio": "0.38",
+      "V11_ImpulseRiskMultiplier": "0.25",
+      "V11_ImpulseRR": "1.15",
+      "V11_ImpulseMaxHoldBars": "10"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 30.01,
+        "profit_factor": 2.29,
+        "expected_payoff": 1.11,
+        "total_trades": 27.0,
+        "win_rate": 51.85,
+        "balance_dd_abs": 7.97,
+        "balance_dd_pct": 5.78,
+        "equity_dd_abs": 9.14,
+        "equity_dd_pct": 6.57
+      },
+      "ytd": {
+        "net_profit": 364.42,
+        "profit_factor": 2.17,
+        "expected_payoff": 2.17,
+        "total_trades": 168.0,
+        "win_rate": 53.57,
+        "balance_dd_abs": 29.11,
+        "balance_dd_pct": 5.9,
+        "equity_dd_abs": 34.49,
+        "equity_dd_pct": 26.04
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 641.825
+  },
+  {
+    "iteration": 2,
+    "preset": "both_soft_scalp",
+    "note": "Loose continuation scalp after impulse-pullback; low risk and short hold.",
+    "overrides": {
+      "V11_EnableImpulsePullbackEngine": "true",
+      "V11_ImpulseAllowWeakRegime": "true",
+      "V11_ImpulseSessionStartHour": "0",
+      "V11_ImpulseSessionEndHour": "23",
+      "V11_EnableBuyImpulsePullback": "true",
+      "V11_EnableSellImpulsePullback": "true",
+      "V11_ImpulseMinBodyRatio": "0.44",
+      "V11_ImpulseMinMoveATR": "0.42",
+      "V11_ImpulsePullbackMaxATR": "1.35",
+      "V11_ImpulseEntryBodyRatio": "0.28",
+      "V11_ImpulseRiskMultiplier": "0.18",
+      "V11_ImpulseRR": "0.95",
+      "V11_ImpulseMaxHoldBars": "6",
+      "V11_BuyImpulseTimeCloseProfitOnly": "false",
+      "V11_SellImpulseTimeCloseProfitOnly": "false"
+    },
+    "metrics": {
+      "recent": {
+        "net_profit": 19.19,
+        "profit_factor": 1.85,
+        "expected_payoff": 0.53,
+        "total_trades": 36.0,
+        "win_rate": 50.0,
+        "balance_dd_abs": 9.69,
+        "balance_dd_pct": 7.52,
+        "equity_dd_abs": 9.74,
+        "equity_dd_pct": 7.56
+      },
+      "ytd": {
+        "net_profit": 297.42,
+        "profit_factor": 2.04,
+        "expected_payoff": 1.36,
+        "total_trades": 218.0,
+        "win_rate": 54.59,
+        "balance_dd_abs": 32.59,
+        "balance_dd_pct": 7.58,
+        "equity_dd_abs": 37.75,
+        "equity_dd_pct": 16.7
+      }
+    },
+    "reports": {
+      "recent": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260401_20260425.htm",
+      "ytd": "/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/Reports/InvictusCombinedM5_v11_XAUUSDc_M5_20260101_20260425.htm"
+    },
+    "score": 631.595
+  }
+]

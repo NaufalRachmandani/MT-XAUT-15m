@@ -1,7 +1,7 @@
 #property copyright "OpenAI Codex"
-#property version   "2.00"
+#property version   "2.10"
 #property strict
-// Acane M1 v2: balanced aggressive MRV scalper with anti-stack loss controls.
+// Acane M1 v2: real-tick filtered XAUUSD MRV scalper with anti-stack loss controls.
 
 #include <Trade/Trade.mqh>
 
@@ -61,7 +61,7 @@ const int    ACANE_M5Slow = 36;
 const int    ACANE_ATRPeriod = 14;
 const int    ACANE_RSI_Period = 7;
 const int    ACANE_BBandsPeriod = 20;
-const double ACANE_BBandsDeviation = 2.00;
+const double ACANE_BBandsDeviation = 2.25;
 const int    ACANE_BreakLookback = 4;
 const int    ACANE_CompressionLookback = 5;
 const double ACANE_MinBodyRatio = 0.34;
@@ -71,28 +71,28 @@ const double ACANE_StrongBreakATR = 0.045;
 const double ACANE_MaxChaseATR = 1.65;
 const double ACANE_MinATRUsd = 0.18;
 const double ACANE_MaxATRUsd = 8.00;
-const int    ACANE_MinScore = 52;
-const int    ACANE_StrongScore = 73;
+const int    ACANE_MinScore = 82;
+const int    ACANE_StrongScore = 86;
 const bool   ACANE_UseSessionFilter = false;
 const int    ACANE_SessionStartHour = 0;
 const int    ACANE_SessionEndHour = 23;
-const string ACANE_BlockEntryHours = "2,5,11,20";
+const string ACANE_BlockEntryHours = "1,2,3,16,17,23";
 const bool   ACANE_EnableMomentumEngine = false;
 const bool   ACANE_EnableReclaimEngine = false;
 const bool   ACANE_EnableCompressionEngine = false;
 const bool   ACANE_EnableMeanReversionEngine = true;
-const double ACANE_MeanReversionRSILow = 42.0;
-const double ACANE_MeanReversionRSIHigh = 58.0;
-const double ACANE_MeanReversionTouchATR = 0.04;
+const double ACANE_MeanReversionRSILow = 30.0;
+const double ACANE_MeanReversionRSIHigh = 70.0;
+const double ACANE_MeanReversionTouchATR = 0.28;
 const double ACANE_MeanReversionRiskMultiplier = 0.12;
 const double ACANE_MeanReversionRR = 0.72;
 const bool   ACANE_EnableMinLotFallback = true;
 const double ACANE_MinLotFallbackMaxRiskPct = 7.00;
 const bool   ACANE_LogEntries = true;
-const bool   ACANE_LogStatus = true;
-const bool   ACANE_DebugReasons = true;
-const int    ACANE_StatusEverySeconds = 60;
-const int    ACANE_DebugEverySeconds = 60;
+const bool   ACANE_LogStatus = false;
+const bool   ACANE_DebugReasons = false;
+const int    ACANE_StatusEverySeconds = 300;
+const int    ACANE_DebugEverySeconds = 300;
 
 static const ulong ACANE_MAGIC = 2026050701;
 static const ENUM_TIMEFRAMES ACANE_TF = PERIOD_M1;
@@ -755,7 +755,8 @@ AcaneSignal AcaneBuildSignal()
 
    if(ACANE_EnableMeanReversionEngine)
      {
-      bool buyReclaim = rates[0].low <= bandLower - atr * ACANE_MeanReversionTouchATR &&
+      bool buyReclaim = regime == ACANE_BULL &&
+                        rates[0].low <= bandLower - atr * ACANE_MeanReversionTouchATR &&
                         close > bandLower &&
                         close > open &&
                         rsi <= ACANE_MeanReversionRSILow &&
@@ -772,7 +773,8 @@ AcaneSignal AcaneBuildSignal()
                              ACANE_MeanReversionRR,
                              ACANE_MeanReversionRiskMultiplier);
 
-      bool sellReject = rates[0].high >= bandUpper + atr * ACANE_MeanReversionTouchATR &&
+      bool sellReject = regime == ACANE_BEAR &&
+                        rates[0].high >= bandUpper + atr * ACANE_MeanReversionTouchATR &&
                         close < bandUpper &&
                         close < open &&
                         rsi >= ACANE_MeanReversionRSIHigh &&
@@ -1204,7 +1206,7 @@ int OnInit()
    AcaneResetDailyGuardIfNeeded();
    AcaneResetWeeklyGuardIfNeeded();
    AcaneResetMonthlyGuardIfNeeded();
-   PrintFormat("ACANE PROFILE v2 BALANCED FAST | symbol=%s tf=M1 account=%I64d accountLeverage=%d balance=%.2f equity=%.2f freeMargin=%.2f risk=%.2f maxPos=%d sameSide=%d dailyLoss=%.2f accountCircuit=%.2f openRisk=%.2f basketStop=%.2f spreadMax=%.2f minLotFallback=%s minLotRisk=%.2f statusEvery=%d debugEvery=%d",
+   PrintFormat("ACANE PROFILE v2.10 REALTICK MRV RG | symbol=%s tf=M1 account=%I64d accountLeverage=%d balance=%.2f equity=%.2f freeMargin=%.2f risk=%.2f maxPos=%d sameSide=%d dailyLoss=%.2f accountCircuit=%.2f openRisk=%.2f basketStop=%.2f spreadMax=%.2f minLotFallback=%s minLotRisk=%.2f statusEvery=%d debugEvery=%d",
                _Symbol,
                AccountInfoInteger(ACCOUNT_LOGIN),
                (int)AccountInfoInteger(ACCOUNT_LEVERAGE),

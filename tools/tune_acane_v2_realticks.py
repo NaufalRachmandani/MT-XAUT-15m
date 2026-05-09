@@ -37,6 +37,13 @@ class Case:
 
 
 @dataclass(frozen=True)
+class RunConfig:
+    delay_ms: int = 100
+    deposit: int = 29
+    leverage: str = "1:2000"
+
+
+@dataclass(frozen=True)
 class Variant:
     name: str
     source: Path = SRC_V2
@@ -135,14 +142,14 @@ def compile_variant(variant: Variant) -> str:
     return stem
 
 
-def report_stem(stem: str, case: Case) -> str:
+def report_stem(stem: str, case: Case, config: RunConfig) -> str:
     start = case.from_date.replace(".", "")
     end = case.to_date.replace(".", "")
-    return f"{stem}_{case.name}_d29_delay50_real_ticks_{start}_{end}"
+    return f"{stem}_{case.name}_d{config.deposit}_delay{config.delay_ms}_real_ticks_{start}_{end}"
 
 
-def write_ini(stem: str, case: Case) -> Path:
-    name = report_stem(stem, case)
+def write_ini(stem: str, case: Case, config: RunConfig) -> Path:
+    name = report_stem(stem, case, config)
     config = f"""[Common]
 Login=265874264
 Server=Exness-MT5Real38
@@ -164,7 +171,7 @@ Symbol=XAUUSD
 Period=M1
 Login=265874264
 Model=4
-ExecutionMode=50
+ExecutionMode={config.delay_ms}
 Optimization=0
 FromDate={case.from_date}
 ToDate={case.to_date}
@@ -172,9 +179,9 @@ ForwardMode=0
 Report=\\Reports\\{name}
 ReplaceReport=1
 ShutdownTerminal=1
-Deposit=29
+Deposit={config.deposit}
 Currency=USD
-Leverage=1:2000
+Leverage={config.leverage}
 UseLocal=1
 UseRemote=0
 UseCloud=0
@@ -202,7 +209,7 @@ def dd_pct(value: str) -> float:
     return pct_in(value)
 
 
-def parse_report(report: Path, variant: Variant, stem: str, case: Case) -> dict[str, object]:
+def parse_report(report: Path, variant: Variant, stem: str, case: Case, config: RunConfig) -> dict[str, object]:
     text = read_report(report)
     profit_trades = cell(text, "Profit Trades (% of total):")
     loss_trades = cell(text, "Loss Trades (% of total):")
@@ -215,6 +222,10 @@ def parse_report(report: Path, variant: Variant, stem: str, case: Case) -> dict[
         "from": case.from_date,
         "to": case.to_date,
         "note": variant.note,
+        "deposit": config.deposit,
+        "delay_ms": config.delay_ms,
+        "model": 4,
+        "leverage": cell(text, "Leverage:", config.leverage),
         "net": parse_first_number(cell(text, "Total Net Profit:")),
         "pf": parse_first_number(cell(text, "Profit Factor:")),
         "trades": int(parse_first_number(cell(text, "Total Trades:"))),
@@ -227,17 +238,17 @@ def parse_report(report: Path, variant: Variant, stem: str, case: Case) -> dict[
         "history_quality": cell(text, "History Quality:"),
         "largest_loss": parse_first_number(cell(text, "Largest loss trade:")),
         "avg_loss": parse_first_number(cell(text, "Average loss trade:")),
-        "report": str(OUT / f"{report_stem(stem, case)}.htm"),
+        "report": str(OUT / f"{report_stem(stem, case, config)}.htm"),
     }
 
 
-def run_case(stem: str, variant: Variant, case: Case, timeout: int) -> dict[str, object]:
-    name = report_stem(stem, case)
+def run_case(stem: str, variant: Variant, case: Case, timeout: int, config: RunConfig) -> dict[str, object]:
+    name = report_stem(stem, case, config)
     report = REPORTS / f"{name}.htm"
     for old in REPORTS.glob(f"{name}*"):
         if old.is_file():
             old.unlink()
-    ini = write_ini(stem, case)
+    ini = write_ini(stem, case, config)
     subprocess.run(
         [str(WINE), TERMINAL, f"/config:{win_build_path(ini.name)}"],
         env=env(),
@@ -257,23 +268,23 @@ def run_case(stem: str, variant: Variant, case: Case, timeout: int) -> dict[str,
     for artifact in REPORTS.glob(f"{name}*"):
         if artifact.is_file():
             shutil.copy2(artifact, OUT / artifact.name)
-    return parse_report(report, variant, stem, case)
+    return parse_report(report, variant, stem, case, config)
 
 
-def write_outputs(results: list[dict[str, object]], filename: str) -> None:
+def write_outputs(results: list[dict[str, object]], filename: str, config: RunConfig) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"{filename}.json").write_text(json.dumps(results, indent=2) + "\n")
     lines = [
         f"# {filename}",
         "",
-        "Setup: `XAUUSD`, `M1`, deposit `$29`, leverage `1:2000`, `Model=4` real ticks, `ExecutionMode=50`.",
+        f"Setup: `XAUUSD`, `M1`, deposit `${config.deposit}`, leverage `{config.leverage}`, `Model=4` real ticks, `ExecutionMode={config.delay_ms}`.",
         "",
-        "| Variant | Case | Net | PF | Trades | WR | Eq DD | History | Note |",
-        "| --- | --- | ---: | ---: | ---: | ---: | --- | --- | --- |",
+        "| Variant | Case | Net | PF | Trades | WR | Eq DD | Delay | History | Note |",
+        "| --- | --- | ---: | ---: | ---: | ---: | --- | ---: | --- | --- |",
     ]
     for row in sorted(results, key=lambda r: (str(r["case"]), -float(r["net"]))):
         lines.append(
-            "| {variant} | {case} | {net:.2f} | {pf:.2f} | {trades} | {win_rate:.2f}% | {eqdd} | {history_quality} | {note} |".format(
+            "| {variant} | {case} | {net:.2f} | {pf:.2f} | {trades} | {win_rate:.2f}% | {eqdd} | {delay_ms} | {history_quality} | {note} |".format(
                 **row
             )
         )
@@ -967,12 +978,469 @@ VARIANTS = [
 ]
 
 
+REBUILD_VARIANTS = [
+    Variant("r01_balanced_base", note="v2.20 rebuild base hybrid"),
+    Variant(
+        "r02_no_bad_hours",
+        replacements={"ACANE_BlockEntryHours": "0,1,2,3,16,17,22,23"},
+        note="hybrid, stricter hour block",
+    ),
+    Variant(
+        "r03_nohour",
+        replacements={"ACANE_BlockEntryHours": ""},
+        note="hybrid, no hour block",
+    ),
+    Variant(
+        "r04_london_ny",
+        replacements={
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 7,
+            "ACANE_SessionEndHour": 21,
+            "ACANE_BlockEntryHours": "",
+        },
+        note="hybrid in active server hours",
+    ),
+    Variant(
+        "r05_mrv_only_strict",
+        replacements={
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_MeanReversionRSILow": 30.0,
+            "ACANE_MeanReversionRSIHigh": 70.0,
+            "ACANE_MeanReversionTouchATR": 0.22,
+            "ACANE_MeanReversionRR": 0.86,
+            "ACANE_MinScore": 78,
+        },
+        note="mean reversion only, strict extreme",
+    ),
+    Variant(
+        "r06_mrv_only_loose",
+        replacements={
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_MeanReversionRSILow": 34.0,
+            "ACANE_MeanReversionRSIHigh": 66.0,
+            "ACANE_MeanReversionTouchATR": 0.10,
+            "ACANE_MeanReversionRR": 0.74,
+            "ACANE_MinScore": 74,
+        },
+        note="mean reversion only, more trades",
+    ),
+    Variant(
+        "r07_reclaim_only",
+        replacements={
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_TakeProfitR": 0.86,
+            "ACANE_MinScore": 74,
+        },
+        note="trend EMA reclaim only",
+    ),
+    Variant(
+        "r08_reclaim_tight",
+        replacements={
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_TakeProfitR": 0.72,
+            "ACANE_FastLossR": 0.58,
+            "ACANE_BreakevenR": 0.35,
+            "ACANE_TrailStartR": 0.55,
+            "ACANE_MinScore": 76,
+        },
+        note="reclaim with faster protection",
+    ),
+    Variant(
+        "r09_momentum_only",
+        replacements={
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_TakeProfitR": 1.05,
+            "ACANE_MinBreakATR": 0.08,
+            "ACANE_MinScore": 78,
+        },
+        note="trend breakout only",
+    ),
+    Variant(
+        "r10_momentum_loose",
+        replacements={
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_TakeProfitR": 0.84,
+            "ACANE_MinBreakATR": 0.04,
+            "ACANE_MinScore": 74,
+        },
+        note="looser trend breakout",
+    ),
+    Variant(
+        "r11_compression_only",
+        replacements={
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_TakeProfitR": 0.78,
+            "ACANE_MinScore": 76,
+        },
+        note="compression breakout only",
+    ),
+    Variant(
+        "r12_trend_combo",
+        replacements={
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_TakeProfitR": 0.88,
+            "ACANE_MinScore": 76,
+        },
+        note="momentum + reclaim + compression",
+    ),
+    Variant(
+        "r13_trend_combo_tight",
+        replacements={
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_TakeProfitR": 0.72,
+            "ACANE_FastLossR": 0.55,
+            "ACANE_BreakevenR": 0.34,
+            "ACANE_TrailStartR": 0.56,
+            "ACANE_MinScore": 76,
+        },
+        note="trend combo with tighter exits",
+    ),
+    Variant(
+        "r14_hybrid_more_tp",
+        replacements={
+            "ACANE_TakeProfitR": 1.15,
+            "ACANE_MeanReversionRR": 0.95,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.88,
+            "ACANE_MaxHoldSeconds": 540,
+        },
+        note="hybrid lets winners breathe",
+    ),
+    Variant(
+        "r15_hybrid_fast_exit",
+        replacements={
+            "ACANE_TakeProfitR": 0.68,
+            "ACANE_MeanReversionRR": 0.62,
+            "ACANE_FastLossR": 0.50,
+            "ACANE_BreakevenR": 0.28,
+            "ACANE_TrailStartR": 0.48,
+            "ACANE_MaxHoldSeconds": 220,
+        },
+        note="hybrid short hold and fast protection",
+    ),
+    Variant(
+        "r16_hybrid_low_spread",
+        replacements={
+            "ACANE_MaxSpreadUsd": 0.55,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_MinScore": 74,
+        },
+        note="only tighter spread ticks",
+    ),
+    Variant(
+        "r17_hybrid_more_risk",
+        replacements={
+            "ACANE_CoreRiskMultiplier": 0.24,
+            "ACANE_WeakRiskMultiplier": 0.12,
+            "ACANE_MeanReversionRiskMultiplier": 0.16,
+            "ACANE_MaxOpenRiskPct": 8.5,
+            "ACANE_MaxSameSideOpenRiskPct": 8.5,
+            "ACANE_MinLotFallbackMaxRiskPct": 6.2,
+        },
+        note="same logic, more aggressive sizing",
+    ),
+    Variant(
+        "r18_hybrid_lower_risk",
+        replacements={
+            "ACANE_CoreRiskMultiplier": 0.12,
+            "ACANE_WeakRiskMultiplier": 0.06,
+            "ACANE_MeanReversionRiskMultiplier": 0.08,
+            "ACANE_MaxOpenRiskPct": 5.5,
+            "ACANE_MaxSameSideOpenRiskPct": 5.5,
+            "ACANE_MinLotFallbackMaxRiskPct": 4.8,
+        },
+        note="same logic, smaller-account survival",
+    ),
+    Variant(
+        "r19_buy_only",
+        replacements={
+            "ACANE_EnableSells": False,
+            "ACANE_BlockEntryHours": "",
+        },
+        note="hybrid buys only",
+    ),
+    Variant(
+        "r20_sell_only",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_BlockEntryHours": "",
+        },
+        note="hybrid sells only",
+    ),
+    Variant(
+        "r21_block_0_5",
+        replacements={"ACANE_BlockEntryHours": "0,1,2,3,4,5,16,17,22,23"},
+        note="hybrid blocks audited Jan leak hours",
+    ),
+    Variant(
+        "r22_reclaim_block_0_5",
+        replacements={
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_BlockEntryHours": "0,1,2,3,4,5,16,17,22,23",
+            "ACANE_TakeProfitR": 0.86,
+            "ACANE_MinScore": 74,
+        },
+        note="reclaim only, audited leak hours blocked",
+    ),
+    Variant(
+        "r23_hybrid_day_hours",
+        replacements={
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 6,
+            "ACANE_SessionEndHour": 22,
+            "ACANE_BlockEntryHours": "16,17",
+        },
+        note="hybrid trades server hours 6-21 except 16/17",
+    ),
+    Variant(
+        "r24_hybrid_day_more_tp",
+        replacements={
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 6,
+            "ACANE_SessionEndHour": 22,
+            "ACANE_BlockEntryHours": "16,17",
+            "ACANE_TakeProfitR": 1.12,
+            "ACANE_MeanReversionRR": 0.92,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.88,
+            "ACANE_MaxHoldSeconds": 540,
+        },
+        note="day-hour hybrid with larger targets",
+    ),
+    Variant(
+        "r25_reclaim_day_hours",
+        replacements={
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 6,
+            "ACANE_SessionEndHour": 22,
+            "ACANE_BlockEntryHours": "16,17",
+            "ACANE_TakeProfitR": 0.86,
+            "ACANE_MinScore": 74,
+        },
+        note="reclaim only during audited day hours",
+    ),
+    Variant(
+        "r26_momentum_day_hours",
+        replacements={
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 6,
+            "ACANE_SessionEndHour": 22,
+            "ACANE_BlockEntryHours": "16,17",
+            "ACANE_TakeProfitR": 1.05,
+            "ACANE_MinBreakATR": 0.08,
+            "ACANE_MinScore": 78,
+        },
+        note="momentum only during audited day hours",
+    ),
+    Variant(
+        "r27_sell_8_12",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 8,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.12,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.88,
+            "ACANE_MaxHoldSeconds": 540,
+        },
+        note="sell-only MOM/RJT in audited profitable hours 8-11",
+    ),
+    Variant(
+        "r28_sell_9_12",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 9,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.12,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.88,
+            "ACANE_MaxHoldSeconds": 540,
+        },
+        note="sell-only MOM/RJT in best hours 9-11",
+    ),
+    Variant(
+        "r29_sell_rjt_8_12",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 8,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.08,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.86,
+            "ACANE_MaxHoldSeconds": 480,
+        },
+        note="sell-only RJT in audited profitable hours 8-11",
+    ),
+    Variant(
+        "r30_sell_rjt_9_12",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 9,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.08,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.86,
+            "ACANE_MaxHoldSeconds": 480,
+        },
+        note="sell-only RJT in best hours 9-11",
+    ),
+    Variant(
+        "r31_sell_mom_8_12",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 8,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.15,
+            "ACANE_MinBreakATR": 0.07,
+            "ACANE_MinScore": 78,
+        },
+        note="sell-only MOM in audited profitable hours 8-11",
+    ),
+    Variant(
+        "r32_sell_mom_9_12",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableReclaimEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 9,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.15,
+            "ACANE_MinBreakATR": 0.07,
+            "ACANE_MinScore": 78,
+        },
+        note="sell-only MOM in best hours 9-11",
+    ),
+    Variant(
+        "r33_sell_rjt_10_only",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 10,
+            "ACANE_SessionEndHour": 11,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.08,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.86,
+            "ACANE_MaxHoldSeconds": 480,
+        },
+        note="sell-only RJT in YTD-positive hour 10",
+    ),
+    Variant(
+        "r34_sell_rjt_10_12",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 10,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.08,
+            "ACANE_FastLossR": 0.82,
+            "ACANE_TrailStartR": 0.86,
+            "ACANE_MaxHoldSeconds": 480,
+        },
+        note="sell-only RJT in YTD-best hours 10-11",
+    ),
+    Variant(
+        "r35_sell_rjt_10_only_tp",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 10,
+            "ACANE_SessionEndHour": 11,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.24,
+            "ACANE_FastLossR": 0.92,
+            "ACANE_TrailStartR": 1.00,
+            "ACANE_MaxHoldSeconds": 600,
+        },
+        note="hour-10 RJT with larger target",
+    ),
+    Variant(
+        "r36_sell_rjt_10_12_tp",
+        replacements={
+            "ACANE_EnableBuys": False,
+            "ACANE_EnableMomentumEngine": False,
+            "ACANE_EnableCompressionEngine": False,
+            "ACANE_EnableMeanReversionEngine": False,
+            "ACANE_UseSessionFilter": True,
+            "ACANE_SessionStartHour": 10,
+            "ACANE_SessionEndHour": 12,
+            "ACANE_BlockEntryHours": "",
+            "ACANE_TakeProfitR": 1.24,
+            "ACANE_FastLossR": 0.92,
+            "ACANE_TrailStartR": 1.00,
+            "ACANE_MaxHoldSeconds": 600,
+        },
+        note="hours 10-11 RJT with larger target",
+    ),
+]
+
+
 CASES_QUICK = [
+    Case("friday_20260508", "2026.05.08", "2026.05.09"),
     Case("lastweek_20260501", "2026.05.01", "2026.05.09"),
     Case("ytd_2026", "2026.01.01", "2026.05.09"),
 ]
 
 CASES_FULL = [
+    Case("friday_20260508", "2026.05.08", "2026.05.09"),
     Case("lastweek_20260501", "2026.05.01", "2026.05.09"),
     Case("ytd_2026", "2026.01.01", "2026.05.09"),
     Case("current_2025", "2025.01.01", "2026.05.09"),
@@ -983,13 +1451,23 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--stage", choices=["quick", "full"], default="quick")
     parser.add_argument("--variants", nargs="*", help="variant names to run")
+    parser.add_argument("--legacy-variants", action="store_true", help="use the older v2.10 variant list")
+    parser.add_argument("--max-variants", type=int, help="cap variants after filtering")
+    parser.add_argument("--delay-ms", type=int, default=100)
+    parser.add_argument("--deposit", type=int, default=29)
+    parser.add_argument("--leverage", default="1:2000")
+    parser.add_argument("--timeout", type=int, default=1200)
     args = parser.parse_args()
 
-    selected = [v for v in VARIANTS if not args.variants or v.name in set(args.variants)]
+    config = RunConfig(delay_ms=args.delay_ms, deposit=args.deposit, leverage=args.leverage)
+    available = VARIANTS if args.legacy_variants else REBUILD_VARIANTS
+    selected = [v for v in available if not args.variants or v.name in set(args.variants)]
     if args.variants and len(selected) != len(args.variants):
         found = {v.name for v in selected}
         missing = [name for name in args.variants if name not in found]
         raise SystemExit(f"unknown variants: {missing}")
+    if args.max_variants is not None:
+        selected = selected[: args.max_variants]
 
     cases = CASES_QUICK if args.stage == "quick" else CASES_FULL
     results: list[dict[str, object]] = []
@@ -997,16 +1475,19 @@ def main() -> None:
         print(f"compile {variant.name}", flush=True)
         stem = compile_variant(variant)
         for case in cases:
-            print(f"run {variant.name} {case.name}", flush=True)
-            result = run_case(stem, variant, case, timeout=1200)
+            print(
+                f"run {variant.name} {case.name} deposit={config.deposit} delay={config.delay_ms} model=4",
+                flush=True,
+            )
+            result = run_case(stem, variant, case, timeout=args.timeout, config=config)
             print(
                 f"done {variant.name} {case.name} net={result['net']:.2f} pf={result['pf']:.2f} trades={result['trades']}",
                 flush=True,
             )
             results.append(result)
-            write_outputs(results, f"{args.stage}_results_partial")
-    write_outputs(results, f"{args.stage}_results")
-    print(OUT / f"{args.stage}_results.md")
+            write_outputs(results, f"{args.stage}_d{config.deposit}_delay{config.delay_ms}_partial", config)
+    write_outputs(results, f"{args.stage}_d{config.deposit}_delay{config.delay_ms}_results", config)
+    print(OUT / f"{args.stage}_d{config.deposit}_delay{config.delay_ms}_results.md")
 
 
 if __name__ == "__main__":

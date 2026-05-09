@@ -14,7 +14,7 @@ from analyze_mt5_report import iter_rows, parse_first_number, parse_report_metri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "build" / "acane_v2_delay50_backtest"
+OUT = ROOT / "build" / "acane_v2_delay_backtest"
 
 WINEPREFIX = Path.home() / "Library/Application Support/net.metaquotes.wine.metatrader5"
 WINE = Path("/Applications/MetaTrader 5.app/Contents/SharedSupport/wine/bin/wine64")
@@ -188,7 +188,7 @@ def run_case(case: Case, timeout: int = 1200) -> dict[str, object]:
 def write_summary(results: list[dict[str, object]]) -> None:
     rows = sorted(results, key=lambda row: (str(row["case"]), int(row["execution_mode_ms"])))
     lines = [
-        "# AcaneM1 v2 delay 50ms backtest",
+        "# AcaneM1 v2 delay backtest",
         "",
         "Setup: `XAUUSD`, `M1`, account `265874264` on `Exness-MT5Real38`, deposit `$29`, leverage `1:2000`, `Model=4` real ticks.",
         "",
@@ -201,21 +201,21 @@ def write_summary(results: list[dict[str, object]]) -> None:
                 **row
             )
         )
-    lines.extend(["", "Raw results are in `delay50_results.json`."])
+    lines.extend(["", "Raw results are in `delay_results.json`."])
     (OUT / "SUMMARY.md").write_text("\n".join(lines) + "\n")
-    (OUT / "delay50_results.json").write_text(json.dumps(results, indent=2) + "\n")
+    (OUT / "delay_results.json").write_text(json.dumps(results, indent=2) + "\n")
 
 
 def main() -> None:
     cases = [
-        Case("friday_20260508", "2026.05.08", "2026.05.09", 0),
-        Case("friday_20260508", "2026.05.08", "2026.05.09", 50),
-        Case("recent_20260501", "2026.05.01", "2026.05.09", 0),
-        Case("recent_20260501", "2026.05.01", "2026.05.09", 50),
-        Case("ytd_2026", "2026.01.01", "2026.05.09", 0),
-        Case("ytd_2026", "2026.01.01", "2026.05.09", 50),
-        Case("since_2023", "2023.01.01", "2026.05.09", 0),
-        Case("since_2023", "2023.01.01", "2026.05.09", 50),
+        Case("friday_20260508", "2026.05.08", "2026.05.09", 100),
+        Case("recent_20260501", "2026.05.01", "2026.05.09", 100),
+        Case("ytd_2026", "2026.01.01", "2026.05.09", 100),
+        Case("current_2025", "2025.01.01", "2026.05.09", 100),
+        Case("recent_20260501_stress", "2026.05.01", "2026.05.09", 200),
+        Case("ytd_2026_stress", "2026.01.01", "2026.05.09", 200),
+        Case("recent_20260501_d100", "2026.05.01", "2026.05.09", 100, deposit=100),
+        Case("ytd_2026_d100", "2026.01.01", "2026.05.09", 100, deposit=100),
     ]
     results = []
     for case in cases:

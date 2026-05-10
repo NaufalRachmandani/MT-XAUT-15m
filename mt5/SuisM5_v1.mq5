@@ -1,34 +1,34 @@
 #property copyright "OpenAI Codex"
-#property version   "3.07"
+#property version   "4.01"
 #property strict
-// Variant: Suis M5 stable profile
+// Variant: Suis M5 unified latency-safe candidate (formerly v2)
 
 #include <Trade/Trade.mqh>
 
-const double SUIS_RiskPercent = 13.00;
-const double SUIS_BuyRiskMultiplier = 0.60;
-const double SUIS_SellRiskMultiplier = 0.22;
-const double SUIS_WeakBuyRiskMultiplier = 0.22;
-const double SUIS_WeakSellRiskMultiplier = 0.11;
+const double SUIS_RiskPercent = 30.00;
+const double SUIS_BuyRiskMultiplier = 0.30;
+const double SUIS_SellRiskMultiplier = 0.16;
+const double SUIS_WeakBuyRiskMultiplier = 0.10;
+const double SUIS_WeakSellRiskMultiplier = 0.08;
 const bool   SUIS_EnableBuys = true;
 const bool   SUIS_EnableSells = true;
-const int    SUIS_MaxPositions = 6;
-const int    SUIS_WeakRegimeMaxPositions = 2;
+const int    SUIS_MaxPositions = 8;
+const int    SUIS_WeakRegimeMaxPositions = 3;
 const int    SUIS_SellSessionStartHour = 0;
 const int    SUIS_SellSessionEndHour = 23;
-const int    SUIS_BuySessionStartHour = 5;
-const int    SUIS_BuySessionEndHour = 20;
+const int    SUIS_BuySessionStartHour = 0;
+const int    SUIS_BuySessionEndHour = 23;
 const bool   SUIS_StrongBullRelaxBuySession = false;
 const bool   SUIS_EnableMixedMomentumEntries = false;
 const bool   SUIS_BlockOppositeDirection = true;
 const long   SUIS_OppositeMagic = 2026042412;
 const double SUIS_MaxSpreadUsd = 1.20;
 const bool   SUIS_EnableDailyGuard = true;
-const double SUIS_DailyMaxLossPct = 19.50;
+const double SUIS_DailyMaxLossPct = 30.00;
 const double SUIS_DailyProfitStopPct = 0.00;
-const double SUIS_DailyProfitLockStartPct = 28.00;
-const double SUIS_DailyMaxGivebackPct = 8.50;
-const bool   SUIS_DailyClosePositionsOnStop = false;
+const double SUIS_DailyProfitLockStartPct = 0.00;
+const double SUIS_DailyMaxGivebackPct = 0.00;
+const bool   SUIS_DailyClosePositionsOnStop = true;
 const int    SUIS_MaxConsecutiveLosses = 3;
 const int    SUIS_LossCooldownMinutes = 180;
 const bool   SUIS_DailyGuardLog = true;
@@ -47,7 +47,7 @@ const bool   SUIS_EnableOverextensionGuard = true;
 const int    SUIS_D1ATRPeriod = 14;
 const double SUIS_MaxBuyD1FastDistanceATR = 2.60;
 const double SUIS_MaxBuyH1FastDistanceATR = 0.00;
-const bool   SUIS_OverextensionGuardBlocksZone = true;
+const bool   SUIS_OverextensionGuardBlocksZone = false;
 const bool   SUIS_OverextensionGuardBlocksPullback = false;
 const bool   SUIS_OverextensionGuardBlocksBreak = false;
 
@@ -68,7 +68,7 @@ const int    SUIS_PullbackLookback = 6;
 const bool   SUIS_RequirePullback = false;
 const bool   SUIS_AllowBreakoutBuys = true;
 const bool   SUIS_AllowPullbackBuys = true;
-const bool   SUIS_UseBuyCoreHours = true;
+const bool   SUIS_UseBuyCoreHours = false;
 const bool   SUIS_EnableBullSubEngine = false;
 const bool   SUIS_BullSubAllowWeakBull = false;
 const int    SUIS_BullSubSessionStartHour = 0;
@@ -82,8 +82,8 @@ const double SUIS_BullSubMinBodyRatio = 0.58;
 const double SUIS_BullSubRiskMultiplier = 0.28;
 const double SUIS_BullSubRR = 1.85;
 const int    SUIS_BullSubMaxHoldBars = 24;
-const bool   SUIS_EnableBearSubEngine = false;
-const bool   SUIS_BearSubAllowWeakBear = false;
+const bool   SUIS_EnableBearSubEngine = true;
+const bool   SUIS_BearSubAllowWeakBear = true;
 const int    SUIS_BearSubSessionStartHour = 0;
 const int    SUIS_BearSubSessionEndHour = 23;
 const int    SUIS_BearSubCompressionBars = 6;
@@ -91,8 +91,8 @@ const double SUIS_BearSubMaxRangeATR = 1.60;
 const double SUIS_BearSubTouchEmaATR = 0.18;
 const double SUIS_BearSubBreakATR = 0.04;
 const double SUIS_BearSubMinBodyRatio = 0.58;
-const double SUIS_BearSubRiskMultiplier = 0.28;
-const double SUIS_BearSubRR = 1.75;
+const double SUIS_BearSubRiskMultiplier = 0.16;
+const double SUIS_BearSubRR = 1.20;
 const int    SUIS_BearSubMaxHoldBars = 24;
 const bool   SUIS_EnableBearSafeMode = true;
 const int    SUIS_BearSafeStrongMinScore = 72;
@@ -100,8 +100,8 @@ const int    SUIS_BearSafeWeakMinScore = 82;
 const double SUIS_BearSafeWeakMinBodyRatio = 0.58;
 const bool   SUIS_BearSafeBlockWeakZone = false;
 const bool   SUIS_BearSafeBlockWeakAddOns = true;
-const bool   SUIS_EnableImpulsePullbackEngine = false;
-const bool   SUIS_EnableBuyImpulsePullback = true;
+const bool   SUIS_EnableImpulsePullbackEngine = true;
+const bool   SUIS_EnableBuyImpulsePullback = false;
 const bool   SUIS_EnableSellImpulsePullback = true;
 const bool   SUIS_ImpulseAllowWeakRegime = true;
 const int    SUIS_ImpulseSessionStartHour = 0;
@@ -111,11 +111,11 @@ const double SUIS_ImpulseMinMoveATR = 0.65;
 const double SUIS_ImpulsePullbackMaxATR = 0.80;
 const double SUIS_ImpulseEntryBodyRatio = 0.38;
 const double SUIS_ImpulseBreakATR = 0.00;
-const double SUIS_ImpulseRiskMultiplier = 0.35;
-const double SUIS_ImpulseRR = 1.15;
+const double SUIS_ImpulseRiskMultiplier = 0.16;
+const double SUIS_ImpulseRR = 1.10;
 const int    SUIS_ImpulseMaxHoldBars = 10;
 const bool   SUIS_EnableZoneRetestEngine = true;
-const bool   SUIS_ZoneAllowWeakRegime = true;
+const bool   SUIS_ZoneAllowWeakRegime = false;
 const bool   SUIS_ZoneUseCoreHours = false;
 const int    SUIS_ZoneLookback = 8;
 const double SUIS_ZoneMinBodyRatio = 0.46;
@@ -123,7 +123,7 @@ const double SUIS_ZoneBreakATR = 0.02;
 const double SUIS_ZoneMidTouchATR = 0.10;
 const double SUIS_ZoneReclaimATR = 0.00;
 const double SUIS_ZoneOvershootATR = 0.35;
-const double SUIS_ZoneRiskMultiplier = 0.70;
+const double SUIS_ZoneRiskMultiplier = 0.35;
 const double SUIS_ZoneRR = 1.20;
 const int    SUIS_ZoneMaxHoldBars = 12;
 const bool   SUIS_StrongBullRelaxCoreHours = false;
@@ -132,9 +132,9 @@ const bool   SUIS_BlockBuyHour07 = false;
 const bool   SUIS_BlockBuyHour10 = false;
 const bool   SUIS_BlockBuyHour14 = false;
 const bool   SUIS_BlockBuyHour17 = false;
-const string SUIS_BlockBuyBreakHours = "5";
-const string SUIS_BlockBuyPullbackHours = "16";
-const string SUIS_BlockBuyZoneHours = "7,10,12,13,16,17";
+const string SUIS_BlockBuyBreakHours = "1,2,4,5,7,10,20";
+const string SUIS_BlockBuyPullbackHours = "1,2,3,5,7,8,9,10,12,14,16,17,18";
+const string SUIS_BlockBuyZoneHours = "7,10,13,15,20";
 const string SUIS_BlockBuyImpulseHours = "";
 const string SUIS_BlockBuySubHours = "";
 const string SUIS_BlockBuyAddOnHours = "9,16";
@@ -218,15 +218,15 @@ const double SUIS_TrailStartR = 1.50;
 const double SUIS_TrailATR = 1.20;
 const double SUIS_TrailLockUsd = 0.40;
 const bool   SUIS_EnableAddOnEngine = true;
-const bool   SUIS_EnableBuyAddOns = true;
-const bool   SUIS_EnableSellAddOns = false;
-const bool   SUIS_AddOnAllowWeakRegime = false;
-const int    SUIS_AddOnMaxPerSide = 1;
-const double SUIS_AddOnMinProgressR = 0.65;
+const bool   SUIS_EnableBuyAddOns = false;
+const bool   SUIS_EnableSellAddOns = true;
+const bool   SUIS_AddOnAllowWeakRegime = true;
+const int    SUIS_AddOnMaxPerSide = 2;
+const double SUIS_AddOnMinProgressR = 0.30;
 const double SUIS_AddOnBreakATR = 0.02;
 const double SUIS_AddOnMinBodyRatio = 0.58;
-const double SUIS_AddOnRiskMultiplier = 0.32;
-const double SUIS_AddOnRR = 1.10;
+const double SUIS_AddOnRiskMultiplier = 0.16;
+const double SUIS_AddOnRR = 1.05;
 const int    SUIS_AddOnMaxHoldBars = 8;
 const bool   SUIS_BuyBreakTimeCloseProfitOnly = false;
 const bool   SUIS_BuyImpulseTimeCloseProfitOnly = false;
@@ -308,7 +308,7 @@ int               g_consecutiveLosses = 0;
 datetime          g_lossCooldownUntil = 0;
 datetime          g_lastRiskGuardLogTime = 0;
 string            g_lastRiskGuardLogReason = "";
-static const ulong SUIS_MAGIC = 2026042612;
+static const ulong SUIS_MAGIC = 2026050613;
 static const ENUM_TIMEFRAMES SUIS_EXEC_TF = PERIOD_M5;
 
 
@@ -658,7 +658,7 @@ string SUISAppendTag(const string tags, const string tag)
 
 string SUISBuildComment(const string engineCode, const int score, const string grade, const string tags)
   {
-   string comment = "SV1|" + SUISEngineComment(engineCode) + "|" + engineCode + "|S" + IntegerToString(score) + "|" + grade;
+   string comment = "SV2|" + SUISEngineComment(engineCode) + "|" + engineCode + "|S" + IntegerToString(score) + "|" + grade;
    if(tags != "")
       comment += "|" + tags;
    if(StringLen(comment) > 31)
@@ -3181,7 +3181,7 @@ int OnInit()
       return(INIT_FAILED);
      }
 
-   PrintFormat("SuisM5_v1 SUIS STABLE PROFILE Suis v1 | symbol=%s tf=M5 risk=%.2f buy=%s sell=%s sellRisk=%.2f weakSellRisk=%.2f sellSession=%02d-%02d maxPos=%d dailyLoss=%.2f closeOnStop=%s weeklyLoss=%.2f equityCircuit=%.2f macro=%s macroBearScore=%d priceGate=%s minD1Close=%.2f buyBlocks BO=%s PB=%s ZB=%s sellBlocks BO=%s ZS=all overextensionD1=%.2f",
+   PrintFormat("SuisM5_v1 SUIS AGGRESSIVE FREQUENCY PROFILE Suis v1 | symbol=%s tf=M5 risk=%.2f buy=%s sell=%s sellRisk=%.2f weakSellRisk=%.2f sellSession=%02d-%02d maxPos=%d dailyLoss=%.2f closeOnStop=%s weeklyLoss=%.2f equityCircuit=%.2f macro=%s macroBearScore=%d priceGate=%s minD1Close=%.2f buyBlocks BO=%s PB=%s ZB=%s sellBlocks BO=%s ZS=all overextensionD1=%.2f",
                _Symbol,
                SUIS_RiskPercent,
                SUIS_EnableBuys ? "true" : "false",

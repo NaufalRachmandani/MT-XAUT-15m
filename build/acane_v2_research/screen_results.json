@@ -1,0 +1,848 @@
+[
+  {
+    "variant": "v2_balanced_recent29",
+    "stem": "AcaneM1_v2_balanced_4264",
+    "deposit": 29,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_balanced_4264_v2_balanced_recent29_d29_20260501_20260509.htm",
+    "report_net": 0.0,
+    "trades_report": 0,
+    "net": 0,
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0.0,
+    "pf": 0.0,
+    "avg": 0.0,
+    "largest_loss": 0.0,
+    "eqdd": "0.00 (0.00%) Gross Loss",
+    "eqdd_pct": 0.0,
+    "baldd": "0.00 (0.00%) Equity Drawdown Maximal",
+    "baldd_pct": 0.0,
+    "worst_hours": [],
+    "worst_days": []
+  },
+  {
+    "variant": "v2_balanced_fast_recent29",
+    "stem": "AcaneM1_v2_balanced_fast_4264",
+    "deposit": 29,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_balanced_fast_4264_v2_balanced_fast_recent29_d29_20260501_20260509.htm",
+    "report_net": 0.0,
+    "trades_report": 0,
+    "net": 0,
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0.0,
+    "pf": 0.0,
+    "avg": 0.0,
+    "largest_loss": 0.0,
+    "eqdd": "0.00 (0.00%) Gross Loss",
+    "eqdd_pct": 0.0,
+    "baldd": "0.00 (0.00%) Equity Drawdown Maximal",
+    "baldd_pct": 0.0,
+    "worst_hours": [],
+    "worst_days": []
+  },
+  {
+    "variant": "v2_stack2_recent29",
+    "stem": "AcaneM1_v2_stack2_4264",
+    "deposit": 29,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_stack2_4264_v2_stack2_recent29_d29_20260501_20260509.htm",
+    "report_net": 0.0,
+    "trades_report": 0,
+    "net": 0,
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0.0,
+    "pf": 0.0,
+    "avg": 0.0,
+    "largest_loss": 0.0,
+    "eqdd": "0.00 (0.00%) Gross Loss",
+    "eqdd_pct": 0.0,
+    "baldd": "0.00 (0.00%) Equity Drawdown Maximal",
+    "baldd_pct": 0.0,
+    "worst_hours": [],
+    "worst_days": []
+  },
+  {
+    "variant": "v2_stack3_recent29",
+    "stem": "AcaneM1_v2_stack3_4264",
+    "deposit": 29,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_stack3_4264_v2_stack3_recent29_d29_20260501_20260509.htm",
+    "report_net": 0.0,
+    "trades_report": 0,
+    "net": 0,
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0.0,
+    "pf": 0.0,
+    "avg": 0.0,
+    "largest_loss": 0.0,
+    "eqdd": "0.00 (0.00%) Gross Loss",
+    "eqdd_pct": 0.0,
+    "baldd": "0.00 (0.00%) Equity Drawdown Maximal",
+    "baldd_pct": 0.0,
+    "worst_hours": [],
+    "worst_days": []
+  },
+  {
+    "variant": "v2_stack2_nohour_recent29",
+    "stem": "AcaneM1_v2_stack2_nohour_4264",
+    "deposit": 29,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_stack2_nohour_4264_v2_stack2_nohour_recent29_d29_20260501_20260509.htm",
+    "report_net": 0.0,
+    "trades_report": 0,
+    "net": 0,
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0.0,
+    "pf": 0.0,
+    "avg": 0.0,
+    "largest_loss": 0.0,
+    "eqdd": "0.00 (0.00%) Gross Loss",
+    "eqdd_pct": 0.0,
+    "baldd": "0.00 (0.00%) Equity Drawdown Maximal",
+    "baldd_pct": 0.0,
+    "worst_hours": [],
+    "worst_days": []
+  },
+  {
+    "variant": "v2_throttle_plus_recent29",
+    "stem": "AcaneM1_v2_throttle_plus_4264",
+    "deposit": 29,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_throttle_plus_4264_v2_throttle_plus_recent29_d29_20260501_20260509.htm",
+    "report_net": 0.0,
+    "trades_report": 0,
+    "net": 0,
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0.0,
+    "pf": 0.0,
+    "avg": 0.0,
+    "largest_loss": 0.0,
+    "eqdd": "0.00 (0.00%) Gross Loss",
+    "eqdd_pct": 0.0,
+    "baldd": "0.00 (0.00%) Equity Drawdown Maximal",
+    "baldd_pct": 0.0,
+    "worst_hours": [],
+    "worst_days": []
+  },
+  {
+    "variant": "v2_balanced_recent200",
+    "stem": "AcaneM1_v2_balanced_4264",
+    "deposit": 200,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_balanced_4264_v2_balanced_recent200_d200_20260501_20260509.htm",
+    "report_net": 89.22,
+    "trades_report": 47,
+    "net": 89.22,
+    "trades": 47,
+    "wins": 36,
+    "losses": 11,
+    "win_rate": 76.6,
+    "pf": 5.76,
+    "avg": 1.9,
+    "largest_loss": -2.87,
+    "eqdd": "12.22 (5.96%) Gross Loss",
+    "eqdd_pct": 5.96,
+    "baldd": "11.83 (5.77%) Equity Drawdown Maximal",
+    "baldd_pct": 5.77,
+    "worst_hours": [
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -2.87,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 1,
+        "net": -1.69,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 6,
+        "trades": 1,
+        "net": -1.53,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 2,
+        "net": -0.67,
+        "wr": 50.0,
+        "pf": 0.53
+      },
+      {
+        "hour": 8,
+        "trades": 1,
+        "net": 0.01,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 15,
+        "trades": 2,
+        "net": 3.84,
+        "wr": 50.0,
+        "pf": 2.72
+      },
+      {
+        "hour": 17,
+        "trades": 4,
+        "net": 4.22,
+        "wr": 75.0,
+        "pf": 2.98
+      },
+      {
+        "hour": 23,
+        "trades": 1,
+        "net": 4.44,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "worst_days": [
+      {
+        "date": "2026-05-01",
+        "trades": 3,
+        "net": 2.02,
+        "wr": 33.3,
+        "pf": 1.64
+      },
+      {
+        "date": "2026-05-04",
+        "trades": 12,
+        "net": 2.2,
+        "wr": 58.3,
+        "pf": 1.25
+      },
+      {
+        "date": "2026-05-05",
+        "trades": 6,
+        "net": 13.83,
+        "wr": 83.3,
+        "pf": 26.15
+      },
+      {
+        "date": "2026-05-08",
+        "trades": 4,
+        "net": 15.53,
+        "wr": 75.0,
+        "pf": 7.96
+      },
+      {
+        "date": "2026-05-06",
+        "trades": 6,
+        "net": 19.97,
+        "wr": 83.3,
+        "pf": 10.89
+      }
+    ]
+  },
+  {
+    "variant": "v2_balanced_fast_recent200",
+    "stem": "AcaneM1_v2_balanced_fast_4264",
+    "deposit": 200,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_balanced_fast_4264_v2_balanced_fast_recent200_d200_20260501_20260509.htm",
+    "report_net": 111.9,
+    "trades_report": 54,
+    "net": 111.9,
+    "trades": 54,
+    "wins": 42,
+    "losses": 12,
+    "win_rate": 77.78,
+    "pf": 5.36,
+    "avg": 2.07,
+    "largest_loss": -3.97,
+    "eqdd": "14.08 (6.73%) Gross Loss",
+    "eqdd_pct": 6.73,
+    "baldd": "10.68 (5.17%) Equity Drawdown Maximal",
+    "baldd_pct": 5.17,
+    "worst_hours": [
+      {
+        "hour": 6,
+        "trades": 3,
+        "net": -7.49,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -2.87,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 8,
+        "trades": 1,
+        "net": 0.01,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 3,
+        "net": 2.64,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 19,
+        "trades": 1,
+        "net": 4.97,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 2,
+        "net": 5.26,
+        "wr": 50.0,
+        "pf": 4.11
+      },
+      {
+        "hour": 18,
+        "trades": 2,
+        "net": 5.65,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 15,
+        "trades": 3,
+        "net": 6.13,
+        "wr": 66.7,
+        "pf": 3.3
+      }
+    ],
+    "worst_days": [
+      {
+        "date": "2026-05-05",
+        "trades": 3,
+        "net": 5.23,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "date": "2026-05-01",
+        "trades": 5,
+        "net": 6.54,
+        "wr": 80.0,
+        "pf": 4.8
+      },
+      {
+        "date": "2026-05-04",
+        "trades": 15,
+        "net": 9.58,
+        "wr": 60.0,
+        "pf": 1.9
+      },
+      {
+        "date": "2026-05-06",
+        "trades": 6,
+        "net": 21.42,
+        "wr": 83.3,
+        "pf": 11.6
+      },
+      {
+        "date": "2026-05-08",
+        "trades": 8,
+        "net": 27.23,
+        "wr": 62.5,
+        "pf": 3.97
+      }
+    ]
+  },
+  {
+    "variant": "v2_stack2_recent200",
+    "stem": "AcaneM1_v2_stack2_4264",
+    "deposit": 200,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_stack2_4264_v2_stack2_recent200_d200_20260501_20260509.htm",
+    "report_net": 111.9,
+    "trades_report": 54,
+    "net": 111.9,
+    "trades": 54,
+    "wins": 42,
+    "losses": 12,
+    "win_rate": 77.78,
+    "pf": 5.36,
+    "avg": 2.07,
+    "largest_loss": -3.97,
+    "eqdd": "14.08 (6.73%) Gross Loss",
+    "eqdd_pct": 6.73,
+    "baldd": "10.68 (5.17%) Equity Drawdown Maximal",
+    "baldd_pct": 5.17,
+    "worst_hours": [
+      {
+        "hour": 6,
+        "trades": 3,
+        "net": -7.49,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -2.87,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 8,
+        "trades": 1,
+        "net": 0.01,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 3,
+        "net": 2.64,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 19,
+        "trades": 1,
+        "net": 4.97,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 2,
+        "net": 5.26,
+        "wr": 50.0,
+        "pf": 4.11
+      },
+      {
+        "hour": 18,
+        "trades": 2,
+        "net": 5.65,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 15,
+        "trades": 3,
+        "net": 6.13,
+        "wr": 66.7,
+        "pf": 3.3
+      }
+    ],
+    "worst_days": [
+      {
+        "date": "2026-05-05",
+        "trades": 3,
+        "net": 5.23,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "date": "2026-05-01",
+        "trades": 5,
+        "net": 6.54,
+        "wr": 80.0,
+        "pf": 4.8
+      },
+      {
+        "date": "2026-05-04",
+        "trades": 15,
+        "net": 9.58,
+        "wr": 60.0,
+        "pf": 1.9
+      },
+      {
+        "date": "2026-05-06",
+        "trades": 6,
+        "net": 21.42,
+        "wr": 83.3,
+        "pf": 11.6
+      },
+      {
+        "date": "2026-05-08",
+        "trades": 8,
+        "net": 27.23,
+        "wr": 62.5,
+        "pf": 3.97
+      }
+    ]
+  },
+  {
+    "variant": "v2_stack3_recent200",
+    "stem": "AcaneM1_v2_stack3_4264",
+    "deposit": 200,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_stack3_4264_v2_stack3_recent200_d200_20260501_20260509.htm",
+    "report_net": 111.9,
+    "trades_report": 54,
+    "net": 111.9,
+    "trades": 54,
+    "wins": 42,
+    "losses": 12,
+    "win_rate": 77.78,
+    "pf": 5.36,
+    "avg": 2.07,
+    "largest_loss": -3.97,
+    "eqdd": "14.08 (6.73%) Gross Loss",
+    "eqdd_pct": 6.73,
+    "baldd": "10.68 (5.17%) Equity Drawdown Maximal",
+    "baldd_pct": 5.17,
+    "worst_hours": [
+      {
+        "hour": 6,
+        "trades": 3,
+        "net": -7.49,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -2.87,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 8,
+        "trades": 1,
+        "net": 0.01,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 3,
+        "net": 2.64,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 19,
+        "trades": 1,
+        "net": 4.97,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 2,
+        "net": 5.26,
+        "wr": 50.0,
+        "pf": 4.11
+      },
+      {
+        "hour": 18,
+        "trades": 2,
+        "net": 5.65,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 15,
+        "trades": 3,
+        "net": 6.13,
+        "wr": 66.7,
+        "pf": 3.3
+      }
+    ],
+    "worst_days": [
+      {
+        "date": "2026-05-05",
+        "trades": 3,
+        "net": 5.23,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "date": "2026-05-01",
+        "trades": 5,
+        "net": 6.54,
+        "wr": 80.0,
+        "pf": 4.8
+      },
+      {
+        "date": "2026-05-04",
+        "trades": 15,
+        "net": 9.58,
+        "wr": 60.0,
+        "pf": 1.9
+      },
+      {
+        "date": "2026-05-06",
+        "trades": 6,
+        "net": 21.42,
+        "wr": 83.3,
+        "pf": 11.6
+      },
+      {
+        "date": "2026-05-08",
+        "trades": 8,
+        "net": 27.23,
+        "wr": 62.5,
+        "pf": 3.97
+      }
+    ]
+  },
+  {
+    "variant": "v2_stack2_nohour_recent200",
+    "stem": "AcaneM1_v2_stack2_nohour_4264",
+    "deposit": 200,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_stack2_nohour_4264_v2_stack2_nohour_recent200_d200_20260501_20260509.htm",
+    "report_net": 112.05,
+    "trades_report": 58,
+    "net": 112.05,
+    "trades": 58,
+    "wins": 44,
+    "losses": 14,
+    "win_rate": 75.86,
+    "pf": 4.54,
+    "avg": 1.93,
+    "largest_loss": -4.85,
+    "eqdd": "12.41 (5.86%) Gross Loss",
+    "eqdd_pct": 5.86,
+    "baldd": "11.82 (5.58%) Equity Drawdown Maximal",
+    "baldd_pct": 5.58,
+    "worst_hours": [
+      {
+        "hour": 6,
+        "trades": 2,
+        "net": -5.96,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -2.87,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 11,
+        "trades": 2,
+        "net": -2.68,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 8,
+        "trades": 1,
+        "net": 0.01,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 20,
+        "trades": 2,
+        "net": 1.4,
+        "wr": 50.0,
+        "pf": 1.29
+      },
+      {
+        "hour": 16,
+        "trades": 3,
+        "net": 2.64,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 19,
+        "trades": 1,
+        "net": 4.97,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 2,
+        "net": 5.26,
+        "wr": 50.0,
+        "pf": 4.11
+      }
+    ],
+    "worst_days": [
+      {
+        "date": "2026-05-05",
+        "trades": 3,
+        "net": 5.23,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "date": "2026-05-01",
+        "trades": 5,
+        "net": 6.54,
+        "wr": 80.0,
+        "pf": 4.8
+      },
+      {
+        "date": "2026-05-04",
+        "trades": 17,
+        "net": 13.77,
+        "wr": 64.7,
+        "pf": 2.16
+      },
+      {
+        "date": "2026-05-06",
+        "trades": 6,
+        "net": 21.42,
+        "wr": 83.3,
+        "pf": 11.6
+      },
+      {
+        "date": "2026-05-08",
+        "trades": 9,
+        "net": 27.22,
+        "wr": 55.6,
+        "pf": 3.97
+      }
+    ]
+  },
+  {
+    "variant": "v2_throttle_plus_recent200",
+    "stem": "AcaneM1_v2_throttle_plus_4264",
+    "deposit": 200,
+    "from": "2026.05.01",
+    "to": "2026.05.09",
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v2_research/AcaneM1_v2_throttle_plus_4264_v2_throttle_plus_recent200_d200_20260501_20260509.htm",
+    "report_net": 72.72,
+    "trades_report": 43,
+    "net": 72.72,
+    "trades": 43,
+    "wins": 31,
+    "losses": 12,
+    "win_rate": 72.09,
+    "pf": 4.48,
+    "avg": 1.69,
+    "largest_loss": -2.87,
+    "eqdd": "12.22 (5.96%) Gross Loss",
+    "eqdd_pct": 5.96,
+    "baldd": "11.83 (5.77%) Equity Drawdown Maximal",
+    "baldd_pct": 5.77,
+    "worst_hours": [
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -2.87,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 1,
+        "net": -1.69,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 6,
+        "trades": 1,
+        "net": -1.53,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 2,
+        "net": -0.67,
+        "wr": 50.0,
+        "pf": 0.53
+      },
+      {
+        "hour": 8,
+        "trades": 1,
+        "net": 0.01,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 1,
+        "trades": 2,
+        "net": 4.03,
+        "wr": 50.0,
+        "pf": 2.92
+      },
+      {
+        "hour": 15,
+        "trades": 3,
+        "net": 4.05,
+        "wr": 66.7,
+        "pf": 2.82
+      },
+      {
+        "hour": 23,
+        "trades": 1,
+        "net": 4.44,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "worst_days": [
+      {
+        "date": "2026-05-01",
+        "trades": 3,
+        "net": 2.02,
+        "wr": 33.3,
+        "pf": 1.64
+      },
+      {
+        "date": "2026-05-04",
+        "trades": 12,
+        "net": 2.2,
+        "wr": 58.3,
+        "pf": 1.25
+      },
+      {
+        "date": "2026-05-08",
+        "trades": 5,
+        "net": 13.43,
+        "wr": 60.0,
+        "pf": 4.1
+      },
+      {
+        "date": "2026-05-05",
+        "trades": 6,
+        "net": 13.83,
+        "wr": 83.3,
+        "pf": 26.15
+      },
+      {
+        "date": "2026-05-06",
+        "trades": 5,
+        "net": 14.38,
+        "wr": 80.0,
+        "pf": 8.12
+      }
+    ]
+  }
+]

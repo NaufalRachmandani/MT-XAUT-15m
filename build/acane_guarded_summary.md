@@ -16,11 +16,11 @@
 - Daily max loss: `15%`
 - Account circuit: `15%`
 - Max positions: `12`
-- Max same-side positions: `6`
+- Max same-side positions: `4`
 - Total open-risk cap: `12%`
 - Same-side open-risk cap: `8%`
 - Basket floating-loss stop: `9%`
-- Fast-loss cooldown: `3` fast losses -> cooldown `15` menit.
+- Fast-loss cooldown: `2` fast losses -> cooldown `15` menit.
 - MRV impulse block: hindari entry mean-reversion saat impulse ATR/EMA distance terlalu ekstrem.
 
 ## Audit Live Loss 2026-05-08
@@ -32,7 +32,20 @@ Pola loss live terjadi karena build lama `v1.02 PROFIT30` masih aktif:
 - Guard 30% baru aktif setelah drawdown sudah melewati threshold karena banyak posisi terbuka/tertutup hampir bersamaan.
 - Local terminal sempat `Algo Trading` off, tetapi log menunjukkan ada session/VPS lain yang tetap mengirim order.
 
-## Backtest Snapshot
+## Latest Standard Tuning Snapshot
+
+Setup: `XAUUSDm`, `M1`, Standard account context, deposit `150 USD`, mode `Every tick`.
+
+| Profile | Window | Net Profit | Trades | PF | Win Rate | Max EqDD |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| old guarded `v1.03` | 2026.01.01-2026.05.08 | +1165254.02% | 1941 | 1.69 | 60.95% | 7.29% |
+| old guarded `v1.03` | 2025.01.01-2026.05.08 | +2027.26% | 927 | 1.51 | 59.55% | 15.01% |
+| current `v1.04` | 2026.01.01-2026.05.08 | +1184409.69% | 1858 | 1.76 | 61.89% | 7.53% |
+| current `v1.04` | 2025.01.01-2026.05.08 | +15410874.16% | 7959 | 1.76 | 57.29% | 3.18% |
+
+Perubahan `v1.04`: max same-side positions `6 -> 4`, fast-loss cooldown trigger `3 -> 2`. Ini dipilih karena meningkatkan robustness 2025-current tanpa memangkas profit 2026.
+
+## Previous Pro Snapshot
 
 Setup `150 USD`: `XAUUSD`, `M1`, Pro account context, deposit `150 USD`, leverage `1:2000`, model `Every tick`.
 
@@ -52,8 +65,8 @@ Setup `300 USD`: `XAUUSD`, `M1`, Pro account context, deposit `300 USD`, leverag
 
 ## Forward-Test Read
 
-Build ini adalah kandidat pengganti raw profit30. Jangan jalankan raw `v1.02 PROFIT30` lagi di VPS. Setelah copy file `.ex5` baru, attach ke chart `XAUUSD,M1` dan pastikan Experts log menampilkan:
+Build ini adalah kandidat pengganti raw profit30. Jangan jalankan raw `v1.02 PROFIT30` lagi di VPS. Setelah copy file `.ex5` baru, attach ke chart gold `M1` dan pastikan Experts log menampilkan:
 
-`ACANE LOCKED PROFILE v1.03 GUARDED`
+`ACANE LOCKED PROFILE v1.04 GUARDED`
 
 Catatan risiko: guard `15%` bukan garansi absolut. Slippage, gap, spread melebar, koneksi putus, atau close failure masih bisa membuat real loss melewati threshold.

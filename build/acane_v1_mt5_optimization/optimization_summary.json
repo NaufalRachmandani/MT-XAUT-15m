@@ -1,0 +1,9 @@
+{
+  "stem": "AcaneM1_v1_genetic_2025_forward_20260101_20260510_d100_delay100_model4",
+  "set": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v1_mt5_optimization/AcaneM1_v1_genetic.set",
+  "ini": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_v1_mt5_optimization/AcaneM1_v1_genetic_2025_forward_20260101_20260510_d100_delay100_model4.ini",
+  "artifacts": [],
+  "parsed_xml_rows": 0,
+  "completed_before_timeout": true,
+  "note": "MT5 native genetic optimization, ForwardDate=2026.01.01, local agents only, cloud/remote disabled."
+}

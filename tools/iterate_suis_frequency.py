@@ -15,7 +15,7 @@ from analyze_mt5_report import parse_first_number, parse_report_metrics, read_re
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "mt5" / "SuisM5_v2.mq5"
+SOURCE = ROOT / "mt5" / "SuisM5_v1.mq5"
 OUT = ROOT / "build" / "suis_frequency_iteration"
 
 WINEPREFIX = Path.home() / "Library/Application Support/net.metaquotes.wine.metatrader5"
@@ -48,7 +48,7 @@ def const_value(value: object) -> str:
 
 def patch_source(text: str, stem: str, replacements: dict[str, object]) -> str:
     text = re.sub(r'#property version\s+"[^"]+"', '#property version   "4.10"', text, count=1)
-    text = text.replace("SuisM5_v2", stem)
+    text = text.replace("SuisM5_v1", stem)
     for name, raw_value in replacements.items():
         value = const_value(raw_value)
         pattern = re.compile(rf"const\s+([A-Za-z0-9_]+)\s+{re.escape(name)}\s*=\s*[^;]+;")
@@ -194,7 +194,7 @@ def run_backtest(stem: str, variant: str, window: str, from_date: str, to_date: 
 
 
 VARIANTS = [
-    Variant("suis_v2_current", {}, "current SuisM5_v2 source default / aggressive frequency champion"),
+    Variant("suis_unified_current", {}, "current SuisM5_v1 unified aggressive/frequency source default"),
     Variant(
         "suis_open_hours",
         {
@@ -1326,7 +1326,7 @@ def main() -> None:
         windows.append(("full", "2025.01.01", args.to_date))
 
     for variant in selected:
-        stem = f"SuisM5_v2_iter_{variant.name}"
+        stem = f"SuisM5_v1_iter_{variant.name}"
         patched = patch_source(source_text, stem, variant.replacements)
         compile_variant(stem, patched)
         for window_name, from_date, to_date in windows:

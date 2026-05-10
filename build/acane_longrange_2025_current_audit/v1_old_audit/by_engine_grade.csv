@@ -1,0 +1,3 @@
+engine,grade,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
+MRV,A,62.0,-3.41,5.44,-8.85,40.32258064516129,0.6146892655367232,-0.055,0.21760000000000002,-0.2391891891891892,0.68,-0.53,25.0,37.0
+MRV,B,3.0,0.2,0.65,-0.45,33.33333333333333,1.4444444444444444,0.06666666666666667,0.65,-0.225,0.65,-0.23,1.0,2.0

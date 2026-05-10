@@ -1,0 +1,22 @@
+{
+  "ytd_d100_fixed001": {
+    "net": -111.43,
+    "pf": 0.57,
+    "trades": 14,
+    "wr": 21.43,
+    "eqdd": "507.89 (102.30%)",
+    "eqdd_pct": 102.3,
+    "largest_loss": -25.51,
+    "history": "100% real ticks"
+  },
+  "ytd_d1000_default": {
+    "net": 611.49,
+    "pf": 1.04,
+    "trades": 299,
+    "wr": 36.12,
+    "eqdd": "4 048.22 (78.79%)",
+    "eqdd_pct": 78.79,
+    "largest_loss": -225.51,
+    "history": "100% real ticks"
+  }
+}

@@ -1,0 +1,4 @@
+entry_hour,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
+5,2.0,-31.47,0,-31.47,0.0,0.0,-15.735,0.0,-15.735,0.0,-20.54,0.0,2.0
+10,1.0,-3.25,0,-3.25,0.0,0.0,-3.25,0.0,-3.25,0.0,-3.25,0.0,1.0
+1,2.0,5.38,5.38,0,100.0,0.0,2.69,2.69,0.0,2.84,0.0,2.0,0.0

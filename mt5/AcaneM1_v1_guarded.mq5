@@ -1,5 +1,5 @@
 #property copyright "OpenAI Codex"
-#property version   "1.03"
+#property version   "1.04"
 #property strict
 // Acane M1: aggressive tick-managed XAUUSD scalper.
 
@@ -9,7 +9,7 @@ const double ACANE_RiskPercent = 30.00;
 const double ACANE_CoreRiskMultiplier = 0.00;
 const double ACANE_WeakRiskMultiplier = 0.00;
 const int    ACANE_MaxPositions = 12;
-const int    ACANE_MaxSameSidePositions = 6;
+const int    ACANE_MaxSameSidePositions = 4;
 const int    ACANE_MinSecondsBetweenEntries = 3;
 const int    ACANE_MinHoldSeconds = 6;
 const int    ACANE_MaxHoldSeconds = 100;
@@ -37,7 +37,7 @@ const double ACANE_MaxOpenRiskPct = 12.00;
 const double ACANE_MaxSameSideOpenRiskPct = 8.00;
 const double ACANE_BasketLossStopPct = 9.00;
 const bool   ACANE_StopDayOnBasketLoss = true;
-const int    ACANE_FastLossCooldownAfter = 3;
+const int    ACANE_FastLossCooldownAfter = 2;
 const int    ACANE_FastLossCooldownSeconds = 900;
 const double ACANE_MrvMaxImpulseATR = 1.10;
 const double ACANE_MrvMaxEmaDistanceATR = 1.25;
@@ -1101,7 +1101,7 @@ int OnInit()
    AcaneResetDailyGuardIfNeeded();
    AcaneResetWeeklyGuardIfNeeded();
    AcaneResetMonthlyGuardIfNeeded();
-   PrintFormat("ACANE LOCKED PROFILE v1.03 GUARDED | symbol=%s tf=M1 risk=%.2f maxPos=%d sameSide=%d dailyLoss=%.2f accountCircuit=%.2f openRisk=%.2f basketStop=%.2f spreadMax=%.2f",
+   PrintFormat("ACANE LOCKED PROFILE v1.04 GUARDED | symbol=%s tf=M1 risk=%.2f maxPos=%d sameSide=%d dailyLoss=%.2f accountCircuit=%.2f openRisk=%.2f basketStop=%.2f spreadMax=%.2f",
                _Symbol,
                ACANE_RiskPercent,
                ACANE_MaxPositions,

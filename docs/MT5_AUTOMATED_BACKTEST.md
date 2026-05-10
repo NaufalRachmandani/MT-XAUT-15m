@@ -15,7 +15,7 @@ Panduan ini menjelaskan cara menjalankan backtest MetaTrader 5 secara programati
 ## Environment yang Dipakai di Project Ini
 
 - Workspace project:
-  `/Users/naufalrachmandani/Hobby/MT5 XAU 15m`
+  `/Users/naufalrachmandani/Hobby/MT5 XAU Bot`
 - Wine prefix MT5:
   `/Users/naufalrachmandani/Library/Application Support/net.metaquotes.wine.metatrader5`
 - Wine binary:

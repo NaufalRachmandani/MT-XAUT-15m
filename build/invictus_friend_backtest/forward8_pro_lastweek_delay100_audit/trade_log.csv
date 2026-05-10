@@ -1,0 +1,6 @@
+entry_time,exit_time,entry_month,entry_date,entry_hour,side,volume,entry_price,exit_price,profit,balance,hold_minutes,exit_reason,family,engine,code,score,grade,regime_tag,hour_tag,tags,score_bucket,entry_comment,exit_comment,match_error
+2026-05-04 01:30:00,2026-05-04 02:23:52,2026-05,2026-05-04,1,buy,0.01,4594.898,4597.436,2.54,31.54,53.86666666666667,sl,IHS RB BUY R:$74,,,0,,,,,unknown,IHS RB BUY R:$74,sl 4597.710,2.5146200000000043
+2026-05-04 01:15:00,2026-05-04 05:24:34,2026-05,2026-05-04,1,buy,0.01,4600.913,4606.731,2.84,34.38,249.56666666666666,sl,IHS RB BUY R:$78,,,0,,,,,unknown,IHS RB BUY R:$78,sl 4606.760,2.781819999999998
+2026-05-04 05:15:00,2026-05-04 06:38:38,2026-05,2026-05-04,5,buy,0.01,4603.893,4586.459,-10.93,23.45,83.63333333333334,sl,IHS RB BUY R:$59,,,0,,,,,unknown,IHS RB BUY R:$59,sl 4586.640,10.755659999999997
+2026-05-04 05:30:00,2026-05-04 07:59:04,2026-05,2026-05-04,5,buy,0.01,4597.387,4580.37,-20.54,2.91,149.06666666666666,sl,IHS RB BUY R:$52,,,0,,,,,unknown,IHS RB BUY R:$52,sl 4580.460,20.36983
+2026-05-04 10:15:00,2026-05-04 10:31:00,2026-05,2026-05-04,10,sell,0.01,4542.289,4545.535,-3.25,-0.34,16.0,manual/exit_loss,IHB DropCatch,,,0,,,,,unknown,IHB DropCatch,so -14.98%,3.217539999999999

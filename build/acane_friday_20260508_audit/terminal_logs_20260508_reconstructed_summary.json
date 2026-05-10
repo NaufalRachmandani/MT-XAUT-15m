@@ -1,0 +1,100 @@
+{
+  "local": {
+    "closed": 0,
+    "wins": 0,
+    "losses": 0,
+    "net": 0,
+    "failed_no_money": 0,
+    "by_close_hour": {},
+    "worst": []
+  },
+  "vps": {
+    "closed": 5,
+    "wins": 0,
+    "losses": 5,
+    "net": -8.97,
+    "failed_no_money": 180,
+    "by_close_hour": {
+      "20": {
+        "count": 2,
+        "net": -3.27,
+        "wins": 0,
+        "losses": 2
+      },
+      "21": {
+        "count": 2,
+        "net": -3.14,
+        "wins": 0,
+        "losses": 2
+      },
+      "22": {
+        "count": 1,
+        "net": -2.56,
+        "wins": 0,
+        "losses": 1
+      }
+    },
+    "worst": [
+      {
+        "source": "vps",
+        "open_time": "22:01:23.032",
+        "close_time": "22:01:29.563",
+        "ticket": "187671341",
+        "side": "buy",
+        "volume": 0.04,
+        "open_price": 4723.484,
+        "close_price": 4722.843,
+        "pnl": -2.56,
+        "deal": "182089000"
+      },
+      {
+        "source": "vps",
+        "open_time": "21:31:01.833",
+        "close_time": "21:31:07.145",
+        "ticket": "187666105",
+        "side": "buy",
+        "volume": 0.04,
+        "open_price": 4723.587,
+        "close_price": 4723.033,
+        "pnl": -2.22,
+        "deal": "182087353"
+      },
+      {
+        "source": "vps",
+        "open_time": "20:47:51.262",
+        "close_time": "20:47:58.085",
+        "ticket": "187657839",
+        "side": "buy",
+        "volume": 0.04,
+        "open_price": 4724.425,
+        "close_price": 4723.974,
+        "pnl": -1.8,
+        "deal": "182084195"
+      },
+      {
+        "source": "vps",
+        "open_time": "20:49:56.923",
+        "close_time": "20:50:02.841",
+        "ticket": "187658391",
+        "side": "buy",
+        "volume": 0.04,
+        "open_price": 4723.979,
+        "close_price": 4723.612,
+        "pnl": -1.47,
+        "deal": "182084510"
+      },
+      {
+        "source": "vps",
+        "open_time": "21:07:18.522",
+        "close_time": "21:07:24.566",
+        "ticket": "187662643",
+        "side": "sell",
+        "volume": 0.04,
+        "open_price": 4724.708,
+        "close_price": 4724.937,
+        "pnl": -0.92,
+        "deal": "182086269"
+      }
+    ]
+  }
+}

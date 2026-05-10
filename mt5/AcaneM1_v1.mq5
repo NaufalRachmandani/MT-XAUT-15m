@@ -1,102 +1,121 @@
 #property copyright "OpenAI Codex"
-#property version   "1.01"
+#property version   "1.00"
 #property strict
-// Acane M1: aggressive tick-managed XAUUSD scalper.
+// AcaneM1_v1: optimizable XAUUSD M1 EA rebuilt for MT5 genetic/forward testing.
 
 #include <Trade/Trade.mqh>
 
-const double ACANE_RiskPercent = 30.00;
-const double ACANE_CoreRiskMultiplier = 0.00;
-const double ACANE_WeakRiskMultiplier = 0.00;
-const int    ACANE_MaxPositions = 42;
-const int    ACANE_MaxSameSidePositions = 28;
-const int    ACANE_MinSecondsBetweenEntries = 1;
-const int    ACANE_MinHoldSeconds = 6;
-const int    ACANE_MaxHoldSeconds = 100;
-const int    ACANE_MicroCloseProfitSeconds = 999;
-const double ACANE_MaxSpreadUsd = 1.10;
-const int    ACANE_DeviationPoints = 60;
-const bool   ACANE_EnableBuys = true;
-const bool   ACANE_EnableSells = true;
-const bool   ACANE_BlockOppositeDirection = true;
-const bool   ACANE_EnableDailyGuard = true;
-const double ACANE_DailyMaxLossPct = 15.00;
-const bool   ACANE_CloseOnDailyStop = true;
-const bool   ACANE_EnableWeeklyGuard = false;
-const double ACANE_WeeklyMaxLossPct = 30.00;
-const double ACANE_WeeklyMaxGivebackPct = 35.00;
-const bool   ACANE_CloseOnWeeklyStop = true;
-const bool   ACANE_EnableMonthlyGuard = false;
-const double ACANE_MonthlyMaxLossPct = 30.00;
-const double ACANE_MonthlyMaxGivebackPct = 35.00;
-const bool   ACANE_CloseOnMonthlyStop = true;
-const bool   ACANE_EnableEquityCircuit = true;
-const double ACANE_MaxAccountDrawdownPct = 15.00;
-const bool   ACANE_CloseOnCircuitStop = true;
-const bool   ACANE_EnableStructuralPriceGate = true;
-const double ACANE_MinD1CloseForTrading = 2500.00;
-const bool   ACANE_CloseOnStructuralBlock = false;
-const double ACANE_MinSLUsd = 0.90;
-const double ACANE_MaxSLUsd = 3.60;
-const double ACANE_ATRStopMult = 0.62;
-const double ACANE_TakeProfitR = 0.45;
-const double ACANE_ScalpProfitUsd = 0.30;
-const double ACANE_FastLossR = 0.24;
-const double ACANE_BreakevenR = 0.18;
-const double ACANE_BreakevenLockUsd = 0.05;
-const double ACANE_TrailStartR = 0.38;
-const double ACANE_TrailATR = 0.28;
-const int    ACANE_EMAFast = 9;
-const int    ACANE_EMASlow = 34;
-const int    ACANE_M5Fast = 12;
-const int    ACANE_M5Slow = 36;
-const int    ACANE_ATRPeriod = 14;
-const int    ACANE_RSI_Period = 7;
-const int    ACANE_BBandsPeriod = 20;
-const double ACANE_BBandsDeviation = 2.00;
-const int    ACANE_BreakLookback = 4;
-const int    ACANE_CompressionLookback = 5;
-const double ACANE_MinBodyRatio = 0.34;
-const double ACANE_StrongBodyRatio = 0.52;
-const double ACANE_MinBreakATR = 0.015;
-const double ACANE_StrongBreakATR = 0.045;
-const double ACANE_MaxChaseATR = 1.65;
-const double ACANE_MinATRUsd = 0.18;
-const double ACANE_MaxATRUsd = 8.00;
-const int    ACANE_MinScore = 52;
-const int    ACANE_StrongScore = 73;
-const bool   ACANE_UseSessionFilter = false;
-const int    ACANE_SessionStartHour = 0;
-const int    ACANE_SessionEndHour = 23;
-const string ACANE_BlockEntryHours = "";
-const bool   ACANE_EnableMomentumEngine = false;
-const bool   ACANE_EnableReclaimEngine = false;
-const bool   ACANE_EnableCompressionEngine = false;
-const bool   ACANE_EnableMeanReversionEngine = true;
-const double ACANE_MeanReversionRSILow = 42.0;
-const double ACANE_MeanReversionRSIHigh = 58.0;
-const double ACANE_MeanReversionTouchATR = 0.04;
-const double ACANE_MeanReversionRiskMultiplier = 0.12;
-const double ACANE_MeanReversionRR = 0.72;
-const bool   ACANE_LogEntries = true;
-const bool   ACANE_LogStatus = false;
-const int    ACANE_StatusEverySeconds = 300;
+input ulong  AC_Magic = 2026051001;
+input double AC_RiskPercent = 2.00;
+input double AC_CoreRiskMultiplier = 1.00;
+input double AC_WeakRiskMultiplier = 0.45;
+input double AC_MaxLotCap = 0.06;
+input int    AC_MaxPositions = 3;
+input int    AC_MaxSameSidePositions = 2;
+input int    AC_MinBarsBetweenEntries = 1;
+input bool   AC_BlockOppositeDirection = true;
+input double AC_MaxSpreadUsd = 0.85;
+input int    AC_DeviationPoints = 80;
+input bool   AC_EnableBuys = true;
+input bool   AC_EnableSells = true;
 
-static const ulong ACANE_MAGIC = 2026050701;
-static const ENUM_TIMEFRAMES ACANE_TF = PERIOD_M1;
+input bool   AC_EnableDailyGuard = true;
+input double AC_DailyMaxLossPct = 5.00;
+input double AC_DailyMaxLossUsd = 5.00;
+input bool   AC_CloseOnDailyStop = true;
+input bool   AC_EnableEquityCircuit = true;
+input double AC_MaxEquityDrawdownPct = 19.00;
+input bool   AC_CloseOnCircuitStop = true;
+input double AC_MaxOpenRiskPct = 12.00;
+input double AC_BasketLossStopPct = 10.00;
+input int    AC_LossCooldownBars = 8;
+
+input bool   AC_UseSessionFilter = true;
+input int    AC_SessionStartHour = 4;
+input int    AC_SessionEndHour = 15;
+input string AC_BlockEntryHours = "";
+input int    AC_HourPreset = 8;
+input bool   AC_EnableStructuralPriceGate = true;
+input double AC_MinD1CloseForTrading = 2500.00;
+input bool   AC_UseH1TrendGuard = true;
+input int    AC_H1Fast = 18;
+input int    AC_H1Slow = 54;
+
+input int    AC_EMAFast = 9;
+input int    AC_EMASlow = 34;
+input int    AC_M5Fast = 12;
+input int    AC_M5Slow = 36;
+input int    AC_M15Fast = 12;
+input int    AC_M15Slow = 36;
+input int    AC_ATRPeriod = 14;
+input int    AC_RSIPeriod = 9;
+input int    AC_ADXPeriod = 14;
+input int    AC_BBandsPeriod = 20;
+input double AC_BBandsDeviation = 2.00;
+
+input bool   AC_EnableTrendPullback = false;
+input bool   AC_EnableImpulseContinuation = true;
+input bool   AC_EnableCompressionBreakout = true;
+input bool   AC_EnableMeanReversion = true;
+input int    AC_ImpulseLookback = 6;
+input double AC_ImpulseMinBreakATR = 0.06;
+input int    AC_BreakLookback = 12;
+input int    AC_CompressionLookback = 8;
+input double AC_MinATRUsd = 0.22;
+input double AC_MaxATRUsd = 6.00;
+input double AC_MinBodyRatio = 0.32;
+input double AC_StrongBodyRatio = 0.52;
+input double AC_MinBreakATR = 0.08;
+input double AC_StrongBreakATR = 0.20;
+input double AC_CompressionMaxATR = 1.55;
+input double AC_PullbackTouchATR = 0.30;
+input double AC_MaxEmaDistanceATR = 1.45;
+input double AC_TrendADXMin = 16.00;
+input double AC_SidewaysADXMax = 18.00;
+input double AC_StrongADX = 25.00;
+input bool   AC_RequirePullbackMomentum = true;
+input int    AC_MinScore = 70;
+input int    AC_StrongScore = 100;
+
+input double AC_MinSLUsd = 0.65;
+input double AC_MaxSLUsd = 2.00;
+input double AC_ATRStopMult = 0.70;
+input double AC_StopBufferATR = 0.12;
+input double AC_TrendRR = 1.15;
+input double AC_ImpulseRR = 0.95;
+input double AC_BreakoutRR = 1.35;
+input double AC_MeanReversionRR = 0.82;
+input double AC_MeanReversionRSILow = 31.00;
+input double AC_MeanReversionRSIHigh = 69.00;
+input double AC_MeanReversionTouchATR = 0.14;
+input double AC_BreakevenR = 0.50;
+input double AC_BreakevenLockUsd = 0.05;
+input double AC_TrailStartR = 0.80;
+input double AC_TrailATR = 0.45;
+input int    AC_MaxHoldBars = 14;
+input int    AC_WeakMaxHoldBars = 8;
+input bool   AC_CloseOnRegimeFlip = false;
+
+input int    AC_TesterMinTrades = 250;
+input double AC_TesterMaxDDPct = 20.00;
+input bool   AC_LogEntries = true;
+input bool   AC_LogStatus = false;
+input int    AC_StatusEveryBars = 30;
+
+static const ENUM_TIMEFRAMES AC_TF = PERIOD_M1;
 
 enum AcaneRegime
   {
-   ACANE_SIDEWAYS = 0,
-   ACANE_BULL = 1,
-   ACANE_BEAR = -1
+   AC_SIDEWAYS = 0,
+   AC_BULL = 1,
+   AC_BEAR = -1
   };
 
 struct AcaneSignal
   {
-   bool   valid;
-   bool   sell;
-   int    score;
+   bool valid;
+   bool sell;
+   int score;
    string engine;
    string tags;
    double stopDistance;
@@ -105,47 +124,36 @@ struct AcaneSignal
    string comment;
   };
 
-CTrade   g_trade;
-int      g_emaFast = INVALID_HANDLE;
-int      g_emaSlow = INVALID_HANDLE;
-int      g_m5Fast = INVALID_HANDLE;
-int      g_m5Slow = INVALID_HANDLE;
-int      g_atr = INVALID_HANDLE;
-int      g_rsi = INVALID_HANDLE;
-int      g_bands = INVALID_HANDLE;
-datetime g_lastEntryTime = 0;
-datetime g_lastStatusTime = 0;
-int      g_dayKey = -1;
-double   g_dayStartEquity = 0.0;
-double   g_dayHighEquity = 0.0;
-bool     g_dailyStopped = false;
-int      g_weekKey = -1;
-double   g_weekStartEquity = 0.0;
-double   g_weekHighEquity = 0.0;
-bool     g_weeklyStopped = false;
-int      g_monthKey = -1;
-double   g_monthStartEquity = 0.0;
-double   g_monthHighEquity = 0.0;
-bool     g_monthlyStopped = false;
-double   g_accountHighEquity = 0.0;
-bool     g_circuitStopped = false;
-
+CTrade g_trade;
+int g_emaFast = INVALID_HANDLE;
+int g_emaSlow = INVALID_HANDLE;
+int g_m5Fast = INVALID_HANDLE;
+int g_m5Slow = INVALID_HANDLE;
+int g_m15Fast = INVALID_HANDLE;
+int g_m15Slow = INVALID_HANDLE;
+int g_h1Fast = INVALID_HANDLE;
+int g_h1Slow = INVALID_HANDLE;
+int g_atr = INVALID_HANDLE;
+int g_rsi = INVALID_HANDLE;
+int g_adx = INVALID_HANDLE;
+int g_bands = INVALID_HANDLE;
+datetime g_lastBarTime = 0;
+datetime g_lastEntryBarTime = 0;
+datetime g_cooldownUntilBar = 0;
+int g_dayKey = -1;
+double g_dayStartEquity = 0.0;
+double g_dayHighEquity = 0.0;
+bool g_dailyStopped = false;
+double g_accountHighEquity = 0.0;
+bool g_circuitStopped = false;
+int g_lastStatusBars = 0;
 
 double AcaneNormalizePrice(const double price)
   {
    return(NormalizeDouble(price, (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS)));
   }
 
-
-double AcaneMinStopDistance()
-  {
-   long stopLevel = SymbolInfoInteger(_Symbol, SYMBOL_TRADE_STOPS_LEVEL);
-   long freezeLevel = SymbolInfoInteger(_Symbol, SYMBOL_TRADE_FREEZE_LEVEL);
-   return((double)MathMax(stopLevel, freezeLevel) * _Point);
-  }
-
-
-bool AcaneCopyBufferValue(const int handle, const int buffer, const int shift, double &value)
+bool AcaneCopyValue(const int handle, const int buffer, const int shift, double &value)
   {
    double data[];
    ArraySetAsSeries(data, true);
@@ -155,13 +163,11 @@ bool AcaneCopyBufferValue(const int handle, const int buffer, const int shift, d
    return(true);
   }
 
-
 bool AcaneLoadRates(MqlRates &rates[], const int count)
   {
    ArraySetAsSeries(rates, true);
-   return(CopyRates(_Symbol, ACANE_TF, 0, count, rates) == count);
+   return(CopyRates(_Symbol, AC_TF, 0, count, rates) == count);
   }
-
 
 int AcaneDayKey(const datetime ts)
   {
@@ -170,60 +176,13 @@ int AcaneDayKey(const datetime ts)
    return(dt.year * 1000 + dt.day_of_year);
   }
 
-
-int AcaneWeekKey(const datetime ts)
+double AcaneSpread()
   {
-   MqlDateTime dt;
-   TimeToStruct(ts, dt);
-   int bucket = (dt.day_of_year - 1) / 7;
-   return(dt.year * 100 + bucket);
+   MqlTick tick;
+   if(!SymbolInfoTick(_Symbol, tick) || tick.ask <= 0.0 || tick.bid <= 0.0)
+      return(999.0);
+   return(tick.ask - tick.bid);
   }
-
-
-int AcaneMonthKey(const datetime ts)
-  {
-   MqlDateTime dt;
-   TimeToStruct(ts, dt);
-   return(dt.year * 100 + dt.mon);
-  }
-
-
-bool AcaneStructuralPriceAllowed()
-  {
-   if(!ACANE_EnableStructuralPriceGate)
-      return(true);
-   double d1Close = iClose(_Symbol, PERIOD_D1, 1);
-   if(d1Close <= 0.0)
-      return(false);
-   return(d1Close >= ACANE_MinD1CloseForTrading);
-  }
-
-
-bool AcaneHourAllowed()
-  {
-   MqlDateTime dt;
-   TimeToStruct(TimeCurrent(), dt);
-   string hours = ACANE_BlockEntryHours;
-   StringReplace(hours, " ", "");
-   StringReplace(hours, ";", ",");
-   if(StringLen(hours) > 0)
-     {
-      string wrapped = "," + hours + ",";
-      string plainHour = "," + IntegerToString(dt.hour) + ",";
-      string paddedHour = "," + StringFormat("%02d", dt.hour) + ",";
-      if(StringFind(wrapped, plainHour) >= 0 || StringFind(wrapped, paddedHour) >= 0)
-         return(false);
-     }
-
-   if(!ACANE_UseSessionFilter)
-      return(true);
-   if(ACANE_SessionStartHour == ACANE_SessionEndHour)
-      return(true);
-   if(ACANE_SessionStartHour < ACANE_SessionEndHour)
-      return(dt.hour >= ACANE_SessionStartHour && dt.hour < ACANE_SessionEndHour);
-   return(dt.hour >= ACANE_SessionStartHour || dt.hour < ACANE_SessionEndHour);
-  }
-
 
 bool AcaneMarketOpenLikely()
   {
@@ -241,232 +200,72 @@ bool AcaneMarketOpenLikely()
           mode == SYMBOL_TRADE_MODE_SHORTONLY);
   }
 
-
-double AcaneSpread()
+double AcaneMinStopDistance()
   {
-   double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
-   double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
-   if(ask <= 0.0 || bid <= 0.0)
-      return(999.0);
-   return(ask - bid);
+   long stopLevel = SymbolInfoInteger(_Symbol, SYMBOL_TRADE_STOPS_LEVEL);
+   long freezeLevel = SymbolInfoInteger(_Symbol, SYMBOL_TRADE_FREEZE_LEVEL);
+   return((double)MathMax(stopLevel, freezeLevel) * _Point);
   }
 
-
-bool AcaneSpreadAllowed()
+bool AcaneHourAllowed()
   {
-   return(AcaneSpread() <= ACANE_MaxSpreadUsd);
-  }
-
-
-int AcaneCountPositions(const int side = 0)
-  {
-   int count = 0;
-   for(int i = PositionsTotal() - 1; i >= 0; i--)
+   MqlDateTime dt;
+   TimeToStruct(TimeCurrent(), dt);
+   string hours = AC_BlockEntryHours;
+   StringReplace(hours, " ", "");
+   StringReplace(hours, ";", ",");
+   if(StringLen(hours) > 0)
      {
-      ulong ticket = PositionGetTicket(i);
-      if(ticket == 0 || !PositionSelectByTicket(ticket))
-         continue;
-      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
-         continue;
-      if((ulong)PositionGetInteger(POSITION_MAGIC) != ACANE_MAGIC)
-         continue;
-      ENUM_POSITION_TYPE type = (ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE);
-      if(side == 1 && type != POSITION_TYPE_BUY)
-         continue;
-      if(side == -1 && type != POSITION_TYPE_SELL)
-         continue;
-      count++;
-     }
-   return(count);
-  }
-
-
-bool AcaneHasOpposite(const bool sell)
-  {
-   if(!ACANE_BlockOppositeDirection)
-      return(false);
-   return(AcaneCountPositions(sell ? 1 : -1) > 0);
-  }
-
-
-void AcaneCloseOwnPositions(const string reason)
-  {
-   if(!AcaneMarketOpenLikely())
-      return;
-
-   g_trade.SetExpertMagicNumber(ACANE_MAGIC);
-   g_trade.SetDeviationInPoints(ACANE_DeviationPoints);
-   g_trade.SetTypeFillingBySymbol(_Symbol);
-
-   for(int i = PositionsTotal() - 1; i >= 0; i--)
-     {
-      ulong ticket = PositionGetTicket(i);
-      if(ticket == 0 || !PositionSelectByTicket(ticket))
-         continue;
-      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
-         continue;
-      if((ulong)PositionGetInteger(POSITION_MAGIC) != ACANE_MAGIC)
-         continue;
-      if(g_trade.PositionClose(ticket))
-         PrintFormat("ACANE EXIT RISK | ticket=%I64u reason=%s", ticket, reason);
-     }
-  }
-
-
-void AcaneResetDailyGuardIfNeeded()
-  {
-   int key = AcaneDayKey(TimeCurrent());
-   if(key == g_dayKey)
-      return;
-   g_dayKey = key;
-   g_dayStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
-   g_dayHighEquity = g_dayStartEquity;
-   g_dailyStopped = false;
-   PrintFormat("ACANE GUARD | new day | equity=%.2f", g_dayStartEquity);
-  }
-
-
-void AcaneResetWeeklyGuardIfNeeded()
-  {
-   int key = AcaneWeekKey(TimeCurrent());
-   if(key == g_weekKey)
-      return;
-   g_weekKey = key;
-   g_weekStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
-   g_weekHighEquity = g_weekStartEquity;
-   g_weeklyStopped = false;
-   PrintFormat("ACANE GUARD | new week | equity=%.2f", g_weekStartEquity);
-  }
-
-
-void AcaneResetMonthlyGuardIfNeeded()
-  {
-   int key = AcaneMonthKey(TimeCurrent());
-   if(key == g_monthKey)
-      return;
-   g_monthKey = key;
-   g_monthStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
-   g_monthHighEquity = g_monthStartEquity;
-   g_monthlyStopped = false;
-   PrintFormat("ACANE GUARD | new month | equity=%.2f", g_monthStartEquity);
-  }
-
-
-bool AcaneRiskAllowsTrading()
-  {
-   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
-   if(g_accountHighEquity <= 0.0)
-      g_accountHighEquity = equity;
-   g_accountHighEquity = MathMax(g_accountHighEquity, equity);
-
-   if(!AcaneStructuralPriceAllowed())
-     {
-      string reason = StringFormat("structural price gate d1 close below %.2f", ACANE_MinD1CloseForTrading);
-      if(ACANE_CloseOnStructuralBlock)
-         AcaneCloseOwnPositions(reason);
-      return(false);
-     }
-
-   if(ACANE_EnableDailyGuard)
-     {
-      AcaneResetDailyGuardIfNeeded();
-      g_dayHighEquity = MathMax(g_dayHighEquity, equity);
-      if(!g_dailyStopped && g_dayStartEquity > 0.0)
-        {
-         double dayLossPct = (g_dayStartEquity - equity) / g_dayStartEquity * 100.0;
-         if(dayLossPct >= ACANE_DailyMaxLossPct)
-           {
-            g_dailyStopped = true;
-            string reason = StringFormat("daily loss %.2f%% >= %.2f%%", dayLossPct, ACANE_DailyMaxLossPct);
-            PrintFormat("ACANE GUARD | %s", reason);
-            if(ACANE_CloseOnDailyStop)
-               AcaneCloseOwnPositions(reason);
-           }
-        }
-      if(g_dailyStopped)
-        {
-         if(ACANE_CloseOnDailyStop)
-            AcaneCloseOwnPositions("daily stop active retry");
-         return(false);
-        }
-     }
-
-   if(ACANE_EnableWeeklyGuard)
-     {
-      AcaneResetWeeklyGuardIfNeeded();
-      g_weekHighEquity = MathMax(g_weekHighEquity, equity);
-      if(!g_weeklyStopped && g_weekStartEquity > 0.0)
-        {
-         double weekLossPct = (g_weekStartEquity - equity) / g_weekStartEquity * 100.0;
-         double weekGivebackPct = (g_weekHighEquity - equity) / g_weekHighEquity * 100.0;
-         if((ACANE_WeeklyMaxLossPct > 0.0 && weekLossPct >= ACANE_WeeklyMaxLossPct) ||
-            (ACANE_WeeklyMaxGivebackPct > 0.0 && weekGivebackPct >= ACANE_WeeklyMaxGivebackPct))
-           {
-            g_weeklyStopped = true;
-            string reason = StringFormat("weekly guard loss %.2f%% giveback %.2f%%", weekLossPct, weekGivebackPct);
-            PrintFormat("ACANE GUARD | %s", reason);
-            if(ACANE_CloseOnWeeklyStop)
-               AcaneCloseOwnPositions(reason);
-           }
-        }
-      if(g_weeklyStopped)
+      string wrapped = "," + hours + ",";
+      string plainHour = "," + IntegerToString(dt.hour) + ",";
+      string paddedHour = "," + StringFormat("%02d", dt.hour) + ",";
+      if(StringFind(wrapped, plainHour) >= 0 || StringFind(wrapped, paddedHour) >= 0)
          return(false);
      }
-
-   if(ACANE_EnableMonthlyGuard)
-     {
-      AcaneResetMonthlyGuardIfNeeded();
-      g_monthHighEquity = MathMax(g_monthHighEquity, equity);
-      if(!g_monthlyStopped && g_monthStartEquity > 0.0)
-        {
-         double monthLossPct = (g_monthStartEquity - equity) / g_monthStartEquity * 100.0;
-         double monthGivebackPct = (g_monthHighEquity - equity) / g_monthHighEquity * 100.0;
-         if((ACANE_MonthlyMaxLossPct > 0.0 && monthLossPct >= ACANE_MonthlyMaxLossPct) ||
-            (ACANE_MonthlyMaxGivebackPct > 0.0 && monthGivebackPct >= ACANE_MonthlyMaxGivebackPct))
-           {
-            g_monthlyStopped = true;
-            string reason = StringFormat("monthly guard loss %.2f%% giveback %.2f%%", monthLossPct, monthGivebackPct);
-            PrintFormat("ACANE GUARD | %s", reason);
-            if(ACANE_CloseOnMonthlyStop)
-               AcaneCloseOwnPositions(reason);
-           }
-        }
-      if(g_monthlyStopped)
-         return(false);
-     }
-
-   if(ACANE_EnableEquityCircuit && !g_circuitStopped && g_accountHighEquity > 0.0)
-     {
-      double ddPct = (g_accountHighEquity - equity) / g_accountHighEquity * 100.0;
-      if(ddPct >= ACANE_MaxAccountDrawdownPct)
-        {
-         g_circuitStopped = true;
-         string reason = StringFormat("account dd %.2f%% >= %.2f%%", ddPct, ACANE_MaxAccountDrawdownPct);
-         PrintFormat("ACANE GUARD | %s", reason);
-         if(ACANE_CloseOnCircuitStop)
-            AcaneCloseOwnPositions(reason);
-        }
-     }
-   if(g_circuitStopped)
-     {
-      if(ACANE_CloseOnCircuitStop)
-         AcaneCloseOwnPositions("account circuit active retry");
+   bool sessionAllowed = true;
+   if(AC_SessionStartHour == AC_SessionEndHour)
+      sessionAllowed = true;
+   else if(AC_UseSessionFilter && AC_SessionStartHour < AC_SessionEndHour)
+      sessionAllowed = (dt.hour >= AC_SessionStartHour && dt.hour < AC_SessionEndHour);
+   else if(AC_UseSessionFilter)
+      sessionAllowed = (dt.hour >= AC_SessionStartHour || dt.hour < AC_SessionEndHour);
+   if(!sessionAllowed)
       return(false);
+
+   switch(AC_HourPreset)
+     {
+      case 1:
+         return(dt.hour >= 4 && dt.hour <= 10 && dt.hour != 6);
+      case 2:
+         return(dt.hour == 5 || dt.hour == 7 || dt.hour == 10);
+      case 3:
+         return(dt.hour == 5 || dt.hour == 7 || dt.hour == 9 || dt.hour == 10);
+      case 4:
+         return(dt.hour == 4 || dt.hour == 5 || dt.hour == 7 || dt.hour == 9 || dt.hour == 10 || dt.hour == 11);
+      case 5:
+         return(dt.hour >= 5 && dt.hour <= 10 && dt.hour != 6);
+      case 6:
+         return(dt.hour >= 7 && dt.hour <= 10);
+      case 7:
+         return(dt.hour >= 9 && dt.hour <= 12);
+      case 8:
+         return(dt.hour == 5);
+      case 9:
+         return(dt.hour == 5 || dt.hour == 9);
+      default:
+         return(true);
      }
-   return(true);
   }
 
-
-double AcaneValuePerPriceUnit()
+bool AcaneStructuralPriceAllowed()
   {
-   double tickSize = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_TICK_SIZE);
-   double tickValue = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_TICK_VALUE);
-   if(tickSize > 0.0 && tickValue > 0.0)
-      return(tickValue / tickSize);
-   double contract = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE);
-   return(contract > 0.0 ? contract : 100.0);
+   if(!AC_EnableStructuralPriceGate)
+      return(true);
+   double close = iClose(_Symbol, PERIOD_D1, 1);
+   if(close <= 0.0)
+      return(false);
+   return(close >= AC_MinD1CloseForTrading);
   }
-
 
 int AcaneVolumePrecision()
   {
@@ -481,7 +280,6 @@ int AcaneVolumePrecision()
    return(precision);
   }
 
-
 double AcaneFloorVolume(const double volume)
   {
    double step = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_STEP);
@@ -490,6 +288,8 @@ double AcaneFloorVolume(const double volume)
    if(step <= 0.0 || volume <= 0.0)
       return(0.0);
    double clipped = MathMin(maxLot, volume);
+   if(AC_MaxLotCap > 0.0)
+      clipped = MathMin(clipped, AC_MaxLotCap);
    double steps = MathFloor(clipped / step + 1e-9);
    double normalized = NormalizeDouble(steps * step, AcaneVolumePrecision());
    if(normalized < minLot)
@@ -497,17 +297,184 @@ double AcaneFloorVolume(const double volume)
    return(normalized);
   }
 
+double AcaneValuePerPriceUnit()
+  {
+   double tickSize = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_TICK_SIZE);
+   double tickValue = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_TICK_VALUE);
+   if(tickSize > 0.0 && tickValue > 0.0)
+      return(tickValue / tickSize);
+   double contract = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE);
+   return(contract > 0.0 ? contract : 100.0);
+  }
 
 double AcaneLotForRisk(const double stopDistance, const double riskMultiplier)
   {
-   if(stopDistance <= 0.0)
-      return(0.0);
    double equity = AccountInfoDouble(ACCOUNT_EQUITY);
-   double riskCash = equity * ACANE_RiskPercent / 100.0 * riskMultiplier;
-   double raw = riskCash / (stopDistance * AcaneValuePerPriceUnit());
-   return(AcaneFloorVolume(raw));
+   if(stopDistance <= 0.0 || equity <= 0.0 || riskMultiplier <= 0.0)
+      return(0.0);
+   double riskCash = equity * AC_RiskPercent / 100.0 * riskMultiplier;
+   double valuePerPrice = AcaneValuePerPriceUnit();
+   double raw = riskCash / (stopDistance * valuePerPrice);
+   double lot = AcaneFloorVolume(raw);
+   if(lot > 0.0)
+      return(lot);
+   double minLot = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN);
+   double minLotRiskPct = stopDistance * valuePerPrice * minLot / equity * 100.0;
+   if(minLotRiskPct <= AC_MaxOpenRiskPct * 0.75)
+      return(AcaneFloorVolume(minLot));
+   return(0.0);
   }
 
+int AcaneCountPositions(const int side = 0)
+  {
+   int count = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0 || !PositionSelectByTicket(ticket))
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
+         continue;
+      if((ulong)PositionGetInteger(POSITION_MAGIC) != AC_Magic)
+         continue;
+      ENUM_POSITION_TYPE type = (ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE);
+      if(side == 1 && type != POSITION_TYPE_BUY)
+         continue;
+      if(side == -1 && type != POSITION_TYPE_SELL)
+         continue;
+      count++;
+     }
+   return(count);
+  }
+
+double AcaneOwnFloatingProfit()
+  {
+   double profit = 0.0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0 || !PositionSelectByTicket(ticket))
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
+         continue;
+      if((ulong)PositionGetInteger(POSITION_MAGIC) != AC_Magic)
+         continue;
+      profit += PositionGetDouble(POSITION_PROFIT) + PositionGetDouble(POSITION_SWAP);
+     }
+   return(profit);
+  }
+
+double AcaneOpenRiskCash()
+  {
+   double risk = 0.0;
+   double valuePerPrice = AcaneValuePerPriceUnit();
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0 || !PositionSelectByTicket(ticket))
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
+         continue;
+      if((ulong)PositionGetInteger(POSITION_MAGIC) != AC_Magic)
+         continue;
+      double open = PositionGetDouble(POSITION_PRICE_OPEN);
+      double sl = PositionGetDouble(POSITION_SL);
+      double volume = PositionGetDouble(POSITION_VOLUME);
+      double distance = MathAbs(open - sl);
+      if(distance <= 0.0)
+         distance = AC_MinSLUsd;
+      risk += distance * valuePerPrice * volume;
+     }
+   return(risk);
+  }
+
+void AcaneCloseOwnPositions(const string reason)
+  {
+   if(!AcaneMarketOpenLikely())
+      return;
+   g_trade.SetExpertMagicNumber(AC_Magic);
+   g_trade.SetDeviationInPoints(AC_DeviationPoints);
+   g_trade.SetTypeFillingBySymbol(_Symbol);
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0 || !PositionSelectByTicket(ticket))
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != _Symbol)
+         continue;
+      if((ulong)PositionGetInteger(POSITION_MAGIC) != AC_Magic)
+         continue;
+      if(g_trade.PositionClose(ticket) && AC_LogEntries)
+         PrintFormat("ACANE EXIT GUARD | ticket=%I64u reason=%s", ticket, reason);
+     }
+  }
+
+void AcaneResetDailyGuardIfNeeded()
+  {
+   int key = AcaneDayKey(TimeCurrent());
+   if(key == g_dayKey)
+      return;
+   g_dayKey = key;
+   g_dayStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   g_dayHighEquity = g_dayStartEquity;
+   g_accountHighEquity = g_dayStartEquity;
+   g_dailyStopped = false;
+   g_circuitStopped = false;
+  }
+
+bool AcaneRiskAllowsTrading()
+  {
+   AcaneResetDailyGuardIfNeeded();
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   if(equity <= 0.0)
+      return(false);
+   if(g_accountHighEquity <= 0.0)
+      g_accountHighEquity = equity;
+   g_accountHighEquity = MathMax(g_accountHighEquity, equity);
+   g_dayHighEquity = MathMax(g_dayHighEquity, equity);
+
+   if(!AcaneStructuralPriceAllowed())
+      return(false);
+
+   if(AC_EnableDailyGuard && !g_dailyStopped && g_dayStartEquity > 0.0)
+     {
+      double lossCash = g_dayStartEquity - equity;
+      double lossPct = lossCash / g_dayStartEquity * 100.0;
+      if(lossPct >= AC_DailyMaxLossPct || (AC_DailyMaxLossUsd > 0.0 && lossCash >= AC_DailyMaxLossUsd))
+        {
+         g_dailyStopped = true;
+         if(AC_CloseOnDailyStop)
+            AcaneCloseOwnPositions("daily stop");
+        }
+     }
+   if(g_dailyStopped)
+      return(false);
+
+   if(AC_EnableEquityCircuit && !g_circuitStopped && g_accountHighEquity > 0.0)
+     {
+      double ddPct = (g_accountHighEquity - equity) / g_accountHighEquity * 100.0;
+      if(ddPct >= AC_MaxEquityDrawdownPct)
+        {
+         g_circuitStopped = true;
+         if(AC_CloseOnCircuitStop)
+            AcaneCloseOwnPositions("equity circuit");
+        }
+     }
+   if(g_circuitStopped)
+      return(false);
+
+   if(AcaneOwnFloatingProfit() < 0.0 && -AcaneOwnFloatingProfit() / equity * 100.0 >= AC_BasketLossStopPct)
+     {
+      g_cooldownUntilBar = iTime(_Symbol, AC_TF, 0) + PeriodSeconds(AC_TF) * AC_LossCooldownBars;
+      AcaneCloseOwnPositions("basket stop");
+      return(false);
+     }
+
+   if(AcaneOpenRiskCash() / equity * 100.0 >= AC_MaxOpenRiskPct)
+      return(false);
+
+   return(true);
+  }
 
 double AcaneBodyRatio(const MqlRates &bar)
   {
@@ -517,59 +484,69 @@ double AcaneBodyRatio(const MqlRates &bar)
    return(MathAbs(bar.close - bar.open) / range);
   }
 
-
 double AcaneHighestHigh(const MqlRates &rates[], const int fromShift, const int count)
   {
-   double high = rates[fromShift].high;
+   double value = rates[fromShift].high;
    for(int i = fromShift + 1; i < fromShift + count; i++)
-      high = MathMax(high, rates[i].high);
-   return(high);
+      value = MathMax(value, rates[i].high);
+   return(value);
   }
-
 
 double AcaneLowestLow(const MqlRates &rates[], const int fromShift, const int count)
   {
-   double low = rates[fromShift].low;
+   double value = rates[fromShift].low;
    for(int i = fromShift + 1; i < fromShift + count; i++)
-      low = MathMin(low, rates[i].low);
-   return(low);
+      value = MathMin(value, rates[i].low);
+   return(value);
   }
-
 
 double AcaneRange(const MqlRates &rates[], const int fromShift, const int count)
   {
    return(AcaneHighestHigh(rates, fromShift, count) - AcaneLowestLow(rates, fromShift, count));
   }
 
-
 AcaneRegime AcaneDetectRegime()
   {
-   double f1, s1, f5, s5;
-   if(!AcaneCopyBufferValue(g_emaFast, 0, 1, f1) ||
-      !AcaneCopyBufferValue(g_emaSlow, 0, 1, s1) ||
-      !AcaneCopyBufferValue(g_m5Fast, 0, 1, f5) ||
-      !AcaneCopyBufferValue(g_m5Slow, 0, 1, s5))
-      return(ACANE_SIDEWAYS);
+   double f1, s1, f5, s5, f15, s15, adx;
+   if(!AcaneCopyValue(g_emaFast, 0, 1, f1) ||
+      !AcaneCopyValue(g_emaSlow, 0, 1, s1) ||
+      !AcaneCopyValue(g_m5Fast, 0, 1, f5) ||
+      !AcaneCopyValue(g_m5Slow, 0, 1, s5) ||
+      !AcaneCopyValue(g_m15Fast, 0, 1, f15) ||
+      !AcaneCopyValue(g_m15Slow, 0, 1, s15) ||
+      !AcaneCopyValue(g_adx, 0, 1, adx))
+      return(AC_SIDEWAYS);
 
-   if(f1 > s1 && f5 >= s5)
-      return(ACANE_BULL);
-   if(f1 < s1 && f5 <= s5)
-      return(ACANE_BEAR);
-   return(ACANE_SIDEWAYS);
+   if(adx >= AC_TrendADXMin && f1 > s1 && f5 >= s5 && f15 >= s15)
+      return(AC_BULL);
+   if(adx >= AC_TrendADXMin && f1 < s1 && f5 <= s5 && f15 <= s15)
+      return(AC_BEAR);
+   return(AC_SIDEWAYS);
   }
 
-
-string AcaneComment(const string engine, const int score, const bool sell, const string tags)
+bool AcaneH1Allows(const bool sell)
   {
-   string grade = score >= ACANE_StrongScore ? "A" : "B";
-   string comment = "AC1|" + engine + "|" + engine + "|S" + IntegerToString(score) + "|" + grade;
+   if(!AC_UseH1TrendGuard)
+      return(true);
+   double fast, slow;
+   if(!AcaneCopyValue(g_h1Fast, 0, 1, fast) ||
+      !AcaneCopyValue(g_h1Slow, 0, 1, slow))
+      return(false);
+   if(sell)
+      return(fast <= slow);
+   return(fast >= slow);
+  }
+
+string AcaneComment(const string engine, const int score, const string tags)
+  {
+   string grade = score >= AC_StrongScore ? "A" : "B";
+   string comment = "AC1|" + engine + "|S" + IntegerToString(score) + "|" + grade;
    if(tags != "")
       comment += "|" + tags;
    if(StringLen(comment) > 31)
       comment = StringSubstr(comment, 0, 31);
    return(comment);
   }
-
 
 void AcaneMaybeSetSignal(AcaneSignal &best,
                          const bool sell,
@@ -580,7 +557,7 @@ void AcaneMaybeSetSignal(AcaneSignal &best,
                          const double rr,
                          const double riskMultiplier)
   {
-   if(score < ACANE_MinScore)
+   if(score < AC_MinScore)
       return;
    if(best.valid && score <= best.score)
       return;
@@ -592,9 +569,8 @@ void AcaneMaybeSetSignal(AcaneSignal &best,
    best.stopDistance = stopDistance;
    best.rr = rr;
    best.riskMultiplier = riskMultiplier;
-   best.comment = AcaneComment(engine, score, sell, tags);
+   best.comment = AcaneComment(engine, score, tags);
   }
-
 
 AcaneSignal AcaneBuildSignal()
   {
@@ -605,223 +581,239 @@ AcaneSignal AcaneBuildSignal()
    best.engine = "";
    best.tags = "";
    best.stopDistance = 0.0;
-   best.rr = ACANE_TakeProfitR;
-   best.riskMultiplier = ACANE_WeakRiskMultiplier;
+   best.rr = AC_TrendRR;
+   best.riskMultiplier = AC_WeakRiskMultiplier;
    best.comment = "";
 
    if(!AcaneHourAllowed())
       return(best);
 
+   int barsNeeded = MathMax(MathMax(AC_BreakLookback + 8, AC_CompressionLookback + 8), AC_ImpulseLookback + 8);
    MqlRates rates[];
-   if(!AcaneLoadRates(rates, MathMax(ACANE_BreakLookback + 5, ACANE_CompressionLookback + 5)))
+   if(!AcaneLoadRates(rates, barsNeeded))
       return(best);
 
-   double emaFast, emaSlow, atr, rsi;
-   double bandMiddle, bandUpper, bandLower;
-   if(!AcaneCopyBufferValue(g_emaFast, 0, 0, emaFast) ||
-      !AcaneCopyBufferValue(g_emaSlow, 0, 0, emaSlow) ||
-      !AcaneCopyBufferValue(g_atr, 0, 1, atr) ||
-      !AcaneCopyBufferValue(g_rsi, 0, 0, rsi) ||
-      !AcaneCopyBufferValue(g_bands, 0, 0, bandMiddle) ||
-      !AcaneCopyBufferValue(g_bands, 1, 0, bandUpper) ||
-      !AcaneCopyBufferValue(g_bands, 2, 0, bandLower))
+   double emaFast, emaSlow, emaFastPrev, atr, rsi, adx, bandMid, bandUpper, bandLower;
+   if(!AcaneCopyValue(g_emaFast, 0, 1, emaFast) ||
+      !AcaneCopyValue(g_emaSlow, 0, 1, emaSlow) ||
+      !AcaneCopyValue(g_emaFast, 0, 4, emaFastPrev) ||
+      !AcaneCopyValue(g_atr, 0, 1, atr) ||
+      !AcaneCopyValue(g_rsi, 0, 1, rsi) ||
+      !AcaneCopyValue(g_adx, 0, 1, adx) ||
+      !AcaneCopyValue(g_bands, 0, 1, bandMid) ||
+      !AcaneCopyValue(g_bands, 1, 1, bandUpper) ||
+      !AcaneCopyValue(g_bands, 2, 1, bandLower))
       return(best);
 
-   if(atr < ACANE_MinATRUsd || atr > ACANE_MaxATRUsd)
+   if(atr < AC_MinATRUsd || atr > AC_MaxATRUsd)
       return(best);
 
    AcaneRegime regime = AcaneDetectRegime();
-   MqlRates bar = rates[0];
-   double body = AcaneBodyRatio(bar);
-   double previousHigh = AcaneHighestHigh(rates, 1, ACANE_BreakLookback);
-   double previousLow = AcaneLowestLow(rates, 1, ACANE_BreakLookback);
-   double compressionRange = AcaneRange(rates, 1, ACANE_CompressionLookback);
-   double stopDistance = MathMax(ACANE_MinSLUsd, MathMin(ACANE_MaxSLUsd, atr * ACANE_ATRStopMult));
-   stopDistance = MathMax(stopDistance, AcaneMinStopDistance() + AcaneSpread() + _Point);
+   MqlRates bar = rates[1];
    double close = bar.close;
    double open = bar.open;
-   double breakUp = (close - previousHigh) / atr;
-   double breakDown = (previousLow - close) / atr;
-   double stretchUp = MathAbs(close - emaFast) / atr;
-   double compression = compressionRange / atr;
-   int base = 44;
-
-   if(regime == ACANE_BULL)
-      base += 12;
-   else if(regime == ACANE_BEAR)
-      base += 12;
-   else
-      base += 2;
-
-   if(AcaneSpread() <= ACANE_MaxSpreadUsd * 0.55)
+   double body = AcaneBodyRatio(bar);
+   double prevHigh = AcaneHighestHigh(rates, 2, AC_BreakLookback);
+   double prevLow = AcaneLowestLow(rates, 2, AC_BreakLookback);
+   double compression = AcaneRange(rates, 2, AC_CompressionLookback) / atr;
+   double breakUp = (close - prevHigh) / atr;
+   double breakDown = (prevLow - close) / atr;
+   double emaDistance = MathAbs(close - emaSlow) / atr;
+   double emaSlope = (emaFast - emaFastPrev) / atr;
+   double spread = AcaneSpread();
+   double stopDistance = MathMax(AC_MinSLUsd, MathMin(AC_MaxSLUsd, atr * AC_ATRStopMult + atr * AC_StopBufferATR));
+   stopDistance = MathMax(stopDistance, AcaneMinStopDistance() + spread + _Point);
+   bool narrowSpread = spread <= AC_MaxSpreadUsd * 0.72;
+   bool strongBody = body >= AC_StrongBodyRatio;
+   bool bodyOk = body >= AC_MinBodyRatio;
+   int base = 42 + (narrowSpread ? 5 : 0) + (bodyOk ? 7 : 0) + (strongBody ? 6 : 0);
+   if(adx >= AC_StrongADX)
       base += 5;
-   if(body >= ACANE_MinBodyRatio)
-      base += 7;
-   if(body >= ACANE_StrongBodyRatio)
-      base += 6;
 
-   if(ACANE_EnableMeanReversionEngine)
+   if(AC_EnableImpulseContinuation)
      {
-      bool buyReclaim = rates[0].low <= bandLower - atr * ACANE_MeanReversionTouchATR &&
-                        close > bandLower &&
+      double impulseHigh = AcaneHighestHigh(rates, 2, AC_ImpulseLookback);
+      double impulseLow = AcaneLowestLow(rates, 2, AC_ImpulseLookback);
+      double impulseUp = (close - impulseHigh) / atr;
+      double impulseDown = (impulseLow - close) / atr;
+      bool buyImpulse = AC_EnableBuys &&
+                        regime == AC_BULL &&
+                        AcaneH1Allows(false) &&
+                        close > impulseHigh &&
+                        impulseUp >= AC_ImpulseMinBreakATR &&
                         close > open &&
-                        rsi <= ACANE_MeanReversionRSILow;
-      int buyScore = 48 + (buyReclaim ? 20 : 0) + (regime != ACANE_BEAR ? 8 : 0) + (body >= ACANE_MinBodyRatio ? 6 : 0);
-      if(ACANE_EnableBuys && buyReclaim)
-         AcaneMaybeSetSignal(best,
-                             false,
-                             buyScore,
-                             "MRV",
-                             (regime == ACANE_BULL ? "RG|BB" : "WG|BB"),
-                             stopDistance,
-                             ACANE_MeanReversionRR,
-                             ACANE_MeanReversionRiskMultiplier);
+                        bodyOk &&
+                        rsi >= 50.0 && rsi <= 78.0 &&
+                        emaSlope > 0.0;
+      int buyScore = base + (buyImpulse ? 20 : 0) + (strongBody ? 6 : 0) + (impulseUp >= AC_StrongBreakATR ? 7 : 0);
+      if(buyImpulse)
+         AcaneMaybeSetSignal(best, false, buyScore, "IMP", "BULL", stopDistance, AC_ImpulseRR,
+                             buyScore >= AC_StrongScore ? AC_CoreRiskMultiplier : AC_WeakRiskMultiplier);
 
-      bool sellReject = rates[0].high >= bandUpper + atr * ACANE_MeanReversionTouchATR &&
-                        close < bandUpper &&
-                        close < open &&
-                        rsi >= ACANE_MeanReversionRSIHigh;
-      int sellScore = 48 + (sellReject ? 20 : 0) + (regime != ACANE_BULL ? 8 : 0) + (body >= ACANE_MinBodyRatio ? 6 : 0);
-      if(ACANE_EnableSells && sellReject)
-         AcaneMaybeSetSignal(best,
-                             true,
-                             sellScore,
-                             "MRV",
-                             (regime == ACANE_BEAR ? "RG|BB" : "WG|BB"),
-                             stopDistance,
-                             ACANE_MeanReversionRR,
-                             ACANE_MeanReversionRiskMultiplier);
+      bool sellImpulse = AC_EnableSells &&
+                         regime == AC_BEAR &&
+                         AcaneH1Allows(true) &&
+                         close < impulseLow &&
+                         impulseDown >= AC_ImpulseMinBreakATR &&
+                         close < open &&
+                         bodyOk &&
+                         rsi <= 50.0 && rsi >= 22.0 &&
+                         emaSlope < 0.0;
+      int sellScore = base + (sellImpulse ? 20 : 0) + (strongBody ? 6 : 0) + (impulseDown >= AC_StrongBreakATR ? 7 : 0);
+      if(sellImpulse)
+         AcaneMaybeSetSignal(best, true, sellScore, "IMP", "BEAR", stopDistance, AC_ImpulseRR,
+                             sellScore >= AC_StrongScore ? AC_CoreRiskMultiplier : AC_WeakRiskMultiplier);
      }
 
-   if(ACANE_EnableBuys)
+   if(AC_EnableTrendPullback)
      {
-      int score = base;
-      if(regime == ACANE_BULL)
-         score += 8;
-      if(close > emaFast && emaFast >= emaSlow)
-         score += 8;
-      if(close > open)
-         score += 5;
-      if(breakUp >= ACANE_MinBreakATR)
-         score += 7;
-      if(breakUp >= ACANE_StrongBreakATR)
-         score += 8;
-      if(rsi >= 52.0 && rsi <= 78.0)
-         score += 5;
-      if(stretchUp <= ACANE_MaxChaseATR)
-         score += 4;
-      double risk = (score >= ACANE_StrongScore ? ACANE_CoreRiskMultiplier : ACANE_WeakRiskMultiplier);
-      string regimeTag = (regime == ACANE_BULL ? "RG" : "WG");
-      if(ACANE_EnableMomentumEngine)
-         AcaneMaybeSetSignal(best, false, score, "MOM", regimeTag + "|BRK", stopDistance, ACANE_TakeProfitR, risk);
+      bool buyPull = AC_EnableBuys &&
+                     regime == AC_BULL &&
+                     AcaneH1Allows(false) &&
+                     rates[1].low <= emaFast + atr * AC_PullbackTouchATR &&
+                     close > emaFast &&
+                     close > open &&
+                     (!AC_RequirePullbackMomentum || (bodyOk && close > rates[2].close)) &&
+                     rsi >= 42.0 && rsi <= 72.0 &&
+                     emaDistance <= AC_MaxEmaDistanceATR &&
+                     emaSlope >= -0.03;
+      int buyScore = base + (buyPull ? 20 : 0) + (adx >= AC_TrendADXMin ? 8 : 0) + (close > rates[2].close ? 4 : 0);
+      if(buyPull)
+         AcaneMaybeSetSignal(best, false, buyScore, "TPL", "BULL", stopDistance, AC_TrendRR,
+                             buyScore >= AC_StrongScore ? AC_CoreRiskMultiplier : AC_WeakRiskMultiplier);
 
-      bool reclaimed = rates[0].low <= emaFast + atr * 0.18 && close > emaFast && close > open;
-      int pbScore = base + (regime == ACANE_BULL ? 12 : 0) + (reclaimed ? 16 : 0) + (rsi >= 48.0 ? 5 : 0);
-      if(reclaimed && ACANE_EnableReclaimEngine)
-        {
-         double pbRisk = (pbScore >= ACANE_StrongScore ? ACANE_CoreRiskMultiplier : ACANE_WeakRiskMultiplier);
-         AcaneMaybeSetSignal(best, false, pbScore, "RCL", regimeTag + "|EMA", stopDistance, ACANE_TakeProfitR * 0.92, pbRisk);
-        }
-
-      bool compressedBreak = compression <= 1.60 && close > previousHigh && body >= ACANE_MinBodyRatio;
-      int compScore = base + (regime != ACANE_BEAR ? 8 : 0) + (compressedBreak ? 17 : 0);
-      if(compressedBreak && ACANE_EnableCompressionEngine)
-        {
-         double compRisk = (compScore >= ACANE_StrongScore ? ACANE_CoreRiskMultiplier : ACANE_WeakRiskMultiplier);
-         AcaneMaybeSetSignal(best, false, compScore, "CMP", regimeTag + "|SQZ", stopDistance, ACANE_TakeProfitR * 0.82, compRisk);
-        }
+      bool sellPull = AC_EnableSells &&
+                      regime == AC_BEAR &&
+                      AcaneH1Allows(true) &&
+                      rates[1].high >= emaFast - atr * AC_PullbackTouchATR &&
+                      close < emaFast &&
+                      close < open &&
+                      (!AC_RequirePullbackMomentum || (bodyOk && close < rates[2].close)) &&
+                      rsi <= 58.0 && rsi >= 28.0 &&
+                      emaDistance <= AC_MaxEmaDistanceATR &&
+                      emaSlope <= 0.03;
+      int sellScore = base + (sellPull ? 20 : 0) + (adx >= AC_TrendADXMin ? 8 : 0) + (close < rates[2].close ? 4 : 0);
+      if(sellPull)
+         AcaneMaybeSetSignal(best, true, sellScore, "TPL", "BEAR", stopDistance, AC_TrendRR,
+                             sellScore >= AC_StrongScore ? AC_CoreRiskMultiplier : AC_WeakRiskMultiplier);
      }
 
-   if(ACANE_EnableSells)
+   if(AC_EnableCompressionBreakout && compression <= AC_CompressionMaxATR)
      {
-      int score = base;
-      if(regime == ACANE_BEAR)
-         score += 8;
-      if(close < emaFast && emaFast <= emaSlow)
-         score += 8;
-      if(close < open)
-         score += 5;
-      if(breakDown >= ACANE_MinBreakATR)
-         score += 7;
-      if(breakDown >= ACANE_StrongBreakATR)
-         score += 8;
-      if(rsi <= 48.0 && rsi >= 22.0)
-         score += 5;
-      if(stretchUp <= ACANE_MaxChaseATR)
-         score += 4;
-      double risk = (score >= ACANE_StrongScore ? ACANE_CoreRiskMultiplier : ACANE_WeakRiskMultiplier);
-      string regimeTag = (regime == ACANE_BEAR ? "RG" : "WG");
-      if(ACANE_EnableMomentumEngine)
-         AcaneMaybeSetSignal(best, true, score, "MOM", regimeTag + "|BRK", stopDistance, ACANE_TakeProfitR, risk);
+      bool buyBreak = AC_EnableBuys &&
+                      regime != AC_BEAR &&
+                      AcaneH1Allows(false) &&
+                      close > prevHigh &&
+                      breakUp >= AC_MinBreakATR &&
+                      close > open &&
+                      rsi >= 50.0 && rsi <= 78.0;
+      int buyScore = base + (buyBreak ? 18 : 0) + (regime == AC_BULL ? 8 : 2) +
+                     (breakUp >= AC_StrongBreakATR ? 7 : 0);
+      if(buyBreak)
+         AcaneMaybeSetSignal(best, false, buyScore, "CBK", regime == AC_BULL ? "RG" : "WG",
+                             stopDistance, AC_BreakoutRR,
+                             buyScore >= AC_StrongScore ? AC_CoreRiskMultiplier : AC_WeakRiskMultiplier);
 
-      bool rejected = rates[0].high >= emaFast - atr * 0.18 && close < emaFast && close < open;
-      int rjScore = base + (regime == ACANE_BEAR ? 12 : 0) + (rejected ? 16 : 0) + (rsi <= 52.0 ? 5 : 0);
-      if(rejected && ACANE_EnableReclaimEngine)
-        {
-         double rjRisk = (rjScore >= ACANE_StrongScore ? ACANE_CoreRiskMultiplier : ACANE_WeakRiskMultiplier);
-         AcaneMaybeSetSignal(best, true, rjScore, "RJT", regimeTag + "|EMA", stopDistance, ACANE_TakeProfitR * 0.92, rjRisk);
-        }
+      bool sellBreak = AC_EnableSells &&
+                       regime != AC_BULL &&
+                       AcaneH1Allows(true) &&
+                       close < prevLow &&
+                       breakDown >= AC_MinBreakATR &&
+                       close < open &&
+                       rsi <= 50.0 && rsi >= 22.0;
+      int sellScore = base + (sellBreak ? 18 : 0) + (regime == AC_BEAR ? 8 : 2) +
+                      (breakDown >= AC_StrongBreakATR ? 7 : 0);
+      if(sellBreak)
+         AcaneMaybeSetSignal(best, true, sellScore, "CBK", regime == AC_BEAR ? "RG" : "WG",
+                             stopDistance, AC_BreakoutRR,
+                             sellScore >= AC_StrongScore ? AC_CoreRiskMultiplier : AC_WeakRiskMultiplier);
+     }
 
-      bool compressedBreak = compression <= 1.60 && close < previousLow && body >= ACANE_MinBodyRatio;
-      int compScore = base + (regime != ACANE_BULL ? 8 : 0) + (compressedBreak ? 17 : 0);
-      if(compressedBreak && ACANE_EnableCompressionEngine)
-        {
-         double compRisk = (compScore >= ACANE_StrongScore ? ACANE_CoreRiskMultiplier : ACANE_WeakRiskMultiplier);
-         AcaneMaybeSetSignal(best, true, compScore, "CMP", regimeTag + "|SQZ", stopDistance, ACANE_TakeProfitR * 0.82, compRisk);
-        }
+   if(AC_EnableMeanReversion && adx <= AC_SidewaysADXMax)
+     {
+      bool buyReversal = AC_EnableBuys &&
+                         rates[1].low <= bandLower - atr * AC_MeanReversionTouchATR &&
+                         close > bandLower &&
+                         close > open &&
+                         rsi <= AC_MeanReversionRSILow &&
+                         regime != AC_BEAR;
+      int buyScore = 50 + (buyReversal ? 20 : 0) + (bodyOk ? 6 : 0) + (narrowSpread ? 4 : 0);
+      if(buyReversal)
+         AcaneMaybeSetSignal(best, false, buyScore, "MRV", "BB", stopDistance,
+                             AC_MeanReversionRR, AC_WeakRiskMultiplier);
+
+      bool sellReversal = AC_EnableSells &&
+                          rates[1].high >= bandUpper + atr * AC_MeanReversionTouchATR &&
+                          close < bandUpper &&
+                          close < open &&
+                          rsi >= AC_MeanReversionRSIHigh &&
+                          regime != AC_BULL;
+      int sellScore = 50 + (sellReversal ? 20 : 0) + (bodyOk ? 6 : 0) + (narrowSpread ? 4 : 0);
+      if(sellReversal)
+         AcaneMaybeSetSignal(best, true, sellScore, "MRV", "BB", stopDistance,
+                             AC_MeanReversionRR, AC_WeakRiskMultiplier);
      }
 
    return(best);
   }
 
-
-bool AcaneStopFits(const bool sell, const double price, const double stopLoss)
+bool AcaneStopFits(const bool sell, const double price, const double sl)
   {
    double minDistance = AcaneMinStopDistance();
    if(sell)
-      return(stopLoss > price + minDistance);
-   return(stopLoss < price - minDistance);
+      return(sl > price + minDistance);
+   return(sl < price - minDistance);
   }
 
-
-bool AcaneTakeProfitFits(const bool sell, const double price, const double takeProfit)
+bool AcaneTakeProfitFits(const bool sell, const double price, const double tp)
   {
    double minDistance = AcaneMinStopDistance();
    if(sell)
-      return(takeProfit < price - minDistance);
-   return(takeProfit > price + minDistance);
+      return(tp < price - minDistance);
+   return(tp > price + minDistance);
   }
-
 
 void AcaneTryEntry()
   {
    if(!AcaneRiskAllowsTrading())
       return;
-   if(!AcaneMarketOpenLikely() || !AcaneSpreadAllowed())
+   if(!AcaneMarketOpenLikely())
       return;
-   if(AcaneCountPositions() >= ACANE_MaxPositions)
+   if(AcaneSpread() > AC_MaxSpreadUsd)
       return;
-
-   datetime now = TimeCurrent();
-   if(g_lastEntryTime > 0 && (now - g_lastEntryTime) < ACANE_MinSecondsBetweenEntries)
+   if(g_cooldownUntilBar > 0 && iTime(_Symbol, AC_TF, 0) < g_cooldownUntilBar)
       return;
+   if(AcaneCountPositions() >= AC_MaxPositions)
+      return;
+   if(g_lastEntryBarTime > 0)
+     {
+      int seconds = (int)(iTime(_Symbol, AC_TF, 0) - g_lastEntryBarTime);
+      if(seconds < PeriodSeconds(AC_TF) * AC_MinBarsBetweenEntries)
+         return;
+     }
 
    AcaneSignal signal = AcaneBuildSignal();
    if(!signal.valid)
       return;
-   if(AcaneHasOpposite(signal.sell))
+   if(AC_BlockOppositeDirection && AcaneCountPositions(signal.sell ? 1 : -1) > 0)
       return;
-   if(AcaneCountPositions(signal.sell ? -1 : 1) >= ACANE_MaxSameSidePositions)
+   if(AcaneCountPositions(signal.sell ? -1 : 1) >= AC_MaxSameSidePositions)
       return;
 
    double lot = AcaneLotForRisk(signal.stopDistance, signal.riskMultiplier);
    if(lot <= 0.0)
       return;
 
-   double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
-   double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
-   double price = signal.sell ? bid : ask;
-   double tpDistance = MathMax(signal.stopDistance * signal.rr, ACANE_ScalpProfitUsd + AcaneSpread());
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   double addedRiskPct = signal.stopDistance * AcaneValuePerPriceUnit() * lot / equity * 100.0;
+   if(addedRiskPct + AcaneOpenRiskCash() / equity * 100.0 > AC_MaxOpenRiskPct)
+      return;
+
+   MqlTick tick;
+   if(!SymbolInfoTick(_Symbol, tick))
+      return;
+   double price = signal.sell ? tick.bid : tick.ask;
+   double tpDistance = signal.stopDistance * signal.rr;
    double sl = signal.sell ? price + signal.stopDistance : price - signal.stopDistance;
    double tp = signal.sell ? price - tpDistance : price + tpDistance;
    sl = AcaneNormalizePrice(sl);
@@ -829,44 +821,33 @@ void AcaneTryEntry()
    if(!AcaneStopFits(signal.sell, price, sl) || !AcaneTakeProfitFits(signal.sell, price, tp))
       return;
 
-   g_trade.SetExpertMagicNumber(ACANE_MAGIC);
-   g_trade.SetDeviationInPoints(ACANE_DeviationPoints);
+   g_trade.SetExpertMagicNumber(AC_Magic);
+   g_trade.SetDeviationInPoints(AC_DeviationPoints);
    g_trade.SetTypeFillingBySymbol(_Symbol);
-
    bool ok = signal.sell ? g_trade.Sell(lot, _Symbol, 0.0, sl, tp, signal.comment)
                          : g_trade.Buy(lot, _Symbol, 0.0, sl, tp, signal.comment);
    if(ok)
      {
-      g_lastEntryTime = now;
-      if(ACANE_LogEntries)
-         PrintFormat("ACANE ENTRY %s | engine=%s score=%d lot=%.2f sl=%.2f tp=%.2f stop=%.2f rr=%.2f spread=%.2f comment=%s",
-                     signal.sell ? "SELL" : "BUY",
-                     signal.engine,
-                     signal.score,
-                     lot,
-                     sl,
-                     tp,
-                     signal.stopDistance,
-                     signal.rr,
-                     AcaneSpread(),
-                     signal.comment);
+      g_lastEntryBarTime = iTime(_Symbol, AC_TF, 0);
+      if(AC_LogEntries)
+         PrintFormat("ACANE ENTRY %s | %s score=%d lot=%.2f sl=%.2f tp=%.2f spread=%.2f",
+                     signal.sell ? "SELL" : "BUY", signal.engine, signal.score, lot, sl, tp, AcaneSpread());
      }
   }
-
 
 void AcaneManagePositions()
   {
    if(!AcaneMarketOpenLikely())
       return;
-
-   g_trade.SetExpertMagicNumber(ACANE_MAGIC);
-   g_trade.SetDeviationInPoints(ACANE_DeviationPoints);
+   g_trade.SetExpertMagicNumber(AC_Magic);
+   g_trade.SetDeviationInPoints(AC_DeviationPoints);
    g_trade.SetTypeFillingBySymbol(_Symbol);
 
    double atr;
-   if(!AcaneCopyBufferValue(g_atr, 0, 1, atr))
-      atr = 1.0;
-   atr = MathMax(atr, ACANE_MinATRUsd);
+   if(!AcaneCopyValue(g_atr, 0, 1, atr))
+      atr = AC_MinATRUsd;
+   atr = MathMax(atr, AC_MinATRUsd);
+   AcaneRegime regime = AcaneDetectRegime();
 
    for(int i = PositionsTotal() - 1; i >= 0; i--)
      {
@@ -875,143 +856,157 @@ void AcaneManagePositions()
          continue;
       if(PositionGetString(POSITION_SYMBOL) != _Symbol)
          continue;
-      if((ulong)PositionGetInteger(POSITION_MAGIC) != ACANE_MAGIC)
+      if((ulong)PositionGetInteger(POSITION_MAGIC) != AC_Magic)
          continue;
 
       ENUM_POSITION_TYPE type = (ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE);
-      bool sell = (type == POSITION_TYPE_SELL);
-      double openPrice = PositionGetDouble(POSITION_PRICE_OPEN);
+      bool sell = type == POSITION_TYPE_SELL;
+      double open = PositionGetDouble(POSITION_PRICE_OPEN);
       double sl = PositionGetDouble(POSITION_SL);
       double tp = PositionGetDouble(POSITION_TP);
       double current = sell ? SymbolInfoDouble(_Symbol, SYMBOL_ASK) : SymbolInfoDouble(_Symbol, SYMBOL_BID);
-      double progress = sell ? (openPrice - current) : (current - openPrice);
-      double risk = MathAbs(openPrice - sl);
+      double progress = sell ? open - current : current - open;
+      double risk = MathAbs(open - sl);
       if(risk <= 0.0)
-         risk = ACANE_MinSLUsd;
+         risk = AC_MinSLUsd;
       double progressR = progress / risk;
       datetime openTime = (datetime)PositionGetInteger(POSITION_TIME);
-      int secondsHeld = (int)(TimeCurrent() - openTime);
+      int heldBars = (int)MathFloor((TimeCurrent() - openTime) / PeriodSeconds(AC_TF));
+      string comment = PositionGetString(POSITION_COMMENT);
+      int maxHold = StringFind(comment, "|A") >= 0 ? AC_MaxHoldBars : AC_WeakMaxHoldBars;
 
-      if(secondsHeld >= ACANE_MicroCloseProfitSeconds && progress >= ACANE_ScalpProfitUsd)
+      if(AC_CloseOnRegimeFlip && ((sell && regime == AC_BULL) || (!sell && regime == AC_BEAR)) && heldBars >= 2)
         {
-         if(g_trade.PositionClose(ticket))
-            PrintFormat("ACANE EXIT MICRO_TP | ticket=%I64u seconds=%d r=%.2f", ticket, secondsHeld, progressR);
+         g_trade.PositionClose(ticket);
          continue;
         }
-
-      if(secondsHeld >= ACANE_MinHoldSeconds && progressR <= -ACANE_FastLossR)
+      if(heldBars >= maxHold)
         {
-         if(g_trade.PositionClose(ticket))
-            PrintFormat("ACANE EXIT FAST_LOSS | ticket=%I64u seconds=%d r=%.2f", ticket, secondsHeld, progressR);
-         continue;
-        }
-
-      if(secondsHeld >= ACANE_MaxHoldSeconds)
-        {
-         if(g_trade.PositionClose(ticket))
-            PrintFormat("ACANE EXIT TIME | ticket=%I64u seconds=%d r=%.2f", ticket, secondsHeld, progressR);
+         g_trade.PositionClose(ticket);
          continue;
         }
 
       double newSl = sl;
-      if(progressR >= ACANE_BreakevenR)
+      if(progressR >= AC_BreakevenR)
         {
-         double be = sell ? openPrice - ACANE_BreakevenLockUsd : openPrice + ACANE_BreakevenLockUsd;
+         double be = sell ? open - AC_BreakevenLockUsd : open + AC_BreakevenLockUsd;
          if((sell && (sl <= 0.0 || be < sl)) || (!sell && (sl <= 0.0 || be > sl)))
             newSl = be;
         }
-      if(progressR >= ACANE_TrailStartR)
+      if(progressR >= AC_TrailStartR)
         {
-         double trail = sell ? current + atr * ACANE_TrailATR : current - atr * ACANE_TrailATR;
+         double trail = sell ? current + atr * AC_TrailATR : current - atr * AC_TrailATR;
          if((sell && (newSl <= 0.0 || trail < newSl)) || (!sell && (newSl <= 0.0 || trail > newSl)))
             newSl = trail;
         }
-
-      if(MathAbs(newSl - sl) >= _Point * 2.0 &&
-         AcaneStopFits(sell, current, newSl))
-        {
+      if(MathAbs(newSl - sl) >= _Point * 2.0 && AcaneStopFits(sell, current, newSl))
          g_trade.PositionModify(ticket, AcaneNormalizePrice(newSl), tp);
-        }
      }
   }
 
+bool AcaneIsNewBar()
+  {
+   datetime barTime = iTime(_Symbol, AC_TF, 0);
+   if(barTime <= 0)
+      return(false);
+   if(barTime == g_lastBarTime)
+      return(false);
+   g_lastBarTime = barTime;
+   return(true);
+  }
 
 void AcaneStatusLog()
   {
-   if(!ACANE_LogStatus)
+   if(!AC_LogStatus)
       return;
-   datetime now = TimeCurrent();
-   if(g_lastStatusTime > 0 && (now - g_lastStatusTime) < ACANE_StatusEverySeconds)
+   int bars = Bars(_Symbol, AC_TF);
+   if(g_lastStatusBars > 0 && bars - g_lastStatusBars < AC_StatusEveryBars)
       return;
-   g_lastStatusTime = now;
-   PrintFormat("ACANE STATUS | tf=M1 open=%d buy=%d sell=%d spread=%.2f equity=%.2f dailyStop=%s circuit=%s",
+   g_lastStatusBars = bars;
+   PrintFormat("ACANE STATUS | open=%d spread=%.2f equity=%.2f dayStop=%s circuit=%s",
                AcaneCountPositions(),
-               AcaneCountPositions(1),
-               AcaneCountPositions(-1),
                AcaneSpread(),
                AccountInfoDouble(ACCOUNT_EQUITY),
                g_dailyStopped ? "yes" : "no",
                g_circuitStopped ? "yes" : "no");
   }
 
-
 int OnInit()
   {
-   g_emaFast = iMA(_Symbol, ACANE_TF, ACANE_EMAFast, 0, MODE_EMA, PRICE_CLOSE);
-   g_emaSlow = iMA(_Symbol, ACANE_TF, ACANE_EMASlow, 0, MODE_EMA, PRICE_CLOSE);
-   g_m5Fast = iMA(_Symbol, PERIOD_M5, ACANE_M5Fast, 0, MODE_EMA, PRICE_CLOSE);
-   g_m5Slow = iMA(_Symbol, PERIOD_M5, ACANE_M5Slow, 0, MODE_EMA, PRICE_CLOSE);
-   g_atr = iATR(_Symbol, ACANE_TF, ACANE_ATRPeriod);
-   g_rsi = iRSI(_Symbol, ACANE_TF, ACANE_RSI_Period, PRICE_CLOSE);
-   g_bands = iBands(_Symbol, ACANE_TF, ACANE_BBandsPeriod, 0, ACANE_BBandsDeviation, PRICE_CLOSE);
+   g_emaFast = iMA(_Symbol, AC_TF, AC_EMAFast, 0, MODE_EMA, PRICE_CLOSE);
+   g_emaSlow = iMA(_Symbol, AC_TF, AC_EMASlow, 0, MODE_EMA, PRICE_CLOSE);
+   g_m5Fast = iMA(_Symbol, PERIOD_M5, AC_M5Fast, 0, MODE_EMA, PRICE_CLOSE);
+   g_m5Slow = iMA(_Symbol, PERIOD_M5, AC_M5Slow, 0, MODE_EMA, PRICE_CLOSE);
+   g_m15Fast = iMA(_Symbol, PERIOD_M15, AC_M15Fast, 0, MODE_EMA, PRICE_CLOSE);
+   g_m15Slow = iMA(_Symbol, PERIOD_M15, AC_M15Slow, 0, MODE_EMA, PRICE_CLOSE);
+   g_h1Fast = iMA(_Symbol, PERIOD_H1, AC_H1Fast, 0, MODE_EMA, PRICE_CLOSE);
+   g_h1Slow = iMA(_Symbol, PERIOD_H1, AC_H1Slow, 0, MODE_EMA, PRICE_CLOSE);
+   g_atr = iATR(_Symbol, AC_TF, AC_ATRPeriod);
+   g_rsi = iRSI(_Symbol, AC_TF, AC_RSIPeriod, PRICE_CLOSE);
+   g_adx = iADX(_Symbol, AC_TF, AC_ADXPeriod);
+   g_bands = iBands(_Symbol, AC_TF, AC_BBandsPeriod, 0, AC_BBandsDeviation, PRICE_CLOSE);
    if(g_emaFast == INVALID_HANDLE || g_emaSlow == INVALID_HANDLE ||
       g_m5Fast == INVALID_HANDLE || g_m5Slow == INVALID_HANDLE ||
+      g_m15Fast == INVALID_HANDLE || g_m15Slow == INVALID_HANDLE ||
+      g_h1Fast == INVALID_HANDLE || g_h1Slow == INVALID_HANDLE ||
       g_atr == INVALID_HANDLE || g_rsi == INVALID_HANDLE ||
-      g_bands == INVALID_HANDLE)
+      g_adx == INVALID_HANDLE || g_bands == INVALID_HANDLE)
       return(INIT_FAILED);
-   g_trade.SetExpertMagicNumber(ACANE_MAGIC);
-   g_trade.SetDeviationInPoints(ACANE_DeviationPoints);
+   g_trade.SetExpertMagicNumber(AC_Magic);
+   g_trade.SetDeviationInPoints(AC_DeviationPoints);
    g_trade.SetTypeFillingBySymbol(_Symbol);
    g_dayKey = -1;
-   g_weekKey = -1;
-   g_monthKey = -1;
    g_accountHighEquity = AccountInfoDouble(ACCOUNT_EQUITY);
    AcaneResetDailyGuardIfNeeded();
-   AcaneResetWeeklyGuardIfNeeded();
-   AcaneResetMonthlyGuardIfNeeded();
-   PrintFormat("ACANE LOCKED PROFILE v1.01 GUARD15 | symbol=%s tf=M1 risk=%.2f maxPos=%d dailyLoss=%.2f accountCircuit=%.2f spreadMax=%.2f",
+   PrintFormat("ACANE PROFILE v1.00 OPTIMIZABLE | symbol=%s tf=M1 balance=%.2f leverage=%d",
                _Symbol,
-               ACANE_RiskPercent,
-               ACANE_MaxPositions,
-               ACANE_DailyMaxLossPct,
-               ACANE_MaxAccountDrawdownPct,
-               ACANE_MaxSpreadUsd);
+               AccountInfoDouble(ACCOUNT_BALANCE),
+               (int)AccountInfoInteger(ACCOUNT_LEVERAGE));
    return(INIT_SUCCEEDED);
   }
 
-
 void OnDeinit(const int reason)
   {
-   if(g_emaFast != INVALID_HANDLE)
-      IndicatorRelease(g_emaFast);
-   if(g_emaSlow != INVALID_HANDLE)
-      IndicatorRelease(g_emaSlow);
-   if(g_m5Fast != INVALID_HANDLE)
-      IndicatorRelease(g_m5Fast);
-   if(g_m5Slow != INVALID_HANDLE)
-      IndicatorRelease(g_m5Slow);
-   if(g_atr != INVALID_HANDLE)
-      IndicatorRelease(g_atr);
-   if(g_rsi != INVALID_HANDLE)
-      IndicatorRelease(g_rsi);
-   if(g_bands != INVALID_HANDLE)
-      IndicatorRelease(g_bands);
+   if(g_emaFast != INVALID_HANDLE) IndicatorRelease(g_emaFast);
+   if(g_emaSlow != INVALID_HANDLE) IndicatorRelease(g_emaSlow);
+   if(g_m5Fast != INVALID_HANDLE) IndicatorRelease(g_m5Fast);
+   if(g_m5Slow != INVALID_HANDLE) IndicatorRelease(g_m5Slow);
+   if(g_m15Fast != INVALID_HANDLE) IndicatorRelease(g_m15Fast);
+   if(g_m15Slow != INVALID_HANDLE) IndicatorRelease(g_m15Slow);
+   if(g_h1Fast != INVALID_HANDLE) IndicatorRelease(g_h1Fast);
+   if(g_h1Slow != INVALID_HANDLE) IndicatorRelease(g_h1Slow);
+   if(g_atr != INVALID_HANDLE) IndicatorRelease(g_atr);
+   if(g_rsi != INVALID_HANDLE) IndicatorRelease(g_rsi);
+   if(g_adx != INVALID_HANDLE) IndicatorRelease(g_adx);
+   if(g_bands != INVALID_HANDLE) IndicatorRelease(g_bands);
   }
-
 
 void OnTick()
   {
+   AcaneResetDailyGuardIfNeeded();
    AcaneManagePositions();
    AcaneStatusLog();
-   AcaneTryEntry();
+   if(AcaneIsNewBar())
+      AcaneTryEntry();
+  }
+
+double OnTester()
+  {
+   double profit = TesterStatistics(STAT_PROFIT);
+   double pf = TesterStatistics(STAT_PROFIT_FACTOR);
+   double recovery = TesterStatistics(STAT_RECOVERY_FACTOR);
+   double trades = TesterStatistics(STAT_TRADES);
+   double ddPct = TesterStatistics(STAT_EQUITY_DDREL_PERCENT);
+   if(pf <= 0.0)
+      pf = 0.01;
+   double score = profit + pf * 20.0 + recovery * 8.0 + MathMin(trades, 1200.0) * 0.015;
+   if(ddPct > AC_TesterMaxDDPct)
+      score -= (ddPct - AC_TesterMaxDDPct) * 100.0;
+   if(ddPct > 35.0)
+      score -= (ddPct - 35.0) * 250.0;
+   if(trades < AC_TesterMinTrades)
+      score -= (AC_TesterMinTrades - trades) * 0.20;
+   if(profit <= 0.0)
+      score += profit * 2.0;
+   return(score);
   }

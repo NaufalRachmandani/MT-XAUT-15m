@@ -265,19 +265,36 @@ def reconstruct_closed_trades(deals: list[dict[str, object]]) -> tuple[list[Clos
 
 def parse_entry_comment(comment: str) -> dict[str, object]:
     parts = [part.strip() for part in comment.split("|")]
-    score = 0
-    score_token = parts[3] if len(parts) > 3 else ""
-    if score_token.startswith("S") and score_token[1:].isdigit():
-        score = int(score_token[1:])
-    code = parts[2] if len(parts) > 2 else ""
-    engine = parts[1] if len(parts) > 1 else ENGINE_NAMES.get(code, "")
-    tags = [tag for tag in parts[5:] if tag]
+    if parts and parts[0] == "AC1":
+        score = 0
+        grade = ""
+        tags: list[str] = []
+        for token in parts[2:]:
+            if token.startswith("S") and token[1:].isdigit():
+                score = int(token[1:])
+                continue
+            if token in {"A", "B", "C"} and not grade:
+                grade = token
+                continue
+            if token:
+                tags.append(token)
+        code = parts[1] if len(parts) > 1 else ""
+        engine = code
+    else:
+        score = 0
+        score_token = parts[3] if len(parts) > 3 else ""
+        if score_token.startswith("S") and score_token[1:].isdigit():
+            score = int(score_token[1:])
+        code = parts[2] if len(parts) > 2 else ""
+        engine = parts[1] if len(parts) > 1 else ENGINE_NAMES.get(code, "")
+        grade = parts[4] if len(parts) > 4 else ""
+        tags = [tag for tag in parts[5:] if tag]
     return {
         "family": parts[0] if parts else "",
         "engine": engine,
         "code": code,
         "score": score,
-        "grade": parts[4] if len(parts) > 4 else "",
+        "grade": grade,
         "regime_tag": "WG" if "WG" in tags else ("RG" if "RG" in tags else ""),
         "hour_tag": "XH" if ("XH" in tags or "X" in tags) else ("CH" if "CH" in tags else ""),
         "tags": tags,

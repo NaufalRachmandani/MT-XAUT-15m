@@ -1,0 +1,3 @@
+side,exit_reason,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
+buy,sl,4.0,-26.09,5.38,-31.47,50.0,0.1709564664760089,-6.5225,2.69,-15.735,2.84,-20.54,2.0,2.0
+sell,manual/exit_loss,1.0,-3.25,0,-3.25,0.0,0.0,-3.25,0.0,-3.25,0.0,-3.25,0.0,1.0

@@ -1,0 +1,3 @@
+side,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
+sell,12.0,9.37,20.44,-11.07,66.66666666666666,1.8464317976513098,0.7808333333333333,2.555,-2.7675,4.1,-4.65,8.0,4.0
+buy,14.0,17.29,22.53,-5.24,71.42857142857143,4.299618320610687,1.2349999999999999,2.253,-1.31,3.9,-1.73,10.0,4.0

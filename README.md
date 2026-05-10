@@ -2,40 +2,38 @@
 
 Repository ini sekarang memakai naming baru yang lebih stabil:
 
-- `SuisM5_v1`: stable profile.
-- `SuisM5_v2`: aggressive frequency profile.
+- `SuisM5_v1`: satu-satunya Suis M5 aktif. File ini sudah ditiban dengan profil aggressive/frequency yang sebelumnya disebut `SuisM5_v2`.
 - `AcaneM1_v1_guarded`: Acane M1 aggressive guarded profile terbaru. Ini menggantikan nama lama `AcaneM1_v1_profit30`.
 
 Internal source sekarang memakai prefix generik `SUIS_`, supaya versi berikutnya tetap mudah dibaca tanpa nama historis yang membingungkan.
 
 ## Live Files
 
-- [SuisM5_v1.mq5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/mt5/SuisM5_v1.mq5>)
-- [SuisM5_v2.mq5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/mt5/SuisM5_v2.mq5>)
-- [AcaneM1_v1_guarded.mq5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/mt5/AcaneM1_v1_guarded.mq5>)
-- [SuisM5_v1.ex5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/build/suis_live_package/MQL5/Experts/Suis/SuisM5_v1.ex5>)
-- [SuisM5_v2.ex5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/build/suis_live_package/MQL5/Experts/Suis/SuisM5_v2.ex5>)
-- [AcaneM1_v1_guarded.ex5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/build/acane_guarded_live_package/MQL5/Experts/Acane/AcaneM1_v1_guarded.ex5>)
-- [suis_live_package.zip](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/build/suis_live_package.zip>)
-- [acane_guarded_live_package.zip](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/build/acane_guarded_live_package.zip>)
+- [SuisM5_v1.mq5](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/mt5/SuisM5_v1.mq5>)
+- [AcaneM1_v1_guarded.mq5](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/mt5/AcaneM1_v1_guarded.mq5>)
+- [SuisM5_v1.ex5](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/suis_live_package/MQL5/Experts/Suis/SuisM5_v1.ex5>)
+- [AcaneM1_v1_guarded.ex5](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_guarded_live_package/MQL5/Experts/Acane/AcaneM1_v1_guarded.ex5>)
+- [suis_live_package.zip](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/suis_live_package.zip>)
+- [acane_guarded_live_package.zip](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_guarded_live_package.zip>)
 
 Copy file `.ex5` ke folder sesuai package di VPS. Tidak perlu preset `.set`.
 
-## Sanity Backtest Setelah Rename
+## Suis M5 Snapshot
 
-Setup: `XAUUSDc`, `M5`, `Deposit 100 USD`, `Leverage 1:100`, mode `Every tick`, window `2026.01.01-2026.05.07`.
+Suis sekarang hanya punya satu file aktif: `SuisM5_v1`. Secara isi, ini adalah profil aggressive/frequency yang sebelumnya disebut `SuisM5_v2`.
+
+Setup terbaru yang lebih relevan untuk akun standar: `XAUUSDm`, `M5`, `Deposit 150 USD`, `Leverage 1:2000`, mode `Every tick`.
 
 | EA | Net Profit | Trades | PF | EqDD |
 | --- | ---: | ---: | ---: | ---: |
-| `SuisM5_v1` | +5900.48% | 95 | 5.71 | 11.85% |
-| `SuisM5_v2` | +22259.69% | 125 | 4.26 | 19.94% |
+| `SuisM5_v1` 2026.01.01-2026.05.08 | +353.57% | 1132 | 1.09 | 58.21% |
+| `SuisM5_v1` 2025.01.01-2026.05.08 | +567.49% | 4422 | 1.07 | 43.01% |
 
 ## Pilihan Live
 
-- Gunakan `SuisM5_v2` jika prioritasnya aggressive TF5m, frequency lebih tinggi, dan profit tinggi.
-- Gunakan `SuisM5_v1` jika ingin profile yang lebih konservatif/stabil.
-
-`SuisM5_v2` sudah memakai base risk `30%`, daily max loss guard `30%`, profit harian tidak dibatasi, dan buy/sell frequency lebih tinggi dibanding v1.
+- `AcaneM1_v1_guarded` lebih cocok jika latency VPS ke broker rendah, idealnya jauh di bawah `50 ms`.
+- `SuisM5_v1` lebih tahan latency dibanding Acane M1 karena bekerja di `M5`, tetapi hasil `XAUUSDm` saat ini masih punya DD tinggi sehingga belum menjadi kandidat live utama tanpa retune.
+- Untuk VPS dengan ping sekitar `180 ms`, jangan jalankan Acane M1 aggressive kecuali setelah pindah ke VPS latency rendah.
 
 ## Historical Acane M1 v1
 
@@ -66,11 +64,20 @@ Penyebab loss live yang ditemukan:
 Perubahan live build terbaru:
 
 - Daily loss guard dan account circuit turun dari `30%` ke `15%`.
-- Max posisi turun dari `42` ke `12`; max same-side turun dari `28` ke `6`.
+- Max posisi turun dari `42` ke `12`; max same-side turun dari `28` ke `4`.
 - Tambah open-risk cap total `12%` dan same-side `8%`.
 - Tambah basket floating-loss stop `9%`; jika aktif, EA close posisi dan stop trading hari itu.
-- Tambah cooldown `15` menit setelah `3` fast-loss beruntun.
+- Tambah cooldown `15` menit setelah `2` fast-loss beruntun.
 - MRV diblok jika impulse ATR atau jarak EMA terlalu ekstrem, supaya tidak terus melawan candle yang sedang impulsif.
+
+Tuning terbaru `v1.04` pada Standard account `XAUUSDm`, deposit `150 USD`, mode `Every tick`:
+
+| Profile | Window | Net Profit | Trades | PF | Win Rate | EqDD |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| old guarded `v1.03` | `2026.01.01-2026.05.08` | +1165254.02% | 1941 | 1.69 | 60.95% | 7.29% |
+| old guarded `v1.03` | `2025.01.01-2026.05.08` | +2027.26% | 927 | 1.51 | 59.55% | 15.01% |
+| current `v1.04` | `2026.01.01-2026.05.08` | +1184409.69% | 1858 | 1.76 | 61.89% | 7.53% |
+| current `v1.04` | `2025.01.01-2026.05.08` | +15410874.16% | 7959 | 1.76 | 57.29% | 3.18% |
 
 Setup test `150 USD`: `XAUUSD`, `M1`, account Pro context, deposit `150 USD`, leverage `1:2000`, mode `Every tick`.
 
@@ -90,8 +97,8 @@ Setup test `300 USD`: `XAUUSD`, `M1`, account Pro context, deposit `300 USD`, le
 
 Live file:
 
-- [AcaneM1_v1_guarded.mq5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/mt5/AcaneM1_v1_guarded.mq5>)
-- [AcaneM1_v1_guarded.ex5](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/build/acane_guarded_live_package/MQL5/Experts/Acane/AcaneM1_v1_guarded.ex5>)
-- [acane_guarded_live_package.zip](</Users/naufalrachmandani/Hobby/MT5 XAU 15m/build/acane_guarded_live_package.zip>)
+- [AcaneM1_v1_guarded.mq5](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/mt5/AcaneM1_v1_guarded.mq5>)
+- [AcaneM1_v1_guarded.ex5](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_guarded_live_package/MQL5/Experts/Acane/AcaneM1_v1_guarded.ex5>)
+- [acane_guarded_live_package.zip](</Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_guarded_live_package.zip>)
 
 Catatan risiko: build ini tetap agresif. Backtest sangat tinggi karena compounding dan leverage tinggi; itu bukan garansi live. Guard `15%` juga bukan garansi absolut jika ada slippage, gap, koneksi putus, atau close gagal.

@@ -1,0 +1,3 @@
+side,exit_reason,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
+buy,manual/exit_loss,6.0,-5.96,0,-5.96,0.0,0.0,-0.9933333333333333,0.0,-0.9933333333333333,0.0,-1.38,0.0,6.0
+buy,tp,1.0,1.22,1.22,0,100.0,0.0,1.22,1.22,0.0,1.22,0.0,1.0,0.0

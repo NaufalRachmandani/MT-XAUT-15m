@@ -1,0 +1,993 @@
+[
+  {
+    "label": "v1_old",
+    "stem": "AcaneM1_v1_guarded_debug",
+    "deposit": 29,
+    "requested_leverage": "1:2000",
+    "report_leverage": "1:2000",
+    "net": 2.26,
+    "trades": 28,
+    "wins": 16,
+    "losses": 12,
+    "win_rate": 57.14,
+    "pf": 1.7,
+    "avg": 0.08,
+    "largest_loss": -0.48,
+    "eqdd": "2.67 (8.09%) Gross Loss",
+    "eqdd_pct": 8.09,
+    "by_hour": [
+      {
+        "hour": 19,
+        "trades": 3,
+        "net": -0.72,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 20,
+        "trades": 4,
+        "net": -0.43,
+        "wr": 50.0,
+        "pf": 0.1
+      },
+      {
+        "hour": 16,
+        "trades": 7,
+        "net": 0.05,
+        "wr": 57.1,
+        "pf": 1.05
+      },
+      {
+        "hour": 18,
+        "trades": 4,
+        "net": 0.65,
+        "wr": 75.0,
+        "pf": 3.03
+      },
+      {
+        "hour": 17,
+        "trades": 6,
+        "net": 1.15,
+        "wr": 66.7,
+        "pf": 3.25
+      },
+      {
+        "hour": 9,
+        "trades": 4,
+        "net": 1.56,
+        "wr": 75.0,
+        "pf": 18.33
+      }
+    ],
+    "by_side": [
+      {
+        "side": "sell",
+        "trades": 8,
+        "net": 0.67,
+        "wr": 50.0,
+        "pf": 1.68
+      },
+      {
+        "side": "buy",
+        "trades": 20,
+        "net": 1.59,
+        "wr": 60.0,
+        "pf": 1.72
+      }
+    ],
+    "by_exit": [
+      {
+        "exit": "manual/exit_loss",
+        "trades": 11,
+        "net": -3.12,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "sl",
+        "trades": 11,
+        "net": 0.77,
+        "wr": 90.9,
+        "pf": 9.56
+      },
+      {
+        "exit": "tp",
+        "trades": 6,
+        "net": 4.61,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_friday_20260508_audit/AcaneM1_v1_guarded_debug_v1_old_friday_d29_lev12000_20260508_20260509.htm"
+  },
+  {
+    "label": "v2",
+    "stem": "AcaneM1_v2",
+    "deposit": 29,
+    "requested_leverage": "1:2000",
+    "report_leverage": "1:2000",
+    "net": 5.72,
+    "trades": 22,
+    "wins": 13,
+    "losses": 8,
+    "win_rate": 59.09,
+    "pf": 2.36,
+    "avg": 0.26,
+    "largest_loss": -1.32,
+    "eqdd": "2.57 (7.49%) Gross Loss",
+    "eqdd_pct": 7.49,
+    "by_hour": [
+      {
+        "hour": 8,
+        "trades": 3,
+        "net": -0.79,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 6,
+        "trades": 1,
+        "net": -0.66,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 9,
+        "trades": 2,
+        "net": -0.49,
+        "wr": 50.0,
+        "pf": 0.63
+      },
+      {
+        "hour": 15,
+        "trades": 1,
+        "net": -0.44,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -0.35,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 19,
+        "trades": 1,
+        "net": -0.24,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 3,
+        "trades": 2,
+        "net": 0.28,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 18,
+        "trades": 1,
+        "net": 0.68,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 1,
+        "trades": 2,
+        "net": 0.8,
+        "wr": 50.0,
+        "pf": 2.9
+      },
+      {
+        "hour": 17,
+        "trades": 2,
+        "net": 0.82,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 4,
+        "trades": 1,
+        "net": 0.83,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 1,
+        "net": 0.83,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 12,
+        "trades": 1,
+        "net": 1.08,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 0,
+        "trades": 1,
+        "net": 1.18,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 2,
+        "net": 2.19,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "by_side": [
+      {
+        "side": "buy",
+        "trades": 11,
+        "net": 0.48,
+        "wr": 45.5,
+        "pf": 1.13
+      },
+      {
+        "side": "sell",
+        "trades": 11,
+        "net": 5.24,
+        "wr": 72.7,
+        "pf": 9.06
+      }
+    ],
+    "by_exit": [
+      {
+        "exit": "manual/exit_loss",
+        "trades": 8,
+        "net": -4.22,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "sl",
+        "trades": 4,
+        "net": 0.31,
+        "wr": 75.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "tp",
+        "trades": 10,
+        "net": 9.63,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_friday_20260508_audit/AcaneM1_v2_v2_friday_d29_lev12000_20260508_20260509.htm"
+  },
+  {
+    "label": "v1_old",
+    "stem": "AcaneM1_v1_guarded_debug",
+    "deposit": 100,
+    "requested_leverage": "1:2000",
+    "report_leverage": "1:2000",
+    "net": 42.0,
+    "trades": 86,
+    "wins": 55,
+    "losses": 31,
+    "win_rate": 63.95,
+    "pf": 2.15,
+    "avg": 0.49,
+    "largest_loss": -3.26,
+    "eqdd": "9.36 (8.08%) Gross Loss",
+    "eqdd_pct": 8.08,
+    "by_hour": [
+      {
+        "hour": 3,
+        "trades": 9,
+        "net": -4.47,
+        "wr": 66.7,
+        "pf": 0.21
+      },
+      {
+        "hour": 8,
+        "trades": 5,
+        "net": -4.35,
+        "wr": 40.0,
+        "pf": 0.02
+      },
+      {
+        "hour": 19,
+        "trades": 3,
+        "net": -3.59,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 2,
+        "net": -2.29,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 20,
+        "trades": 4,
+        "net": -2.11,
+        "wr": 50.0,
+        "pf": 0.11
+      },
+      {
+        "hour": 6,
+        "trades": 1,
+        "net": -1.32,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 5,
+        "trades": 2,
+        "net": -1.16,
+        "wr": 50.0,
+        "pf": 0.09
+      },
+      {
+        "hour": 1,
+        "trades": 3,
+        "net": 0.81,
+        "wr": 33.3,
+        "pf": 1.49
+      },
+      {
+        "hour": 16,
+        "trades": 6,
+        "net": 2.0,
+        "wr": 66.7,
+        "pf": 1.81
+      },
+      {
+        "hour": 12,
+        "trades": 1,
+        "net": 3.25,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 15,
+        "trades": 7,
+        "net": 3.28,
+        "wr": 57.1,
+        "pf": 2.05
+      },
+      {
+        "hour": 18,
+        "trades": 4,
+        "net": 3.29,
+        "wr": 75.0,
+        "pf": 3.08
+      },
+      {
+        "hour": 17,
+        "trades": 6,
+        "net": 4.38,
+        "wr": 66.7,
+        "pf": 2.92
+      },
+      {
+        "hour": 0,
+        "trades": 4,
+        "net": 4.8,
+        "wr": 75.0,
+        "pf": 481.0
+      },
+      {
+        "hour": 13,
+        "trades": 4,
+        "net": 4.83,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 2,
+        "trades": 4,
+        "net": 6.37,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 9,
+        "trades": 7,
+        "net": 7.35,
+        "wr": 57.1,
+        "pf": 3.87
+      },
+      {
+        "hour": 4,
+        "trades": 4,
+        "net": 7.53,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 10,
+        "net": 13.4,
+        "wr": 80.0,
+        "pf": 7.98
+      }
+    ],
+    "by_side": [
+      {
+        "side": "buy",
+        "trades": 49,
+        "net": 11.24,
+        "wr": 57.1,
+        "pf": 1.47
+      },
+      {
+        "side": "sell",
+        "trades": 37,
+        "net": 30.76,
+        "wr": 73.0,
+        "pf": 3.49
+      }
+    ],
+    "by_exit": [
+      {
+        "exit": "manual/exit_loss",
+        "trades": 29,
+        "net": -36.14,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "sl",
+        "trades": 29,
+        "net": 6.72,
+        "wr": 93.1,
+        "pf": 18.23
+      },
+      {
+        "exit": "tp",
+        "trades": 28,
+        "net": 71.42,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_friday_20260508_audit/AcaneM1_v1_guarded_debug_v1_old_friday_d100_lev12000_20260508_20260509.htm"
+  },
+  {
+    "label": "v2",
+    "stem": "AcaneM1_v2",
+    "deposit": 100,
+    "requested_leverage": "1:2000",
+    "report_leverage": "1:2000",
+    "net": 18.83,
+    "trades": 24,
+    "wins": 16,
+    "losses": 8,
+    "win_rate": 66.67,
+    "pf": 3.03,
+    "avg": 0.78,
+    "largest_loss": -2.62,
+    "eqdd": "4.64 (4.16%) Gross Loss",
+    "eqdd_pct": 4.16,
+    "by_hour": [
+      {
+        "hour": 8,
+        "trades": 3,
+        "net": -1.92,
+        "wr": 33.3,
+        "pf": 0.01
+      },
+      {
+        "hour": 6,
+        "trades": 1,
+        "net": -1.32,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 19,
+        "trades": 1,
+        "net": -0.96,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -0.69,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 9,
+        "trades": 2,
+        "net": -0.14,
+        "wr": 50.0,
+        "pf": 0.95
+      },
+      {
+        "hour": 15,
+        "trades": 2,
+        "net": 0.62,
+        "wr": 50.0,
+        "pf": 1.7
+      },
+      {
+        "hour": 3,
+        "trades": 2,
+        "net": 0.7,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 1,
+        "trades": 2,
+        "net": 1.61,
+        "wr": 50.0,
+        "pf": 2.92
+      },
+      {
+        "hour": 13,
+        "trades": 1,
+        "net": 1.85,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 12,
+        "trades": 1,
+        "net": 2.17,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 0,
+        "trades": 1,
+        "net": 2.37,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 1,
+        "net": 2.47,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 17,
+        "trades": 2,
+        "net": 2.48,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 4,
+        "trades": 1,
+        "net": 2.48,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 18,
+        "trades": 1,
+        "net": 2.72,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 2,
+        "net": 4.39,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "by_side": [
+      {
+        "side": "buy",
+        "trades": 12,
+        "net": 4.79,
+        "wr": 50.0,
+        "pf": 1.64
+      },
+      {
+        "side": "sell",
+        "trades": 12,
+        "net": 14.04,
+        "wr": 83.3,
+        "pf": 8.93
+      }
+    ],
+    "by_exit": [
+      {
+        "exit": "manual/exit_loss",
+        "trades": 8,
+        "net": -9.26,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "sl",
+        "trades": 4,
+        "net": 0.82,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "tp",
+        "trades": 12,
+        "net": 27.27,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_friday_20260508_audit/AcaneM1_v2_v2_friday_d100_lev12000_20260508_20260509.htm"
+  },
+  {
+    "label": "v1_old",
+    "stem": "AcaneM1_v1_guarded_debug",
+    "deposit": 200,
+    "requested_leverage": "1:2000",
+    "report_leverage": "1:2000",
+    "net": 91.41,
+    "trades": 85,
+    "wins": 55,
+    "losses": 30,
+    "win_rate": 64.71,
+    "pf": 2.18,
+    "avg": 1.08,
+    "largest_loss": -7.6,
+    "eqdd": "20.21 (8.60%) Gross Loss",
+    "eqdd_pct": 8.6,
+    "by_hour": [
+      {
+        "hour": 3,
+        "trades": 9,
+        "net": -10.1,
+        "wr": 66.7,
+        "pf": 0.19
+      },
+      {
+        "hour": 8,
+        "trades": 5,
+        "net": -9.09,
+        "wr": 40.0,
+        "pf": 0.02
+      },
+      {
+        "hour": 19,
+        "trades": 3,
+        "net": -7.9,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 2,
+        "net": -5.35,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 20,
+        "trades": 4,
+        "net": -4.9,
+        "wr": 50.0,
+        "pf": 0.11
+      },
+      {
+        "hour": 6,
+        "trades": 1,
+        "net": -3.31,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 5,
+        "trades": 2,
+        "net": -2.32,
+        "wr": 50.0,
+        "pf": 0.09
+      },
+      {
+        "hour": 1,
+        "trades": 3,
+        "net": 1.63,
+        "wr": 33.3,
+        "pf": 1.5
+      },
+      {
+        "hour": 16,
+        "trades": 6,
+        "net": 4.49,
+        "wr": 66.7,
+        "pf": 1.8
+      },
+      {
+        "hour": 12,
+        "trades": 1,
+        "net": 6.49,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 18,
+        "trades": 4,
+        "net": 6.94,
+        "wr": 75.0,
+        "pf": 2.83
+      },
+      {
+        "hour": 15,
+        "trades": 6,
+        "net": 8.31,
+        "wr": 66.7,
+        "pf": 2.86
+      },
+      {
+        "hour": 0,
+        "trades": 4,
+        "net": 9.58,
+        "wr": 75.0,
+        "pf": 480.0
+      },
+      {
+        "hour": 17,
+        "trades": 6,
+        "net": 9.95,
+        "wr": 66.7,
+        "pf": 2.96
+      },
+      {
+        "hour": 13,
+        "trades": 4,
+        "net": 13.73,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 9,
+        "trades": 7,
+        "net": 14.69,
+        "wr": 57.1,
+        "pf": 3.87
+      },
+      {
+        "hour": 2,
+        "trades": 4,
+        "net": 15.89,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 4,
+        "trades": 4,
+        "net": 17.56,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 10,
+        "net": 25.12,
+        "wr": 80.0,
+        "pf": 7.54
+      }
+    ],
+    "by_side": [
+      {
+        "side": "buy",
+        "trades": 48,
+        "net": 28.45,
+        "wr": 58.3,
+        "pf": 1.55
+      },
+      {
+        "side": "sell",
+        "trades": 37,
+        "net": 62.96,
+        "wr": 73.0,
+        "pf": 3.45
+      }
+    ],
+    "by_exit": [
+      {
+        "exit": "manual/exit_loss",
+        "trades": 28,
+        "net": -76.62,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "sl",
+        "trades": 31,
+        "net": 16.18,
+        "wr": 93.5,
+        "pf": 21.74
+      },
+      {
+        "exit": "tp",
+        "trades": 26,
+        "net": 151.85,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_friday_20260508_audit/AcaneM1_v1_guarded_debug_v1_old_friday_d200_lev12000_20260508_20260509.htm"
+  },
+  {
+    "label": "v2",
+    "stem": "AcaneM1_v2",
+    "deposit": 200,
+    "requested_leverage": "1:2000",
+    "report_leverage": "1:2000",
+    "net": 45.43,
+    "trades": 24,
+    "wins": 16,
+    "losses": 8,
+    "win_rate": 66.67,
+    "pf": 3.11,
+    "avg": 1.89,
+    "largest_loss": -6.56,
+    "eqdd": "11.47 (5.08%) Gross Loss",
+    "eqdd_pct": 5.08,
+    "by_hour": [
+      {
+        "hour": 8,
+        "trades": 3,
+        "net": -4.26,
+        "wr": 33.3,
+        "pf": 0.01
+      },
+      {
+        "hour": 6,
+        "trades": 1,
+        "net": -3.31,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 19,
+        "trades": 1,
+        "net": -2.16,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 10,
+        "trades": 1,
+        "net": -1.74,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 9,
+        "trades": 2,
+        "net": -0.75,
+        "wr": 50.0,
+        "pf": 0.89
+      },
+      {
+        "hour": 3,
+        "trades": 2,
+        "net": 1.53,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 15,
+        "trades": 2,
+        "net": 2.77,
+        "wr": 50.0,
+        "pf": 2.56
+      },
+      {
+        "hour": 1,
+        "trades": 2,
+        "net": 3.23,
+        "wr": 50.0,
+        "pf": 2.93
+      },
+      {
+        "hour": 0,
+        "trades": 1,
+        "net": 4.73,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 4,
+        "trades": 1,
+        "net": 4.95,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 12,
+        "trades": 1,
+        "net": 5.41,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 13,
+        "trades": 1,
+        "net": 5.56,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 16,
+        "trades": 1,
+        "net": 5.76,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 18,
+        "trades": 1,
+        "net": 6.12,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 17,
+        "trades": 2,
+        "net": 6.61,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "hour": 7,
+        "trades": 2,
+        "net": 10.98,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "by_side": [
+      {
+        "side": "buy",
+        "trades": 12,
+        "net": 10.59,
+        "wr": 50.0,
+        "pf": 1.61
+      },
+      {
+        "side": "sell",
+        "trades": 12,
+        "net": 34.84,
+        "wr": 83.3,
+        "pf": 9.3
+      }
+    ],
+    "by_exit": [
+      {
+        "exit": "manual/exit_loss",
+        "trades": 8,
+        "net": -21.52,
+        "wr": 0.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "sl",
+        "trades": 4,
+        "net": 1.84,
+        "wr": 100.0,
+        "pf": 0.0
+      },
+      {
+        "exit": "tp",
+        "trades": 12,
+        "net": 65.11,
+        "wr": 100.0,
+        "pf": 0.0
+      }
+    ],
+    "report": "/Users/naufalrachmandani/Hobby/MT5 XAU Bot/build/acane_friday_20260508_audit/AcaneM1_v2_v2_friday_d200_lev12000_20260508_20260509.htm"
+  }
+]

@@ -1,0 +1,4 @@
+engine,regime_tag,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
+TPL,,42.0,-14.34,34.13,-48.47,45.23809523809524,0.7041468949865897,-0.3414285714285714,1.7963157894736843,-2.107391304347826,3.85,-2.89,19.0,23.0
+CBK,WG,1.0,-1.49,0,-1.49,0.0,0.0,-1.49,0.0,-1.49,0.0,-1.49,0.0,1.0
+CBK,RG,1.0,0.79,0.79,0,100.0,0.0,0.79,0.79,0.0,0.79,0.0,1.0,0.0

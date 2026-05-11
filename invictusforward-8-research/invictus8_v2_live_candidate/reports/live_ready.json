@@ -1,0 +1,9 @@
+{
+  "live_ready": false,
+  "reasons": [
+    "no candidate passed walk-forward validation gates",
+    "1000 USC diagnostic V2Live YTD equity DD remains 933.04500000 USC (28.33458095%), so practical live work needs a higher minimum balance or stricter micro-risk cent profile"
+  ],
+  "decision": "not live-ready; keep V1 as baseline and use V2Live diagnostics to narrow risk further",
+  "selected_set": ""
+}

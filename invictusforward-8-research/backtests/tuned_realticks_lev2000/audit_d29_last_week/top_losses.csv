@@ -1,0 +1,4 @@
+entry_time,exit_time,entry_month,entry_date,entry_hour,side,volume,entry_price,exit_price,profit,balance,hold_minutes,exit_reason,family,engine,code,score,grade,regime_tag,hour_tag,tags,score_bucket,entry_comment,exit_comment,match_error
+2026-05-04 01:15:00,2026-05-04 07:59:04,2026-05,2026-05-04,1,buy,0.01,4600.913,4580.37,-20.54,11.0,404.06666666666666,sl,IHS RB BUY R:$78,,,0,,,,,unknown,IHS RB BUY R:$78,sl 4580.460,20.334570000000003
+2026-05-05 12:45:00,2026-05-05 16:32:00,2026-05,2026-05-05,12,buy,0.01,4567.546,4554.9,-12.65,-1.65,227.0,manual/exit_loss,IHB S:100 IMP,,,0,,,,,unknown,IHB S:100 IMP,so -72.37%,12.523539999999993
+2026-05-04 01:30:00,2026-05-04 02:23:52,2026-05,2026-05-04,1,buy,0.01,4594.898,4597.436,2.54,31.54,53.86666666666667,sl,IHS RB BUY R:$74,,,0,,,,,unknown,IHS RB BUY R:$74,sl 4597.710,2.5146200000000043

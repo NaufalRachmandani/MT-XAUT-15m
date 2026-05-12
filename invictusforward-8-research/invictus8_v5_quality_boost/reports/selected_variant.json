@@ -1,0 +1,13 @@
+{
+  "variant_key": "v5_max_profit_scaled",
+  "variant": "V5 max-profit scaled",
+  "passed_research_gate": true,
+  "fail_reasons": [],
+  "score": 22697.6775536,
+  "cent_ytd_net": 19839.9106,
+  "cent_ytd_pf": 2.52,
+  "cent_ytd_dd_pct": 28.59868081,
+  "cent_last_month_net": 2562.402,
+  "cent_last_month_pf": 8.01,
+  "cent_last_month_dd_pct": 13.79541434
+}

@@ -1,0 +1,213 @@
+[
+  {
+    "profile": "v6balance_raw",
+    "label": "V6 profit-balanced raw",
+    "score": -3746.457256656049,
+    "live_ready": false,
+    "fail_reasons": [
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 13840.665,
+    "max_cent_ytd_dd_pct": 17.52451893,
+    "max_cent_ytd_largest_loss_abs": 1041.4,
+    "min_usd_archive_net": 19701.34,
+    "max_usd_archive_dd_pct": 16.61,
+    "max_mc_p95_dd_pct": 128.2357563115605
+  },
+  {
+    "profile": "v8_v5max_micro200_cap100",
+    "label": "V8 V5max micro 200 cap1.00",
+    "score": -12798.080276272369,
+    "live_ready": false,
+    "fail_reasons": [
+      "USD archive DD > 45% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 7894.0174,
+    "max_cent_ytd_dd_pct": 21.27603759,
+    "max_cent_ytd_largest_loss_abs": 370.3,
+    "min_usd_archive_net": 11549.85,
+    "max_usd_archive_dd_pct": 67.36,
+    "max_mc_p95_dd_pct": 74.9429701977237
+  },
+  {
+    "profile": "v7h8m25_raw",
+    "label": "V7 soft H8 m25 raw",
+    "score": -13000.11323125927,
+    "live_ready": false,
+    "fail_reasons": [
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 14270.0368,
+    "max_cent_ytd_dd_pct": 17.48578074,
+    "max_cent_ytd_largest_loss_abs": 1203.4,
+    "min_usd_archive_net": 34190.53,
+    "max_usd_archive_dd_pct": 30.17,
+    "max_mc_p95_dd_pct": 242.7225927225927
+  },
+  {
+    "profile": "v8_v6balance_micro250_cap075",
+    "label": "V8 V6balance micro 250 cap0.75",
+    "score": -17540.641440288007,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent YTD DD > 30% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 2440.253,
+    "max_cent_ytd_dd_pct": 36.02611473,
+    "max_cent_ytd_largest_loss_abs": 147.9,
+    "min_usd_archive_net": 5413.13,
+    "max_usd_archive_dd_pct": 31.2,
+    "max_mc_p95_dd_pct": 47.591867847880046
+  },
+  {
+    "profile": "v8_v5max_guard_moderate",
+    "label": "V8 V5max guard moderate",
+    "score": -17899.3301055,
+    "live_ready": false,
+    "fail_reasons": [
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 100",
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 300",
+      "USD archive DD > 45% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 1934.4342,
+    "max_cent_ytd_dd_pct": 27.27973373,
+    "max_cent_ytd_largest_loss_abs": 277.7,
+    "min_usd_archive_net": -396.43,
+    "max_usd_archive_dd_pct": 46.16,
+    "max_mc_p95_dd_pct": 42.31
+  },
+  {
+    "profile": "v8_v7h8m25_micro250_cap075",
+    "label": "V8 V7H8m25 micro 250 cap0.75",
+    "score": -18161.765109009444,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent YTD DD > 30% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 2490.853,
+    "max_cent_ytd_dd_pct": 36.02611473,
+    "max_cent_ytd_largest_loss_abs": 162.0,
+    "min_usd_archive_net": 6041.59,
+    "max_usd_archive_dd_pct": 33.96,
+    "max_mc_p95_dd_pct": 52.35675453509444
+  },
+  {
+    "profile": "v8_v5max_guard_strict",
+    "label": "V8 V5max guard strict",
+    "score": -19956.528988500002,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent:ytd_2026: net <= 0 at delay 0",
+      "cent:ytd_2026: net <= 0 at delay 100",
+      "cent:ytd_2026: net <= 0 at delay 300",
+      "cent:ytd_2026: net <= 0 at delay 500",
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 100",
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 300",
+      "USD archive DD > 45% under delay stress"
+    ],
+    "min_cent_ytd_net": -167.5,
+    "max_cent_ytd_dd_pct": 28.27734711,
+    "max_cent_ytd_largest_loss_abs": 192.9,
+    "min_usd_archive_net": -396.43,
+    "max_usd_archive_dd_pct": 46.16,
+    "max_mc_p95_dd_pct": 39.642999999999994
+  },
+  {
+    "profile": "v8_v6balance_micro200_cap100",
+    "label": "V8 V6balance micro 200 cap1.00",
+    "score": -22265.27059461613,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent YTD DD > 30% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 4000.9644,
+    "max_cent_ytd_dd_pct": 47.85710234,
+    "max_cent_ytd_largest_loss_abs": 244.7,
+    "min_usd_archive_net": 6761.84,
+    "max_usd_archive_dd_pct": 40.94,
+    "max_mc_p95_dd_pct": 59.26859175616133
+  },
+  {
+    "profile": "v8_v7h8m25_micro200_cap100",
+    "label": "V8 V7H8m25 micro 200 cap1.00",
+    "score": -22540.535881540003,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent YTD DD > 30% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 3759.5946,
+    "max_cent_ytd_dd_pct": 46.69355116,
+    "max_cent_ytd_largest_loss_abs": 254.5,
+    "min_usd_archive_net": 7626.15,
+    "max_usd_archive_dd_pct": 42.19,
+    "max_mc_p95_dd_pct": 64.19375075540005
+  },
+  {
+    "profile": "v5max_raw",
+    "label": "V5 max raw",
+    "score": -23160.606761320465,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent YTD DD > 30% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": 18178.9898,
+    "max_cent_ytd_dd_pct": 30.28810579,
+    "max_cent_ytd_largest_loss_abs": 3732.5,
+    "min_usd_archive_net": 17946.58,
+    "max_usd_archive_dd_pct": 28.51,
+    "max_mc_p95_dd_pct": 262.05454534820467
+  },
+  {
+    "profile": "v8_v6balance_guard_moderate",
+    "label": "V8 V6balance guard moderate",
+    "score": -24475.061495,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent:ytd_2026: net <= 0 at delay 0",
+      "cent:ytd_2026: net <= 0 at delay 100",
+      "cent:ytd_2026: net <= 0 at delay 300",
+      "cent:ytd_2026: net <= 0 at delay 500",
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 100",
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 300",
+      "cent YTD DD > 30% under delay stress",
+      "USD archive DD > 45% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": -215.7,
+    "max_cent_ytd_dd_pct": 34.5049257,
+    "max_cent_ytd_largest_loss_abs": 241.1,
+    "min_usd_archive_net": -495.55,
+    "max_usd_archive_dd_pct": 56.18,
+    "max_mc_p95_dd_pct": 49.555
+  },
+  {
+    "profile": "v8_v7h8m25_guard_moderate",
+    "label": "V8 V7H8m25 guard moderate",
+    "score": -24475.061495,
+    "live_ready": false,
+    "fail_reasons": [
+      "cent:ytd_2026: net <= 0 at delay 0",
+      "cent:ytd_2026: net <= 0 at delay 100",
+      "cent:ytd_2026: net <= 0 at delay 300",
+      "cent:ytd_2026: net <= 0 at delay 500",
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 100",
+      "usd_real38:usd_jun2025_now: net <= 0 at delay 300",
+      "cent YTD DD > 30% under delay stress",
+      "USD archive DD > 45% under delay stress",
+      "Monte Carlo p95 DD > 40%"
+    ],
+    "min_cent_ytd_net": -215.7,
+    "max_cent_ytd_dd_pct": 34.5049257,
+    "max_cent_ytd_largest_loss_abs": 241.1,
+    "min_usd_archive_net": -495.55,
+    "max_usd_archive_dd_pct": 56.18,
+    "max_mc_p95_dd_pct": 49.555
+  }
+]

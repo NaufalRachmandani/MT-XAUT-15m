@@ -1,4 +1,0 @@
-exit_reason,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
-manual/exit_loss,6.0,-6.25,0,-6.25,0.0,0.0,-1.0416666666666667,0.0,-1.0416666666666667,0.0,-1.38,0.0,6.0
-sl,1.0,0.14,0.14,0,100.0,0.0,0.14,0.14,0.0,0.14,0.0,1.0,0.0
-tp,1.0,1.63,1.63,0,100.0,0.0,1.63,1.63,0.0,1.63,0.0,1.0,0.0

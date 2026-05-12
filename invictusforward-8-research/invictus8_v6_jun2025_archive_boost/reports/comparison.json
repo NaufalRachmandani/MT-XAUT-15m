@@ -1,0 +1,45 @@
+{
+  "scope": "Invictus Forward-8 V6 Jun2025 archive boost",
+  "authority": "Native MT5 Strategy Tester .htm reports; Python only parsed/generated reports.",
+  "selected_research_set": "invictusforward-8-research/invictus8_v6_jun2025_archive_boost/sets/InvictusForward8_V6_selected_profit_balanced_not_live.set",
+  "selected_variant": "v6_profit_balanced",
+  "live_ready": false,
+  "live_ready_reason": "Not live-ready: Jun-Dec 2025 PF is only 1.01 with 63.77% equity DD, and cent May/last-month DD is higher than V5 max despite better risk on 2026 YTD.",
+  "winners_by_net": {
+    "usd_proxy:archive_jun_dec_2025": {
+      "variant_key": "v6_archive_balanced",
+      "variant": "V6 archive balanced",
+      "net": 776.14
+    },
+    "usd_proxy:ytd_2026": {
+      "variant_key": "v6_archive_profit_push",
+      "variant": "V6 archive profit push",
+      "net": 25425.28
+    },
+    "usd_proxy:archive_jun2025_now": {
+      "variant_key": "v6_archive_balanced",
+      "variant": "V6 archive balanced",
+      "net": 20540.08
+    },
+    "cent:oos_may": {
+      "variant_key": "v6_archive_profit_push",
+      "variant": "V6 archive profit push",
+      "net": 1378.2
+    },
+    "cent:last_month": {
+      "variant_key": "v6_archive_profit_push",
+      "variant": "V6 archive profit push",
+      "net": 3799.6228
+    },
+    "cent:ytd_2026": {
+      "variant_key": "v5_max_profit_scaled",
+      "variant": "V5 max-profit scaled",
+      "net": 19839.9106
+    }
+  },
+  "notes": [
+    "V6 archive-balanced has the highest USD Jun2025-now net profit, but cent 2026 profit is much lower.",
+    "V6 profit-push has the strongest 2026 profit, but Jun-Dec 2025 is negative, so it did not learn the older archive robustly.",
+    "V6 profit-balanced is the best compromise for manual research: higher full archive net and lower full archive DD than V5 max, while keeping cent 2026 profit reasonably high."
+  ]
+}

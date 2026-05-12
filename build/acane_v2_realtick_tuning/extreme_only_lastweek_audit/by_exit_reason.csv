@@ -1,3 +1,0 @@
-exit_reason,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
-manual/exit_loss,2.0,-0.62,0,-0.62,0.0,0.0,-0.31,0.0,-0.31,0.0,-0.36,0.0,2.0
-sl,2.0,-0.22,0.03,-0.25,50.0,0.12,-0.11,0.03,-0.25,0.03,-0.25,1.0,1.0

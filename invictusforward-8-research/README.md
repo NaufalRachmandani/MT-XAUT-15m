@@ -1,32 +1,33 @@
 # InvictusForward-8 Research Folder
 
-## Contents
+Folder ini sengaja dibuat terpisah untuk riset `InvictusForward-8`.
 
-- `source/original/InvictusForward-8`: untouched source extracted from the zip.
-- `source/tuned/InvictusForward-8-Tuned`: tuned EA source plus compiled `InvictusForward-8-Tuned.ex5`.
-- `backtests/cent_native_2026_lev2000_compare`: native MT5 cent-account Base vs Tuned comparison for 2026-only windows.
-- `backtests/tuned_realticks_lev2000`: MT5 reports, `.ini` tester configs, images, compile log, and parsed summary.
-- `sets/InvictusForward-8-Tuned-research.set`: tuned input defaults.
-- `tools/run_cent_native_compare.py`: reproducible native MT5 runner for `XAUUSDc`, `USC`, `Model=4`, and `Leverage=1:2000`.
-- `tools/run_tuned_backtests.py`: reproducible MT5 runner for `Model=4` real ticks and `Leverage=1:2000`.
-- `notes/RESEARCH.md`: research summary and baseline-vs-tuned comparison.
+## Struktur Aktif
 
-## Run
+- `source/original/InvictusForward-8`: Base/source original dari zip.
+- `invictus8_v5_quality_boost`: V5 quality/profit boost reference.
+- `invictus8_v6_jun2025_archive_boost`: V6 archive-aware balanced reference.
+- `invictus8_v8_risk_certified`: versi terbaru/latest risk-certified stress attempt.
+- `tools/run_invictus8_v5_quality_boost.py`: native MT5 runner/helper V5.
+- `tools/run_invictus8_v8_risk_certified.py`: native MT5 runner/helper V8.
 
-```bash
-python3 invictusforward-8-research/tools/run_tuned_backtests.py --cases d100_last_week d100_last_month d100_ytd_2026
-```
+## Report Utama
 
-Cent native compare:
+- `invictus8_v5_quality_boost/reports/SUMMARY.md`
+- `invictus8_v6_jun2025_archive_boost/reports/SUMMARY.md`
+- `invictus8_v8_risk_certified/reports/SUMMARY.md`
 
-```bash
-python3 invictusforward-8-research/tools/run_cent_native_compare.py --timeout 2400
-```
+## MT5 Native Rules
 
-Every generated tester `.ini` uses:
+Setiap run riset harus tetap:
 
 - `Model=4`
 - `Leverage=1:2000`
 - `UseLocal=1`
 - `UseRemote=0`
 - `UseCloud=0`
+- `AllowLiveTrading=0`
+- `Visual=0`
+- `ShutdownTerminal=1`
+
+Jangan pakai hasil 2025 cent yang history quality rendah untuk keputusan logic. Untuk archive/tick proxy, pisahkan label account dan symbol supaya hasil tidak tercampur dengan cent confirmation.

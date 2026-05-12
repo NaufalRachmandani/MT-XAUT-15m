@@ -1,0 +1,109 @@
+[
+  {
+    "variant_key": "v5_quality_scaled",
+    "variant": "V5 quality-scaled",
+    "passed_research_gate": false,
+    "fail_reasons": [
+      "oos_may: cent confirmation not tested",
+      "validate_apr: cent confirmation not tested",
+      "validate_mar: cent confirmation not tested"
+    ],
+    "score": 6827.9782678,
+    "cent_ytd_net": 6045.1758,
+    "cent_ytd_pf": 3.04,
+    "cent_ytd_dd_pct": 17.63101501,
+    "cent_last_month_net": 1071.8812,
+    "cent_last_month_pf": 6.4,
+    "cent_last_month_dd_pct": 15.7466344
+  },
+  {
+    "variant_key": "v5_profit_scaled",
+    "variant": "V5 profit-scaled",
+    "passed_research_gate": true,
+    "fail_reasons": [],
+    "score": 11148.8379789,
+    "cent_ytd_net": 9701.4892,
+    "cent_ytd_pf": 3.1,
+    "cent_ytd_dd_pct": 22.14138695,
+    "cent_last_month_net": 1459.9812,
+    "cent_last_month_pf": 7.59,
+    "cent_last_month_dd_pct": 9.99317607
+  },
+  {
+    "variant_key": "v5_high_profit_scaled",
+    "variant": "V5 high-profit scaled",
+    "passed_research_gate": true,
+    "fail_reasons": [],
+    "score": 21297.890774299998,
+    "cent_ytd_net": 18771.2898,
+    "cent_ytd_pf": 2.55,
+    "cent_ytd_dd_pct": 26.87345441,
+    "cent_last_month_net": 2337.202,
+    "cent_last_month_pf": 6.98,
+    "cent_last_month_dd_pct": 14.72443125
+  },
+  {
+    "variant_key": "v5_mid_profit_scaled",
+    "variant": "V5 mid-profit scaled",
+    "passed_research_gate": false,
+    "fail_reasons": [
+      "oos_may: cent confirmation not tested",
+      "validate_apr: cent confirmation not tested",
+      "validate_mar: cent confirmation not tested"
+    ],
+    "score": 14551.0556881,
+    "cent_ytd_net": 13095.7422,
+    "cent_ytd_pf": 3.24,
+    "cent_ytd_dd_pct": 24.79177915,
+    "cent_last_month_net": 1751.5416,
+    "cent_last_month_pf": 6.95,
+    "cent_last_month_dd_pct": 22.53877763
+  },
+  {
+    "variant_key": "v5_max_profit_scaled",
+    "variant": "V5 max-profit scaled",
+    "passed_research_gate": true,
+    "fail_reasons": [],
+    "score": 22697.6775536,
+    "cent_ytd_net": 19839.9106,
+    "cent_ytd_pf": 2.52,
+    "cent_ytd_dd_pct": 28.59868081,
+    "cent_last_month_net": 2562.402,
+    "cent_last_month_pf": 8.01,
+    "cent_last_month_dd_pct": 13.79541434
+  },
+  {
+    "variant_key": "v5_leak_block_scaled",
+    "variant": "V5 leak-block scaled",
+    "passed_research_gate": false,
+    "fail_reasons": [
+      "oos_may: cent confirmation not tested",
+      "validate_apr: cent confirmation not tested",
+      "validate_mar: cent confirmation not tested"
+    ],
+    "score": 5327.9161881,
+    "cent_ytd_net": 4879.306,
+    "cent_ytd_pf": 2.29,
+    "cent_ytd_dd_pct": 19.40421719,
+    "cent_last_month_net": 947.7812,
+    "cent_last_month_pf": 3.5,
+    "cent_last_month_dd_pct": 19.49924227
+  },
+  {
+    "variant_key": "v5_strong_rr_scaled",
+    "variant": "V5 strong-RR scaled",
+    "passed_research_gate": false,
+    "fail_reasons": [
+      "oos_may: cent confirmation not tested",
+      "validate_apr: cent confirmation not tested",
+      "validate_mar: cent confirmation not tested"
+    ],
+    "score": 6461.2450358,
+    "cent_ytd_net": 5697.3758,
+    "cent_ytd_pf": 2.95,
+    "cent_ytd_dd_pct": 17.66267661,
+    "cent_last_month_net": 1059.6812,
+    "cent_last_month_pf": 6.34,
+    "cent_last_month_dd_pct": 15.7466344
+  }
+]

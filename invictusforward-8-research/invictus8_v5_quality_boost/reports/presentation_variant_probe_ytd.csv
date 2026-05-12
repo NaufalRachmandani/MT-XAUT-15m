@@ -1,0 +1,16 @@
+Source,Variant Key,Variant Name,Net Profit,ROI %,Profit Factor,Trades,Win Rate %,Equity DD %,Largest Loss,Max Consecutive Losses
+V4,v4_lot_200,V4 lot +100%,16322.0254,1632.20254,3.31,167,81.44,28.63173143,-849.1,3
+V4,v4_aggressive_boost,V4 aggressive boost,15156.7254,1515.67254,3.18,165,81.21,28.18393387,-799.2,3
+V4,v4_balanced_boost,V4 balanced boost,8215.008,821.5008,3.13,166,81.33,21.72968119,-399.6,3
+V4,v4_lot_150,V4 lot +50%,8103.7778,810.37778,3.11,164,81.1,21.85673873,-399.6,3
+V4,v3_reference,V3 reference,3291.0832,329.10832,3.06,158,80.38,12.72728325,-124.9,3
+V4,v4_ref_logic_fixed_lots,"V4 same logic, input-driven lots",3291.0832,329.10832,3.06,158,80.38,12.72728325,-124.9,3
+V4,v4_rr_boost,V4 RR boost,3043.1832,304.31831999999997,2.91,156,80.13,13.19347882,-124.9,3
+V5,v5_max_profit_scaled,V5 max-profit scaled,19839.9106,1983.9910599999998,2.52,169,81.07,28.59868081,-3732.5,3
+V5,v5_high_profit_scaled,V5 high-profit scaled,18771.2898,1877.12898,2.55,169,81.07,26.87345441,-3110.4,3
+V5,v5_mid_profit_scaled,V5 mid-profit scaled,13095.7422,1309.57422,3.24,166,81.33,24.79177915,-555.4,3
+V5,v5_profit_scaled,V5 profit-scaled,9701.4892,970.14892,3.1,165,81.21,22.14138695,-416.5,3
+V5,v5_quality_scaled,V5 quality-scaled,6045.1758,604.51758,3.04,165,81.21,17.63101501,-254.5,3
+V5,v5_strong_rr_scaled,V5 strong-RR scaled,5697.3758,569.73758,2.95,163,80.98,17.66267661,-244.7,3
+V5,v5_leak_block_scaled,V5 leak-block scaled,4879.306,487.93059999999997,2.29,138,79.71,19.40421719,-821.1,4
+V5,v3_reference,V3 reference,3291.0832,329.10832,3.06,158,80.38,12.72728325,-124.9,3

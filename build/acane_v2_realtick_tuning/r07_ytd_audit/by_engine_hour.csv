@@ -1,3 +1,0 @@
-engine,entry_hour,trades,net,gross_profit,gross_loss,win_rate,profit_factor,avg,avg_win,avg_loss,largest_win,largest_loss,win_count,loss_count
-RCL,4,4.0,-3.5,0,-3.5,0.0,0.0,-0.875,0.0,-0.875,0.0,-1.21,0.0,4.0
-RCL,0,3.0,-1.24,1.22,-2.46,33.33333333333333,0.4959349593495935,-0.41333333333333333,1.22,-1.23,1.22,-1.38,1.0,2.0

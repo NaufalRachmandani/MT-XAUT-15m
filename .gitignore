@@ -2,3 +2,10 @@
 *.lnk
 __pycache__/
 tools/__pycache__/
+build/
+mt5/
+settings.dat
+*.dxvk-cache
+.claude/
+*.log
+*.bak

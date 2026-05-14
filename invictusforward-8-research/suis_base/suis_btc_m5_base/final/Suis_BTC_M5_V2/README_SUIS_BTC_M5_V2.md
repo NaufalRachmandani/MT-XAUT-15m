@@ -1,0 +1,26 @@
+# Suis_BTC_M5_V2
+
+Baked no-set EX5 for BTC M5 cent-account validation.
+
+- EA folder: `Suis_BTC_M5_V2`
+- EX5: `Suis_BTC_M5_V2.ex5`
+- Baked variant: `v2_block_h9_nozone_r155`
+- Symbol used for validation: `BTCUSDc`
+- Period: `M5`
+- Execution: `20 ms`
+- Tick model: real ticks, `100%` history quality
+- Expert parameters: empty in tester ini
+
+## Validation Result
+
+- Net profit: `9667.00` USC
+- Profit percent: `966.70%`
+- Profit factor: `1.97`
+- Trades: `192`
+- Win rate: `74.48%`
+- Max DD Any: `29.28%`
+- Largest loss: `-623.38` USC
+
+## Migration
+
+Attach `Suis_BTC_M5_V2.ex5` to a fresh `BTCUSDc,M5` chart on the cent account, then migrate the MT5 VPS. Do not load a `.set` file; defaults are baked into the EX5.

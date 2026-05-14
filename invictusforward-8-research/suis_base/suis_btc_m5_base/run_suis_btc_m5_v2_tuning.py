@@ -173,6 +173,186 @@ CANDIDATES: dict[str, dict[str, Any]] = {
         "V11_DailyProfitLockStartPct": 23.0,
         "V11_DailyMaxGivebackPct": 7.75,
     },
+    "v2_mt5opt_r17_rr78_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 17.0,
+        "V11_MaxLotCap": 23.25,
+        "V11_DailyMaxLossPct": 9.75,
+        "V11_DailyProfitLockStartPct": 23.0,
+        "V11_DailyMaxGivebackPct": 7.75,
+        "V10_SellRR": 0.78,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r17_rr74_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 17.0,
+        "V11_MaxLotCap": 23.25,
+        "V11_DailyMaxLossPct": 9.75,
+        "V11_DailyProfitLockStartPct": 23.0,
+        "V11_DailyMaxGivebackPct": 7.75,
+        "V10_SellRR": 0.74,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r155_rr78_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.5,
+        "V11_MaxLotCap": 23.25,
+        "V11_DailyMaxLossPct": 9.75,
+        "V11_DailyProfitLockStartPct": 23.0,
+        "V11_DailyMaxGivebackPct": 7.75,
+        "V10_SellRR": 0.78,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r155_rr74_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.5,
+        "V11_MaxLotCap": 23.25,
+        "V11_DailyMaxLossPct": 9.75,
+        "V11_DailyProfitLockStartPct": 23.0,
+        "V11_DailyMaxGivebackPct": 7.75,
+        "V10_SellRR": 0.74,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r15_rr74_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.0,
+        "V11_MaxLotCap": 22.5,
+        "V11_DailyMaxLossPct": 9.5,
+        "V11_DailyProfitLockStartPct": 22.0,
+        "V11_DailyMaxGivebackPct": 7.5,
+        "V10_SellRR": 0.74,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r1475_rr74_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 14.75,
+        "V11_MaxLotCap": 22.125,
+        "V11_DailyMaxLossPct": 9.375,
+        "V11_DailyProfitLockStartPct": 21.5,
+        "V11_DailyMaxGivebackPct": 7.375,
+        "V10_SellRR": 0.74,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r1525_rr74_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.25,
+        "V11_MaxLotCap": 22.875,
+        "V11_DailyMaxLossPct": 9.625,
+        "V11_DailyProfitLockStartPct": 22.5,
+        "V11_DailyMaxGivebackPct": 7.625,
+        "V10_SellRR": 0.74,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r15_rr75_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.0,
+        "V11_MaxLotCap": 22.5,
+        "V11_DailyMaxLossPct": 9.5,
+        "V11_DailyProfitLockStartPct": 22.0,
+        "V11_DailyMaxGivebackPct": 7.5,
+        "V10_SellRR": 0.75,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r15_rr76_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.0,
+        "V11_MaxLotCap": 22.5,
+        "V11_DailyMaxLossPct": 9.5,
+        "V11_DailyProfitLockStartPct": 22.0,
+        "V11_DailyMaxGivebackPct": 7.5,
+        "V10_SellRR": 0.76,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r15_rr77_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.0,
+        "V11_MaxLotCap": 22.5,
+        "V11_DailyMaxLossPct": 9.5,
+        "V11_DailyProfitLockStartPct": 22.0,
+        "V11_DailyMaxGivebackPct": 7.5,
+        "V10_SellRR": 0.77,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r1475_rr76_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 14.75,
+        "V11_MaxLotCap": 22.125,
+        "V11_DailyMaxLossPct": 9.375,
+        "V11_DailyProfitLockStartPct": 21.5,
+        "V11_DailyMaxGivebackPct": 7.375,
+        "V10_SellRR": 0.76,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r1525_rr75_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.25,
+        "V11_MaxLotCap": 22.875,
+        "V11_DailyMaxLossPct": 9.625,
+        "V11_DailyProfitLockStartPct": 22.5,
+        "V11_DailyMaxGivebackPct": 7.625,
+        "V10_SellRR": 0.75,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r1525_rr76_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 15.25,
+        "V11_MaxLotCap": 22.875,
+        "V11_DailyMaxLossPct": 9.625,
+        "V11_DailyProfitLockStartPct": 22.5,
+        "V11_DailyMaxGivebackPct": 7.625,
+        "V10_SellRR": 0.76,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r16_rr74_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 16.0,
+        "V11_MaxLotCap": 24.0,
+        "V11_DailyMaxLossPct": 10.0,
+        "V11_DailyProfitLockStartPct": 24.0,
+        "V11_DailyMaxGivebackPct": 8.0,
+        "V10_SellRR": 0.74,
+        "V10_MinTradeScore": 42,
+    },
+    "v2_mt5opt_r165_rr74_score42": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | {
+        "V10_RiskPercent": 16.5,
+        "V11_MaxLotCap": 24.75,
+        "V11_DailyMaxLossPct": 10.25,
+        "V11_DailyProfitLockStartPct": 24.5,
+        "V11_DailyMaxGivebackPct": 8.25,
+        "V10_SellRR": 0.74,
+        "V10_MinTradeScore": 42,
+    },
     "v2_block_h9_nozone_r16": BASE_V1_COMMON
     | hour_overrides(HOURS_5_6_15_16_BLOCKED)
     | NO_ZONE

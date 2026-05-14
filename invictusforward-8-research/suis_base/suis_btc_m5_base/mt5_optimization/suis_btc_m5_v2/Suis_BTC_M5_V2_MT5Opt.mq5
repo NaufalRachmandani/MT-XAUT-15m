@@ -1,13 +1,13 @@
 #property copyright "Suis Base"
-#property version   "2.00"
+#property version   "2.10"
 #property strict
-#property description "Suis_BTC_M5_V2 BTCUSDc M5 baked defaults"
-// Suis BTC M5 V2 baked no-set build: v2_mt5opt_r15_rr76_score42.
+#property description "Suis_BTC_M5_V2 MT5 optimizer temporary build"
+// Suis BTC M5 V2 MT5 optimizer temporary build. Do not migrate this EX5.
 
 #include <Trade/Trade.mqh>
 
-const double V10_RiskPercent = 15.0;
-const double V11_MaxLotCap = 22.5;
+input double V10_RiskPercent = 15.5;
+input double V11_MaxLotCap = 23.25;
 const double V11_BuyPullbackRiskMultiplier = 1.0;
 const double V10_BuyRiskMultiplier = 1.50;
 const double V10_SellRiskMultiplier = 1.15;
@@ -27,10 +27,10 @@ const bool   V11_BlockOppositeDirection = true;
 const long   V11_OppositeMagic = 0;
 const double V10_MaxSpreadUsd = 250;
 const bool   V11_EnableDailyGuard = true;
-const double V11_DailyMaxLossPct = 9.5;
+const double V11_DailyMaxLossPct = 9.75;
 const double V11_DailyProfitStopPct = 0.00;
-const double V11_DailyProfitLockStartPct = 22.0;
-const double V11_DailyMaxGivebackPct = 7.5;
+const double V11_DailyProfitLockStartPct = 23;
+const double V11_DailyMaxGivebackPct = 7.75;
 const bool   V11_DailyClosePositionsOnStop = true;
 const int    V11_MaxConsecutiveLosses = 4;
 const int    V11_LossCooldownMinutes = 120;
@@ -174,7 +174,7 @@ const int    V10_StopLookbackBars = 5;
 const double V10_StopBufferATR = 0.08;
 const double V10_MinSLUsd = 35;
 const double V10_MaxSLUsd = 320;
-const double V10_SellRR = 0.76;
+input double V10_SellRR = 0.7;
 const double V10_BuyRR = 0.76;
 const double V10_WeakSellRR = 0;
 const double V10_WeakBuyRR = 0.68;
@@ -192,7 +192,7 @@ const bool   V10_CloseOnRegimeFlip = false;
 const bool   V10_TimeCloseProfitOnly = false;
 const int    V10_ScoreGradeAMin = 80;
 const int    V10_ScoreGradeBMin = 65;
-const int    V10_MinTradeScore = 42;
+input int V10_MinTradeScore = 38;
 const int    V10_ScoreBoostMin = 90;
 const double V10_ScoreRRBonus = 0.1;
 const double V10_ScoreRiskBonus = 1;

@@ -4,7 +4,7 @@ Baked no-set EX5 for BTC M5 cent-account validation.
 
 - EA folder: `Suis_BTC_M5_V2`
 - EX5: `Suis_BTC_M5_V2.ex5`
-- Baked variant: `v2_mt5opt_r15_rr76_score42`
+- Baked variant: `v2_qnty_r155_rr76_h17_zone`
 - Symbol used for validation: `BTCUSDc`
 - Period: `M5`
 - Execution: `20 ms`
@@ -13,13 +13,13 @@ Baked no-set EX5 for BTC M5 cent-account validation.
 
 ## Validation Result
 
-- Net profit: `10173.73` USC
-- Profit percent: `1017.37%`
-- Profit factor: `2.00`
-- Trades: `193`
-- Win rate: `74.09%`
-- Max DD Any: `28.60%`
-- Largest loss: `-623.38` USC
+- Net profit: `14326.68` USC
+- Profit percent: `1432.67%`
+- Profit factor: `2.09`
+- Trades: `266`
+- Win rate: `74.44%`
+- Max DD Any: `27.79%`
+- Largest loss: `-620.94` USC
 
 ## Migration
 

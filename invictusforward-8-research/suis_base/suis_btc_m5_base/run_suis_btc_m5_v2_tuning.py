@@ -59,6 +59,16 @@ ALL_HOURS = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23"
 HOURS_5_6_15_16_BLOCKED = "0,1,2,3,4,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23"
 HOURS_5_6_10_15_16_BLOCKED = "0,1,2,3,4,7,8,9,11,12,13,14,17,18,19,20,21,22,23"
 HOURS_5_6_9_15_16_BLOCKED = "0,1,2,3,4,7,8,10,11,12,13,14,17,18,19,20,21,22,23"
+HOURS_4_5_6_15_16_BLOCKED = "0,1,2,3,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23"
+HOURS_5_6_7_15_16_BLOCKED = "0,1,2,3,4,8,9,10,11,12,13,14,17,18,19,20,21,22,23"
+HOURS_5_6_14_15_16_BLOCKED = "0,1,2,3,4,7,8,9,10,11,12,13,17,18,19,20,21,22,23"
+HOURS_5_6_15_16_17_BLOCKED = "0,1,2,3,4,7,8,9,10,11,12,13,14,18,19,20,21,22,23"
+CORE_ALLOWED_SELL_HOURS = [5, 6, 15, 16]
+
+
+def blocked_hours_for_allowed(allowed: list[int]) -> str:
+    allowed_set = set(allowed)
+    return ",".join(str(hour) for hour in range(24) if hour not in allowed_set)
 
 
 def hour_overrides(blocked: str) -> dict[str, Any]:
@@ -148,6 +158,20 @@ PEAK_42 = PEAK_35 | {
 
 BASE_V1_COMMON = {
     "V12_BlockTradeMonths": "4,7,8,9,10,12",
+}
+
+BASE_NO_APRIL_BLOCK = {
+    "V12_BlockTradeMonths": "7,8,9,10,12",
+}
+
+MT5OPT_V2_CORE = {
+    "V10_RiskPercent": 15.0,
+    "V11_MaxLotCap": 22.5,
+    "V11_DailyMaxLossPct": 9.5,
+    "V11_DailyProfitLockStartPct": 22.0,
+    "V11_DailyMaxGivebackPct": 7.5,
+    "V10_SellRR": 0.76,
+    "V10_MinTradeScore": 42,
 }
 
 CANDIDATES: dict[str, dict[str, Any]] = {
@@ -272,15 +296,66 @@ CANDIDATES: dict[str, dict[str, Any]] = {
     "v2_mt5opt_r15_rr76_score42": BASE_V1_COMMON
     | hour_overrides(HOURS_5_6_15_16_BLOCKED)
     | NO_ZONE
-    | {
-        "V10_RiskPercent": 15.0,
-        "V11_MaxLotCap": 22.5,
-        "V11_DailyMaxLossPct": 9.5,
-        "V11_DailyProfitLockStartPct": 22.0,
-        "V11_DailyMaxGivebackPct": 7.5,
-        "V10_SellRR": 0.76,
-        "V10_MinTradeScore": 42,
-    },
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_h4": BASE_V1_COMMON
+    | hour_overrides(HOURS_4_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_h7": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_7_15_16_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_h10": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_10_15_16_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_h14": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_14_15_16_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_h17": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_noapr": BASE_NO_APRIL_BLOCK
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_zone": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_score38": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE
+    | {"V10_MinTradeScore": 38},
+    "v2_qnty_r15_rr76_h17_zone": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r15_rr76_h4_h17": BASE_V1_COMMON
+    | hour_overrides(blocked_hours_for_allowed([4, 5, 6, 15, 16, 17]))
+    | NO_ZONE
+    | MT5OPT_V2_CORE,
+    "v2_qnty_r145_rr76_h17": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE
+    | {"V10_RiskPercent": 14.5, "V11_MaxLotCap": 21.75},
+    "v2_qnty_r155_rr76_h17": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE
+    | {"V10_RiskPercent": 15.5, "V11_MaxLotCap": 23.25},
+    "v2_qnty_r15_rr74_h17": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE
+    | {"V10_SellRR": 0.74},
+    "v2_qnty_r15_rr78_h17": BASE_V1_COMMON
+    | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+    | NO_ZONE
+    | MT5OPT_V2_CORE
+    | {"V10_SellRR": 0.78},
     "v2_mt5opt_r15_rr77_score42": BASE_V1_COMMON
     | hour_overrides(HOURS_5_6_15_16_BLOCKED)
     | NO_ZONE
@@ -601,6 +676,76 @@ CANDIDATES: dict[str, dict[str, Any]] = {
         "V11_DailyMaxGivebackPct": 11.0,
     },
 }
+
+for extra_hour in [0, 1, 2, 3, 8, 9, 11, 12, 13, 18, 19, 20, 21, 22, 23]:
+    CANDIDATES[f"v2_qnty_r15_rr76_h{extra_hour}"] = (
+        BASE_V1_COMMON
+        | hour_overrides(blocked_hours_for_allowed(CORE_ALLOWED_SELL_HOURS + [extra_hour]))
+        | NO_ZONE
+        | MT5OPT_V2_CORE
+    )
+
+CANDIDATES.update(
+    {
+        "v2_queue_h5_6_15_16_17_nozone_r12": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | NO_ZONE
+        | QUEUE_CORE
+        | {
+            "V10_RiskPercent": 12.0,
+            "V11_MaxLotCap": 24.0,
+            "V11_DailyMaxLossPct": 9.0,
+            "V11_DailyProfitLockStartPct": 20.0,
+            "V11_DailyMaxGivebackPct": 7.0,
+        },
+        "v2_queue_h5_6_15_16_17_nozone_r14": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | NO_ZONE
+        | QUEUE_CORE
+        | {
+            "V10_RiskPercent": 14.0,
+            "V11_MaxLotCap": 28.0,
+            "V11_DailyMaxLossPct": 10.0,
+            "V11_DailyProfitLockStartPct": 23.0,
+            "V11_DailyMaxGivebackPct": 8.0,
+        },
+        "v2_queue_h5_6_15_16_17_nozone_r16_peak35": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | NO_ZONE
+        | QUEUE_CORE
+        | PEAK_35
+        | {
+            "V10_RiskPercent": 16.0,
+            "V11_MaxLotCap": 32.0,
+            "V11_DailyMaxLossPct": 11.0,
+            "V11_DailyProfitLockStartPct": 26.0,
+            "V11_DailyMaxGivebackPct": 9.0,
+        },
+        "v2_qnty_r145_rr76_h17_zone": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | MT5OPT_V2_CORE
+        | {"V10_RiskPercent": 14.5, "V11_MaxLotCap": 21.75},
+        "v2_qnty_r155_rr76_h17_zone": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | MT5OPT_V2_CORE
+        | {"V10_RiskPercent": 15.5, "V11_MaxLotCap": 23.25},
+        "v2_qnty_r16_rr76_h17_zone": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | MT5OPT_V2_CORE
+        | {"V10_RiskPercent": 16.0, "V11_MaxLotCap": 24.0},
+        "v2_qnty_r15_rr74_h17_zone": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | MT5OPT_V2_CORE
+        | {"V10_SellRR": 0.74},
+        "v2_qnty_r15_rr78_h17_zone": BASE_V1_COMMON
+        | hour_overrides(HOURS_5_6_15_16_17_BLOCKED)
+        | MT5OPT_V2_CORE
+        | {"V10_SellRR": 0.78},
+        "v2_qnty_r15_rr76_h4_h17_zone": BASE_V1_COMMON
+        | hour_overrides(blocked_hours_for_allowed([4, 5, 6, 15, 16, 17]))
+        | MT5OPT_V2_CORE,
+    }
+)
 
 
 def win_path(path: Path) -> str:

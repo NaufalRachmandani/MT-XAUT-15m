@@ -1,13 +1,13 @@
 #property copyright "Suis Base"
-#property version   "2.00"
+#property version   "2.10"
 #property strict
 #property description "Suis_BTC_M5_V2 BTCUSDc M5 baked defaults"
-// Suis BTC M5 V2 baked no-set build: v2_mt5opt_r15_rr76_score42.
+// Suis BTC M5 V2 baked no-set build: v2_qnty_r155_rr76_h17_zone.
 
 #include <Trade/Trade.mqh>
 
-const double V10_RiskPercent = 15.0;
-const double V11_MaxLotCap = 22.5;
+const double V10_RiskPercent = 15.5;
+const double V11_MaxLotCap = 23.25;
 const double V11_BuyPullbackRiskMultiplier = 1.0;
 const double V10_BuyRiskMultiplier = 1.50;
 const double V10_SellRiskMultiplier = 1.15;
@@ -119,7 +119,7 @@ const double V11_ImpulseBreakATR = 0.00;
 const double V11_ImpulseRiskMultiplier = 0.45;
 const double V11_ImpulseRR = 0.82;
 const int    V11_ImpulseMaxHoldBars = 4;
-const bool   V10_EnableZoneRetestEngine = false;
+const bool   V10_EnableZoneRetestEngine = true;
 const bool   V10_ZoneAllowWeakRegime = false;
 const bool   V10_ZoneUseCoreHours = false;
 const int    V10_ZoneLookback = 5;
@@ -143,11 +143,11 @@ const string V11_BlockBuyZoneHours = "";
 const string V11_BlockBuyImpulseHours = "";
 const string V11_BlockBuySubHours = "";
 const string V11_BlockBuyAddOnHours = "";
-const string V11_BlockSellBreakHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23";
-const string V11_BlockSellZoneHours = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23";
-const string V11_BlockSellImpulseHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23";
-const string V11_BlockSellSubHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23";
-const string V11_BlockSellAddOnHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23";
+const string V11_BlockSellBreakHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,18,19,20,21,22,23";
+const string V11_BlockSellZoneHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,18,19,20,21,22,23";
+const string V11_BlockSellImpulseHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,18,19,20,21,22,23";
+const string V11_BlockSellSubHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,18,19,20,21,22,23";
+const string V11_BlockSellAddOnHours = "0,1,2,3,4,7,8,9,10,11,12,13,14,18,19,20,21,22,23";
 const int    V10_BullPullbackLookback = 8;
 const double V10_BullTouchATR = 0.15;
 const double V10_BullReclaimATR = 0.00;
